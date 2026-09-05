@@ -21,4 +21,4 @@ def dilution(stock_conc: float, final_conc: float, final_volume: float) -> Dilut
     """
     stock_volume = (final_conc * final_volume) / stock_conc
     diluent_volume = final_volume - stock_volume
-    return (stock_volume, diluent_volume)
+    return Dilution(stock=stock_volume, diluent=diluent_volume)

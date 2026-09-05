@@ -5,6 +5,10 @@ transformation. Python/FastAPI backend, React/TypeScript frontend.
 
 Work in progress.
 
+# Build status
+
+[![CI](https://github.com/WitchDevelops/cloning-assistant/actions/workflows/ci.yml/badge.svg)](https://github.com/WitchDevelops/cloning-assistant/actions/workflows/ci.yml)
+
 ## Scaffolding progress
 
 ### Done
@@ -22,27 +26,27 @@ Work in progress.
 
 ### Backend config
 
-- [ ] `[tool.ruff]`, `[tool.mypy]` and `[tool.pytest.ini_options]` in `pyproject.toml`
-- [ ] `backend/tests/` with a passing smoke test
+- [x] `[tool.ruff]`, `[tool.mypy]` and `[tool.pytest.ini_options]` in `pyproject.toml`
+- [x] `backend/tests/` with a passing smoke test
 - [ ] `api.py`: FastAPI app, `/api/health` endpoint, CORS
 
 ### Frontend config
 
 - [ ] Remove the Vite starter demo
-- [ ] Vitest + jsdom + Testing Library
+- [x] Vitest + jsdom + Testing Library
 - [ ] Router with the three top-level sections
 - [ ] `storage.ts`: thin interface over localStorage
 
 ### Tooling
 
-- [ ] `.pre-commit-config.yaml`: ruff, trailing whitespace, end-of-file newline,
+- [x] `.pre-commit-config.yaml`: ruff, trailing whitespace, end-of-file newline,
       YAML/JSON validity, large-file guard, frontend lint
-- [ ] `pre-commit install`
+- [x] `pre-commit install`
 
 ### CI
 
-- [ ] `.github/workflows/ci.yml`: ruff, mypy, pytest, vitest, frontend build, caching
-- [ ] Build-status badge in the README
+- [x] `.github/workflows/ci.yml`: ruff, mypy, pytest, vitest, frontend build, caching
+- [x] Build-status badge in the README
 
 ### Docker and deployment
 

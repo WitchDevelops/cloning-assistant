@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { dilutionInputSchema } from './dilution'
+import { dilutionInputSchema } from './dilutionSchema'
 
 const valid = { stockConc: 100, finalConc: 10, finalVolume: 500 }
 

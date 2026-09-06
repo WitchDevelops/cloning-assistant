@@ -1,0 +1,20 @@
+.layout {
+    display: flex;
+}
+.nav {
+    flex-direction: column;
+    width: 240px;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    flex-direction: column;
+}
+  .nav {
+    flex-direction: row; width: auto;
+}
+}
+
+@media print {
+  .nav { display: none; }
+}

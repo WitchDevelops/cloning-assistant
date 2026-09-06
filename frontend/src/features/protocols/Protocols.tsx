@@ -1,5 +1,3 @@
 export const Protocols = () => {
-    return (
-        <div>Protocols</div>
-    )
-}
+	return <div>Protocols</div>;
+};

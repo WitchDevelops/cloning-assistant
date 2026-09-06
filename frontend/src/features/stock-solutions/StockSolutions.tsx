@@ -1,5 +1,3 @@
 export const StockSolutions = () => {
-    return (
-        <div>StockSolutions</div>
-    )
-}
+	return <div>StockSolutions</div>;
+};

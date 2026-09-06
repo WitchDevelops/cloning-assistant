@@ -1,55 +1,134 @@
 # Cloning Screening Assistant
 
-Calculators and a 96-well plate map for screening colonies after a ligation and
-transformation. Python/FastAPI backend, React/TypeScript frontend.
-
-Work in progress.
-
-# Build status
-
 [![CI](https://github.com/WitchDevelops/cloning-assistant/actions/workflows/ci.yml/badge.svg)](https://github.com/WitchDevelops/cloning-assistant/actions/workflows/ci.yml)
 
-## Scaffolding progress
+Calculators and a 96-well plate map for screening colonies after a ligation and
+transformation.
 
-### Done
+## Stack
+Python/FastAPI backend, React/TypeScript frontend.
 
-- [x] WSL2 + Ubuntu, Python 3.12 via `uv`, Node via `nvm`
-- [x] Backend scaffolded (`uv init`, FastAPI, pytest, ruff, mypy)
-- [x] Frontend scaffolded (Vite, React, TypeScript, Zod, Vitest)
+Early development - the calculators are not built yet.
 
-### Repo hygiene
+## Requirements
 
-- [ ] `LICENSE` (MIT or Apache-2.0)
-- [ ] `CITATION.cff`
-- [ ] Full README: what it is, how to run, the calculations with worked examples,
-      deferred scope, CI badge, live URL
+- **[uv](https://docs.astral.sh/uv/)** - manages Python and the backend dependencies
+- **[Node.js](https://nodejs.org/)** - version in `frontend/.nvmrc`
 
-### Backend config
+You do not need to install Python separately. uv reads `backend/.python-version`
+and downloads the right interpreter itself.
 
-- [x] `[tool.ruff]`, `[tool.mypy]` and `[tool.pytest.ini_options]` in `pyproject.toml`
-- [x] `backend/tests/` with a passing smoke test
-- [ ] `api.py`: FastAPI app, `/api/health` endpoint, CORS
+### Installing uv
 
-### Frontend config
+**macOS / Linux**
 
-- [ ] Remove the Vite starter demo
-- [x] Vitest + jsdom + Testing Library
-- [ ] Router with the three top-level sections
-- [ ] `storage.ts`: thin interface over localStorage
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
 
-### Tooling
+**Windows (PowerShell)**
 
-- [x] `.pre-commit-config.yaml`: ruff, trailing whitespace, end-of-file newline,
-      YAML/JSON validity, large-file guard, frontend lint
-- [x] `pre-commit install`
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
 
-### CI
+Or, with a package manager: `brew install uv`, `winget install --id=astral-sh.uv -e`.
 
-- [x] `.github/workflows/ci.yml`: ruff, mypy, pytest, vitest, frontend build, caching
-- [x] Build-status badge in the README
+### Installing Node
 
-### Docker and deployment
+**macOS / Linux** - with [nvm](https://github.com/nvm-sh/nvm):
 
-- [ ] Install Docker
-- [ ] `Dockerfile` (multi-stage), `docker-compose.yml`, `.dockerignore`
-- [ ] Render: static site + web service, CORS narrowed, live URL in the README
+```bash
+nvm install
+```
+
+Run from `frontend/`; nvm reads `.nvmrc`.
+
+**Windows** - [nvm-windows](https://github.com/coreybutler/nvm-windows), [fnm](https://github.com/Schniz/fnm),
+or the installer from [nodejs.org](https://nodejs.org/).
+
+## Running it locally
+
+Every command below is identical on Linux, macOS and Windows.
+
+### Backend
+
+```bash
+cd backend
+uv sync
+uv run dev
+```
+
+Serves on <http://localhost:8000>.
+
+- <http://localhost:8000/api/health> - health check
+- <http://localhost:8000/docs> - interactive API documentation (Swagger UI)
+- <http://localhost:8000/redoc> - the same API as reference documentation
+
+### Frontend
+
+In a second terminal:
+
+```bash
+cd frontend
+npm ci
+npm run dev
+```
+
+Serves on <http://localhost:5173>.
+
+## Contributing
+
+(for now contributions are closed, I'm still setting it up and working on an MVP)
+
+### Pre-commit hooks
+
+Install once after cloning:
+
+```bash
+uv tool install pre-commit
+pre-commit install
+```
+
+On every commit this runs, against staged files only:
+
+- `ruff` - lint and format the backend
+- `eslint` - lint the frontend
+- trailing whitespace, end-of-file newline, YAML/JSON validity, large-file guard
+
+Most hooks fix files in place. When one does, re-stage and commit again.
+
+To run everything without committing:
+
+```bash
+pre-commit run --all-files
+```
+
+### Tests
+
+```bash
+cd backend && uv run pytest
+cd frontend && npm test
+```
+
+Type checking runs in CI rather than in the commit hook, because mypy needs the
+project's installed dependencies and pre-commit's hook environments are isolated
+from them:
+
+```bash
+cd backend && uv run mypy src
+```
+
+### Validation
+
+Input validation is deliberately done twice: **Zod** on the front end for
+immediate feedback and data cleaning, and **Pydantic** on the back end as the
+real gate. Never trust the raw input from the user.
+
+## Planned work
+
+- The calculators: ligation, restriction digest, gel loading dye, colony PCR
+  master mix, dilution
+- The 96-well plate map: configurable start well, well states, multi-plate
+  overflow, print and JSON export
+- Docker image and a deployed instance

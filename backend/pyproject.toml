@@ -13,13 +13,19 @@ dependencies = [
 
 [project.scripts]
 backend = "backend:main"
+dev = "backend.api:dev"
 
 [build-system]
 requires = ["uv_build>=0.12.9,<0.13.0"]
 build-backend = "uv_build"
 
 [dependency-groups]
-dev = ["httpx>=0.28.1", "mypy>=2.3.1", "pytest>=9.1.1", "ruff>=0.16.6"]
+dev = [
+ "httpx2>=2.12.0",
+ "mypy>=2.3.1",
+ "pytest>=9.1.1",
+ "ruff>=0.16.6",
+]
 
 [tool.ruff]
 line-length = 100

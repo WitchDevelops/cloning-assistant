@@ -1,4 +1,28 @@
 {
   "python.defaultInterpreterPath": "backend/.venv/bin/python",
-  "python.analysis.extraPaths": ["backend/src"]
+  "python.analysis.extraPaths": [
+    "backend/src"
+  ],
+  "editor.formatOnSave": true,
+  "recommendations": [
+    "charliermarsh.ruff",
+    "dbaeumer.vscode-eslint"
+  ],
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.ruff": "explicit",
+      "source.organizeImports.ruff": "explicit"
+    }
+  },
+  "[typescript]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
+  "[typescriptreact]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  }
 }

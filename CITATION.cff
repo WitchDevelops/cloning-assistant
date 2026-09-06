@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: Cloning Screening Assistant
+abstract: >-
+  Calculators and a 96-well plate map for screening colonies after
+  ligation and transformation.
+type: software
+authors:
+  - family-names: Wojewska
+    given-names: Dominika Natalia
+    orcid: "https://orcid.org/0000-0003-4145-5194"
+repository-code: "https://github.com/WitchDevelops/cloning-assistant"
+license: MIT
+keywords:
+  - molecular cloning
+  - laboratory
+  - research software

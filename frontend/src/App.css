@@ -9,6 +9,7 @@
 		flex-direction: row;
 	}
 }
+
 .nav {
 	display: flex;
 	flex-wrap: wrap;
@@ -72,6 +73,11 @@
 
 				&::after {
 					display: none;
+				}
+
+				@media (forced-colors: active) {
+					color: Highlight;
+					text-decoration: underline;
 				}
 			}
 		}

@@ -1,8 +1,11 @@
 {
-  "python.defaultInterpreterPath": "${workspaceFolde}/backend/.venv/bin/python",
+  "python.defaultInterpreterPath": "${workspaceFolder}/backend/.venv/bin/python",
   "python.analysis.extraPaths": [
     "backend/src"
   ],
+  "biome.lsp.bin": {
+    "linux-x64": "frontend/node_modules/@biomejs/cli-linux-x64/biome"
+  },
   "editor.formatOnSave": true,
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff",

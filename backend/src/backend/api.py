@@ -1,6 +1,12 @@
+from importlib.metadata import version
+
 from fastapi import FastAPI
 
-app = FastAPI()
+app = FastAPI(
+    title="Cloning screening assistant",
+    description="Calculators for molecular cloning workflows.",
+    version=version("backend"),
+)
 
 
 @app.get("/api/health")

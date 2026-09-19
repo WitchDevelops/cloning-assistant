@@ -10,6 +10,8 @@ class ApiModel(BaseModel):
     """Base for every request and response body.
     Fields are declared snake_case and serialized to camelCase."""
 
+    # strict = True prevents converting booleans to 1 or 0
+    # pupulate_by_name = True accepts snake and pascal case input names
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True, strict=True)
 
 

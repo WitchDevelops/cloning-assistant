@@ -10,16 +10,16 @@ class ApiModel(BaseModel):
     """Base for every request and response body.
     Fields are declared snake_case and serialized to camelCase."""
 
-    model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
+    model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True, strict=True)
 
 
 class DilutionRequest(ApiModel):
     """Desired volume and concentration starting from the stock concentration, e.g.
     mol/l (mol / volume), mg/ml (mass / volume) or equivalent units. The units must match."""
 
-    stock_conc: float = Field(gt=0)
-    final_conc: float = Field(gt=0)
-    final_volume: float = Field(gt=0)
+    stock_conc: float = Field(gt=0, examples=[250])
+    final_conc: float = Field(gt=0, examples=[50])
+    final_volume: float = Field(gt=0, examples=[20])
 
     @field_validator("final_conc")
     @classmethod

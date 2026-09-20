@@ -2,7 +2,6 @@ import './Button.css';
 
 type ButtonProps = React.ComponentProps<'button'> & {
 	variant?: 'primary' | 'secondary' | 'accent' | 'ghost';
-	className?: string;
 };
 
 export const Button = ({

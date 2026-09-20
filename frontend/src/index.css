@@ -41,15 +41,46 @@
 
 	--color-border: color-mix(in srgb, var(--color-text) 20%, transparent);
 	--color-text-muted: color-mix(in srgb, var(--color-text) 65%, transparent);
+	--color-text-accent: color-mix(
+		in srgb,
+		var(--color-text) 35%,
+		var(--color-accent)
+	);
+
+	/* Borders: --color-border is decorative only (fails 3:1).
+	   Form control boundaries must use --color-control-border (WCAG 1.4.11). */
+	--color-control-border: color-mix(
+		in srgb,
+		var(--color-text) 50%,
+		transparent
+	);
 
 	/* Centralized focus */
 	--color-focus-ring: var(--color-text);
+	--color-focus-ring-contrast: var(--color-surface);
+	--focus-ring-width: 2px;
+	--focus-ring-offset: 2px;
+
+	/* Layer 3: sizing */
+	--radius-sm: 6px;
+	--radius-md: 8px;
+
+	/* Spacing sits on a 4px grid */
+	--space-xs: 4px;
+	--space-sm: 8px;
+	--space-md: 12px;
+
+	/* Controls */
+	--control-min-height: 38px;
+	--control-border-width: 1px;
+	--unit-select-width: 100px;
 }
 
 :focus-visible {
-	outline: 2px solid var(--color-focus-ring);
-	outline-offset: 2px;
-	box-shadow: 0 0 0 4px var(--color-focus-ring-contrast);
+	outline: var(--focus-ring-width) solid var(--color-focus-ring);
+	outline-offset: var(--focus-ring-offset);
+	box-shadow: 0 0 0 calc(var(--focus-ring-width) + var(--focus-ring-offset))
+		var(--color-focus-ring-contrast);
 }
 
 @media (forced-colors: active) {
@@ -109,9 +140,21 @@ select {
 	color: inherit;
 }
 
+input,
+select {
+	background-color: transparent;
+	border: none;
+}
+
 fieldset {
 	display: flex;
 	min-inline-size: 0;
+	border: none;
+	padding: 0;
+}
+
+legend {
+	padding-inline: 0;
 }
 
 h1,

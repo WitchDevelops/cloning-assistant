@@ -1,10 +1,10 @@
 .button {
-	border-radius: 8px;
-	padding: 4px 8px;
+	border-radius: var(--radius-md);
+	padding: var(--space-xs) var(--space-sm);
 	min-width: 16ch;
 	background: var(--button-bg);
 	color: var(--button-fg);
-	border: 1px solid var(--button-border, var(--button-bg));
+	border: var(--control-border-width) solid var(--button-border, var(--button-bg));
 	transition:
 		background-color 120ms ease,
 		border-color 120ms ease;

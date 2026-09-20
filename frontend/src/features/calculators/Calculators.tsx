@@ -2,11 +2,12 @@ import { Button } from '../../components/atoms/Button';
 import { Fieldset } from '../../components/molecules/Fieldset';
 import { QuantityField } from '../../components/molecules/QuantityField';
 import { CONCENTRATION_UNITS, VOLUME_UNITS } from './units';
+import './Calculators.css';
 
 export const Calculators = () => {
 	return (
 		<div className="calculators__card">
-			<h2>Diluting stock</h2>
+			<h2 className="card__title">Diluting stock</h2>
 			<form className="calculators__form">
 				<div className="form__body">
 					<Fieldset legend="Stock concentration">

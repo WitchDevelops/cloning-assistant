@@ -1,3 +1,5 @@
+import './Fieldset.css';
+
 type FieldsetProps = {
 	legend: string;
 	children: React.ReactNode;

@@ -1,4 +1,5 @@
 import type { UnitOptions } from '../../features/calculators/units';
+import './QuantityField.css';
 
 type QuantityFieldProps = {
 	name: string;
@@ -27,6 +28,7 @@ export const QuantityField = ({
 				name={valueId}
 				type="text"
 				inputMode="decimal"
+				className="quantity-field__input"
 				aria-describedby={errorId}
 				aria-invalid={invalid}
 			/>
@@ -34,7 +36,7 @@ export const QuantityField = ({
 			<label htmlFor={unitId} className="sr-only">
 				Unit
 			</label>
-			<select id={unitId} name={unitId}>
+			<select id={unitId} name={unitId} className="quantity-field__select">
 				{unitOptions.kind === 'grouped'
 					? unitOptions.groups.map(({ key, label, units }) => (
 							<optgroup key={key} label={label}>
@@ -51,7 +53,7 @@ export const QuantityField = ({
 							</option>
 						))}
 			</select>
-			<p id={errorId} aria-live="polite" className="field__error">
+			<p id={errorId} aria-live="polite" className="quantity-field__error">
 				{error}
 			</p>
 		</div>

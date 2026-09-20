@@ -15,6 +15,7 @@
 .quantity-field__input {
 	border-radius: var(--radius-sm) 0 0 var(--radius-sm);
 	flex: 1 1 0;
+	min-width: 3ch;
 }
 
 .quantity-field__select {

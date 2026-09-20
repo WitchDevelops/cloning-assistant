@@ -9,13 +9,13 @@ export const Calculators = () => {
 			<h2>Diluting stock</h2>
 			<form className="calculators__form">
 				<div className="form__body">
-					<Fieldset legend="Stock concentration" name="stockConc">
+					<Fieldset legend="Stock concentration">
 						<QuantityField name="stockConc" unitOptions={CONCENTRATION_UNITS} />
 					</Fieldset>
-					<Fieldset legend="Working concentration" name="finalConc">
+					<Fieldset legend="Working concentration">
 						<QuantityField name="finalConc" unitOptions={CONCENTRATION_UNITS} />
 					</Fieldset>
-					<Fieldset legend="Final volume" name="finalVolume">
+					<Fieldset legend="Final volume">
 						<QuantityField name="finalVolume" unitOptions={VOLUME_UNITS} />
 					</Fieldset>
 				</div>

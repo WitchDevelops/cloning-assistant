@@ -3,21 +3,22 @@ import type { UnitOptions } from '../../features/calculators/units';
 type QuantityFieldProps = {
 	name: string;
 	unitOptions: UnitOptions;
-	errorId?: string;
+	error?: string;
 	invalid?: boolean;
 };
 
 export const QuantityField = ({
 	name,
 	unitOptions,
-	errorId,
+	error,
 	invalid,
 }: QuantityFieldProps) => {
 	const valueId = `${name}Value`;
 	const unitId = `${name}Unit`;
+	const errorId = `${valueId}-error`;
 
 	return (
-		<>
+		<div className="quantity-field">
 			<label htmlFor={valueId} className="sr-only">
 				Value
 			</label>
@@ -50,6 +51,9 @@ export const QuantityField = ({
 							</option>
 						))}
 			</select>
-		</>
+			<p id={errorId} aria-live="polite" className="field__error">
+				{error}
+			</p>
+		</div>
 	);
 };

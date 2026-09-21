@@ -1,3 +1,6 @@
+export type Unit = keyof typeof UNITS;
+export type UnitFamily = (typeof UNIT_FAMILIES)[number];
+
 export type UnitGroup = {
 	key: UnitFamily;
 	label: string;
@@ -14,9 +17,10 @@ export const UNIT_FAMILIES = [
 	'volume',
 ] as const;
 
-const CONCENTRATION_FAMILIES = ['massPerVolume', 'molPerVolume'] as const;
-
-export type UnitFamily = (typeof UNIT_FAMILIES)[number];
+export const CONCENTRATION_FAMILIES: readonly UnitFamily[] = [
+	'massPerVolume',
+	'molPerVolume',
+];
 
 export const UNITS = {
 	'ng/µL': 'massPerVolume',
@@ -30,7 +34,12 @@ export const UNITS = {
 	mL: 'volume',
 } as const satisfies Record<string, UnitFamily>;
 
-export type Unit = keyof typeof UNITS;
+export const UNIT_VALUES = Object.keys(UNITS) as Unit[];
+
+export const isConcentration = (unit: Unit): boolean =>
+	CONCENTRATION_FAMILIES.includes(UNITS[unit]);
+
+export const isVolume = (unit: Unit): boolean => UNITS[unit] === 'volume';
 
 const unitsOf = (family: UnitFamily): Unit[] =>
 	(Object.keys(UNITS) as Unit[]).filter((unit) => UNITS[unit] === family);
@@ -48,9 +57,9 @@ export const CONCENTRATION_UNITS: UnitOptions = {
 		label: FAMILY_LABELS[family],
 		units: unitsOf(family),
 	})),
-} as const satisfies UnitOptions;
+};
 
 export const VOLUME_UNITS: UnitOptions = {
 	kind: 'flat',
 	units: unitsOf('volume'),
-} as const satisfies UnitOptions;
+};

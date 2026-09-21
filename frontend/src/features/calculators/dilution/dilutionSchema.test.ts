@@ -3,8 +3,11 @@ import { dilutionInputSchema } from './dilutionSchema';
 
 const valid = {
 	stockConcValue: 100,
+	stockConcUnit: 'mM',
 	finalConcValue: 10,
+	finalConcUnit: 'mM',
 	finalVolumeValue: 500,
+	finalVolumeUnit: 'µL',
 };
 
 describe('dilutionInputSchema', () => {

@@ -14,6 +14,7 @@ class UnitFamily(StrEnum):
 
     MASS_PER_VOLUME = "mass_per_volume"
     MOL_PER_VOLUME = "mol_per_volume"
+    VOLUME = "volume"
 
 
 class ConcentrationUnit(StrEnum):

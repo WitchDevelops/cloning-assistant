@@ -6,7 +6,7 @@ from pathlib import Path
 
 from pydantic.alias_generators import to_camel
 
-from backend.schemas import Unit
+from backend.schemas import ConcentrationUnit, UnitFamily, VolumeUnit
 
 # walks up to repo root to store the result there
 OUTPUT = Path(__file__).resolve().parents[2] / "contracts" / "units.json"
@@ -14,9 +14,15 @@ OUTPUT = Path(__file__).resolve().parents[2] / "contracts" / "units.json"
 
 def unit_table() -> dict[str, dict[str, object]]:
     """Maps each unit's wire value to its family (camelCase) and base-unit factor."""
-    return {
-        unit.value: {"family": to_camel(unit.unit_family), "factor": unit.factor} for unit in Unit
+    conc_table = {
+        conc_unit.value: {"family": to_camel(conc_unit.unit_family), "factor": conc_unit.factor}
+        for conc_unit in ConcentrationUnit
     }
+    vol_table = {
+        vol_unit.value: {"family": to_camel(UnitFamily.VOLUME), "factor": vol_unit.factor}
+        for vol_unit in VolumeUnit
+    }
+    return conc_table | vol_table
 
 
 def main() -> None:

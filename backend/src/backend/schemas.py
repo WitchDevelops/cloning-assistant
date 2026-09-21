@@ -8,28 +8,42 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 from pydantic.alias_generators import to_camel
 
 
+class UnitFamily(StrEnum):
+    MASS_PER_VOLUME = "mass_per_volume"
+    MOL_PER_VOLUME = "mol_per_volume"
+    VOLUME = "volume"
+
+
 class Unit(StrEnum):
-    unit_family: str
+    unit_family: UnitFamily
     factor: float
 
     # __new__ creates an instance and returns it
     # needed here because strings are immutable and my enum inherits from str
-    def __new__(cls, value: str, unit_family: str, factor: float) -> "Unit":
+    def __new__(cls, value: str, unit_family: UnitFamily, factor: float) -> "Unit":
         obj = str.__new__(cls, value)
         obj._value_ = value
         obj.unit_family = unit_family
         obj.factor = factor
         return obj
 
-    NG_UL = "ng/µL", "mass_per_volume", 1.0
-    UG_UL = "µg/µL", "mass_per_volume", 1000.0
-    MG_ML = "mg/mL", "mass_per_volume", 1000.0
-    NM = "nM", "mol_per_volume", 1.0
-    UM = "µM", "mol_per_volume", 1_000.0
-    MM = "mM", "mol_per_volume", 1_000_000.0
-    M = "M", "mol_per_volume", 1_000_000_000.0
-    UL = "µL", "volume", 1.0
-    ML = "mL", "volume", 1_000.0
+    @property
+    def is_concentration(self) -> bool:
+        return self.unit_family in (UnitFamily.MASS_PER_VOLUME, UnitFamily.MOL_PER_VOLUME)
+
+    @property
+    def is_volume(self) -> bool:
+        return self.unit_family == UnitFamily.VOLUME
+
+    NG_UL = "ng/µL", UnitFamily.MASS_PER_VOLUME, 1.0
+    UG_UL = "µg/µL", UnitFamily.MASS_PER_VOLUME, 1000.0
+    MG_ML = "mg/mL", UnitFamily.MASS_PER_VOLUME, 1000.0
+    NM = "nM", UnitFamily.MOL_PER_VOLUME, 1.0
+    UM = "µM", UnitFamily.MOL_PER_VOLUME, 1_000.0
+    MM = "mM", UnitFamily.MOL_PER_VOLUME, 1_000_000.0
+    M = "M", UnitFamily.MOL_PER_VOLUME, 1_000_000_000.0
+    UL = "µL", UnitFamily.VOLUME, 1.0
+    ML = "mL", UnitFamily.VOLUME, 1_000.0
 
 
 class ApiModel(BaseModel):
@@ -61,11 +75,11 @@ class DilutionRequest(ApiModel):
 
     @model_validator(mode="after")
     def check_units(self) -> "DilutionRequest":
-        if self.stock_conc.unit.unit_family not in {"mass_per_volume", "mol_per_volume"}:
+        if not self.stock_conc.unit.is_concentration:
             raise ValueError("Stock concentration must be expressed in concentration units.")
-        if self.final_conc.unit.unit_family not in {"mass_per_volume", "mol_per_volume"}:
+        if not self.final_conc.unit.is_concentration:
             raise ValueError("Final concentration must be expressed in concentration units.")
-        if self.final_volume.unit.unit_family != "volume":
+        if not self.final_volume.unit.is_volume:
             raise ValueError("Final volume must be expressed in volume units.")
 
         if self.final_conc.unit.unit_family != self.stock_conc.unit.unit_family:

@@ -1,5 +1,11 @@
 import { z } from 'zod';
-import { isConcentration, isVolume, UNIT_VALUES, UNITS } from '../units';
+import {
+	isConcentration,
+	isVolume,
+	toBase,
+	UNIT_VALUES,
+	UNITS,
+} from '../units';
 
 export const dilutionInputSchema = z
 	.object({
@@ -22,11 +28,20 @@ export const dilutionInputSchema = z
 		path: ['finalVolumeUnit'],
 		message: 'Final volume must be expressed in volume units.',
 	})
-	.refine((data) => UNITS[data.finalConcUnit] === UNITS[data.stockConcUnit], {
-		path: ['finalConcUnit'],
-		message: 'Unit families must match.',
-	})
-	.refine((data) => data.finalConcValue < data.stockConcValue, {
-		path: ['finalConcValue'],
-		message: 'Final concentration must be lower than stock concentration.',
-	});
+	.refine(
+		(data) =>
+			UNITS[data.finalConcUnit].family === UNITS[data.stockConcUnit].family,
+		{
+			path: ['finalConcUnit'],
+			message: 'Unit families must match.',
+		},
+	)
+	.refine(
+		(data) =>
+			toBase(data.finalConcValue, data.finalConcUnit) <
+			toBase(data.stockConcValue, data.stockConcUnit),
+		{
+			path: ['finalConcValue'],
+			message: 'Final concentration must be lower than stock concentration.',
+		},
+	);

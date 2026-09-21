@@ -44,6 +44,12 @@ describe('dilutionInputSchema', () => {
 		);
 	});
 
+	it('accepts concentrations in different units of the same family', () => {
+		expect(
+			dilutionInputSchema.safeParse({ ...valid, finalConcUnit: 'µM' }).success,
+		).toBe(true);
+	});
+
 	it('rejects concentrations from different unit families', () => {
 		expect(rejectionPaths({ ...valid, stockConcUnit: 'mg/mL' })).toContain(
 			'finalConcUnit',
@@ -54,5 +60,11 @@ describe('dilutionInputSchema', () => {
 		expect(rejectionPaths({ ...valid, stockConcUnit: 'pM' })).toContain(
 			'stockConcUnit',
 		);
+	});
+
+	it('rejects a final concentration higher than the stock in another unit', () => {
+		expect(
+			rejectionPaths({ ...valid, stockConcUnit: 'nM', finalConcUnit: 'µM' }),
+		).toContain('finalConcValue');
 	});
 });

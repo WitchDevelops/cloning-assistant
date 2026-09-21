@@ -23,26 +23,33 @@ export const CONCENTRATION_FAMILIES: readonly UnitFamily[] = [
 ];
 
 export const UNITS = {
-	'ng/µL': 'massPerVolume',
-	'µg/µL': 'massPerVolume',
-	'mg/mL': 'massPerVolume',
-	nM: 'molPerVolume',
-	µM: 'molPerVolume',
-	mM: 'molPerVolume',
-	M: 'molPerVolume',
-	µL: 'volume',
-	mL: 'volume',
-} as const satisfies Record<string, UnitFamily>;
+	'ng/µL': { family: 'massPerVolume', factor: 1 },
+	'µg/µL': { family: 'massPerVolume', factor: 1_000 },
+	'mg/mL': { family: 'massPerVolume', factor: 1_000 },
+	nM: { family: 'molPerVolume', factor: 1 },
+	µM: { family: 'molPerVolume', factor: 1_000 },
+	mM: { family: 'molPerVolume', factor: 1_000_000 },
+	M: { family: 'molPerVolume', factor: 1_000_000_000 },
+	µL: { family: 'volume', factor: 1 },
+	mL: { family: 'volume', factor: 1_000 },
+} as const satisfies Record<string, { family: UnitFamily; factor: number }>;
 
 export const UNIT_VALUES = Object.keys(UNITS) as Unit[];
 
-export const isConcentration = (unit: Unit): boolean =>
-	CONCENTRATION_FAMILIES.includes(UNITS[unit]);
+/** Converts a quantity to the base unit of its family: ng/µL, nM or µL. */
+export const toBase = (value: number, unit: Unit): number =>
+	value * UNITS[unit].factor;
 
-export const isVolume = (unit: Unit): boolean => UNITS[unit] === 'volume';
+export const isConcentration = (unit: Unit): boolean =>
+	CONCENTRATION_FAMILIES.includes(UNITS[unit].family);
+
+export const isVolume = (unit: Unit): boolean =>
+	UNITS[unit].family === 'volume';
 
 const unitsOf = (family: UnitFamily): Unit[] =>
-	(Object.keys(UNITS) as Unit[]).filter((unit) => UNITS[unit] === family);
+	(Object.keys(UNITS) as Unit[]).filter(
+		(unit) => UNITS[unit].family === family,
+	);
 
 const FAMILY_LABELS: Record<UnitFamily, string> = {
 	massPerVolume: 'Mass per volume',

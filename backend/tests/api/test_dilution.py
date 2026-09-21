@@ -107,19 +107,6 @@ def test_dilution_converts_between_units_of_the_same_family(
         # mass per volume against molar: not interconvertible without a molecular weight
         # (the c1 V1 = c2 V2 rejects this)
         ((250, "ng/µL"), (50, "mM"), (20, "µL"), "Unit families must match."),
-        (
-            (100, "µL"),
-            (20, "µL"),
-            (50, "µL"),
-            "Stock concentration must be expressed in concentration units.",
-        ),
-        (
-            (100, "mM"),
-            (20, "µL"),
-            (50, "µL"),
-            "Final concentration must be expressed in concentration units.",
-        ),
-        ((250, "mM"), (50, "mM"), (20, "mM"), "Final volume must be expressed in volume units."),
         # 0.5 M is 500 mM, so this is above the 1 mM stock even though 0.5 < 1.
         # Rejecting it requires the comparison to happen after conversion.
         (
@@ -134,3 +121,22 @@ def test_dilution_rejects_invalid_unit_combinations(stock, final, volume, expect
     response = client.post("/api/dilution", json=body(stock, final, volume))
     assert response.status_code == 422
     assert any(expected_message in message for message in messages(response))
+
+
+# A unit from the wrong dimension is rejected by the field type rather than the
+# model validator, so the error carries the field path instead of just ["body"].
+@pytest.mark.parametrize(
+    ("field", "wrong_unit"),
+    [
+        ("stockConc", "µL"),
+        ("finalConc", "µL"),
+        ("finalVolume", "mM"),
+    ],
+)
+def test_dilution_rejects_units_from_the_wrong_dimension(field, wrong_unit):
+    payload = body((100, "mM"), (20, "mM"), (50, "µL"))
+    payload[field]["unit"] = wrong_unit
+    response = client.post("/api/dilution", json=payload)
+    assert response.status_code == 422
+    locs = [error["loc"] for error in response.json()["detail"]]
+    assert ["body", field, "unit"] in locs

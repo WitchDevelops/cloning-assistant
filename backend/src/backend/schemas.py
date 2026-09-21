@@ -9,31 +9,27 @@ from pydantic.alias_generators import to_camel
 
 
 class UnitFamily(StrEnum):
+    """Concentration units are only interconvertible within a family.
+    Crossing families needs a molecular weight, which this API does not take."""
+
     MASS_PER_VOLUME = "mass_per_volume"
     MOL_PER_VOLUME = "mol_per_volume"
-    VOLUME = "volume"
 
 
-class Unit(StrEnum):
+class ConcentrationUnit(StrEnum):
+    """Concentration units. `factor` converts to the family base: ng/µL or nM."""
+
     unit_family: UnitFamily
     factor: float
 
     # __new__ creates an instance and returns it
     # needed here because strings are immutable and my enum inherits from str
-    def __new__(cls, value: str, unit_family: UnitFamily, factor: float) -> "Unit":
+    def __new__(cls, value: str, unit_family: UnitFamily, factor: float) -> "ConcentrationUnit":
         obj = str.__new__(cls, value)
         obj._value_ = value
         obj.unit_family = unit_family
         obj.factor = factor
         return obj
-
-    @property
-    def is_concentration(self) -> bool:
-        return self.unit_family in (UnitFamily.MASS_PER_VOLUME, UnitFamily.MOL_PER_VOLUME)
-
-    @property
-    def is_volume(self) -> bool:
-        return self.unit_family == UnitFamily.VOLUME
 
     NG_UL = "ng/µL", UnitFamily.MASS_PER_VOLUME, 1.0
     UG_UL = "µg/µL", UnitFamily.MASS_PER_VOLUME, 1000.0
@@ -42,8 +38,21 @@ class Unit(StrEnum):
     UM = "µM", UnitFamily.MOL_PER_VOLUME, 1_000.0
     MM = "mM", UnitFamily.MOL_PER_VOLUME, 1_000_000.0
     M = "M", UnitFamily.MOL_PER_VOLUME, 1_000_000_000.0
-    UL = "µL", UnitFamily.VOLUME, 1.0
-    ML = "mL", UnitFamily.VOLUME, 1_000.0
+
+
+class VolumeUnit(StrEnum):
+    """Volume units. `factor` converts to µL. One family, so no family attribute."""
+
+    factor: float
+
+    def __new__(cls, value: str, factor: float) -> "VolumeUnit":
+        obj = str.__new__(cls, value)
+        obj._value_ = value
+        obj.factor = factor
+        return obj
+
+    UL = "µL", 1.0
+    ML = "mL", 1_000.0
 
 
 class ApiModel(BaseModel):
@@ -56,32 +65,46 @@ class ApiModel(BaseModel):
 
 
 class Quantity(ApiModel):
+    """A magnitude paired with a unit. Subclasses narrow `unit` to one dimension,
+    so a volume cannot be supplied where a concentration is expected."""
+
     value: float = Field(gt=0)
-    unit: Unit = Field(strict=False)
+    # Declared as a union here only so `to_base` can see `.factor`; each subclass
+    # narrows it to one dimension. The `strict` constraint lives on the subclasses
+    # because it cannot be applied to a union.
+    unit: ConcentrationUnit | VolumeUnit
 
     def to_base(self) -> float:
-        """Converts the unit to base unit.
-        ng/µL for gram per volume, nM for mol per volume, and µL for volume."""
+        """This quantity's value converted to its family's base unit:
+        ng/µL for mass per volume, nM for molar, µL for volume."""
         return self.value * self.unit.factor
 
 
-class DilutionRequest(ApiModel):
-    """Desired volume and concentration starting from the stock concentration, e.g.
-    mol/l (mol / volume), mg/ml (mass / volume) or equivalent units."""
+class Concentration(Quantity):
+    """A concentration in mass-per-volume or molar units."""
 
-    stock_conc: Quantity = Field(examples=[{"value": 250, "unit": "mM"}])
-    final_conc: Quantity = Field(examples=[{"value": 50, "unit": "mM"}])
-    final_volume: Quantity = Field(examples=[{"value": 20, "unit": "µL"}])
+    # strict=False because a JSON body carries the unit as a plain string;
+    # under strict=True Pydantic would demand an enum instance and reject "mM".
+    unit: ConcentrationUnit = Field(strict=False)
+
+
+class Volume(Quantity):
+    """A volume."""
+
+    unit: VolumeUnit = Field(strict=False)
+
+
+class DilutionRequest(ApiModel):
+    """Desired volume and concentration starting from the stock concentration.
+    The unit types are enforced by the field types; both concentrations must
+    additionally belong to the same family."""
+
+    stock_conc: Concentration = Field(examples=[{"value": 250, "unit": "mM"}])
+    final_conc: Concentration = Field(examples=[{"value": 50, "unit": "mM"}])
+    final_volume: Volume = Field(examples=[{"value": 20, "unit": "µL"}])
 
     @model_validator(mode="after")
     def check_units(self) -> "DilutionRequest":
-        if not self.stock_conc.unit.is_concentration:
-            raise ValueError("Stock concentration must be expressed in concentration units.")
-        if not self.final_conc.unit.is_concentration:
-            raise ValueError("Final concentration must be expressed in concentration units.")
-        if not self.final_volume.unit.is_volume:
-            raise ValueError("Final volume must be expressed in volume units.")
-
         if self.final_conc.unit.unit_family != self.stock_conc.unit.unit_family:
             raise ValueError("Unit families must match.")
         if self.final_conc.to_base() >= self.stock_conc.to_base():

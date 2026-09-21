@@ -16,7 +16,7 @@ export const CONCENTRATION_UNITS = {
 			label: 'Mass per volume',
 			units: ['ng/µL', 'µg/µL', 'mg/mL'],
 		},
-		{ key: 'molar', label: 'Molar', units: ['nM', 'µM', 'mM', 'M'] },
+		{ key: 'massPerVolume', label: 'Molar', units: ['nM', 'µM', 'mM', 'M'] },
 	],
 } as const satisfies UnitOptions;
 

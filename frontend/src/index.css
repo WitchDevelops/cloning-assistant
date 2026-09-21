@@ -5,21 +5,88 @@
 	--teal-600: #0d9488;
 	--teal-700: #0f766e;
 	--teal-900: #134e4a;
+	--violet-50: #f5f3ff;
+	--violet-400: #a78bfa;
+	--violet-600: #7c3aed;
+	--violet-700: #6d28d9;
+	--violet-900: #4c1d95;
 	--orange-500: #f97316;
 	--amber-500: #f59e0b;
 	--red-600: #dc2626;
 	--slate-50: #f8fafc;
+	--slate-200: #e2e8f0;
+	--slate-400: #94a3b8;
+	--slate-500: #64748b;
+	--slate-600: #475569;
+	--slate-700: #334155;
+	--slate-800: #1e293b;
 	--slate-900: #0f172a;
 
 	/* Layer 2: semantic */
 	--color-surface: var(--slate-50);
 	--color-text: var(--slate-900);
 	--color-primary: var(--teal-700);
+	--color-on-primary: var(--teal-50);
+	--color-secondary: var(--violet-700);
+	--color-on-secondary: var(--violet-50);
 	--color-accent: var(--orange-500);
+	--color-on-accent: var(--slate-900);
 	--color-warning: var(--amber-500);
+	--color-on-warning: var(--slate-900);
 	--color-danger: var(--red-600);
+	--color-on-danger: var(--slate-50);
+	--color-disabled-surface: var(--slate-200);
+	--color-on-disabled: var(--slate-600);
+	--color-disabled-border: var(--slate-500);
+
 	--color-border: color-mix(in srgb, var(--color-text) 20%, transparent);
 	--color-text-muted: color-mix(in srgb, var(--color-text) 65%, transparent);
+	--color-text-accent: color-mix(
+		in srgb,
+		var(--color-text) 35%,
+		var(--color-accent)
+	);
+
+	/* Borders: --color-border is decorative only (fails 3:1).
+	   Form control boundaries must use --color-control-border (WCAG 1.4.11). */
+	--color-control-border: color-mix(
+		in srgb,
+		var(--color-text) 50%,
+		transparent
+	);
+
+	/* Centralized focus */
+	--color-focus-ring: var(--color-text);
+	--color-focus-ring-contrast: var(--color-surface);
+	--focus-ring-width: 2px;
+	--focus-ring-offset: 2px;
+
+	/* Layer 3: sizing */
+	--radius-sm: 6px;
+	--radius-md: 8px;
+
+	/* Spacing sits on a 4px grid */
+	--space-xs: 4px;
+	--space-sm: 8px;
+	--space-md: 12px;
+
+	/* Controls */
+	--control-min-height: 38px;
+	--control-border-width: 1px;
+	--unit-select-width: 100px;
+}
+
+:focus-visible {
+	outline: var(--focus-ring-width) solid var(--color-focus-ring);
+	outline-offset: var(--focus-ring-offset);
+	box-shadow: 0 0 0 calc(var(--focus-ring-width) + var(--focus-ring-offset))
+		var(--color-focus-ring-contrast);
+}
+
+@media (forced-colors: active) {
+	:focus-visible {
+		outline-color: Highlight;
+	}
 }
 
 @media (prefers-color-scheme: dark) {
@@ -27,6 +94,9 @@
 		--color-surface: var(--slate-900);
 		--color-text: var(--slate-50);
 		--color-primary: var(--teal-600);
+		--color-secondary: var(--violet-600);
+		--color-disabled-surface: var(--slate-800);
+		--color-on-disabled: var(--slate-400);
 	}
 }
 
@@ -70,6 +140,23 @@ select {
 	color: inherit;
 }
 
+input,
+select {
+	background-color: transparent;
+	border: none;
+}
+
+fieldset {
+	display: flex;
+	min-inline-size: 0;
+	border: none;
+	padding: 0;
+}
+
+legend {
+	padding-inline: 0;
+}
+
 h1,
 h2,
 h3 {
@@ -79,6 +166,21 @@ h3 {
 
 p {
 	text-wrap: pretty;
+}
+
+button {
+	cursor: pointer;
+}
+
+/* Accessibility: screen reader only */
+/* display:none and visibility:hidden remove the element from the accessibility, so they can't be used here */
+.sr-only:not(:focus):not(:active) {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
 }
 
 @media (prefers-reduced-motion: reduce) {

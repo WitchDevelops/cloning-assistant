@@ -2,15 +2,14 @@
 
 [![CI](https://github.com/WitchDevelops/cloning-assistant/actions/workflows/ci.yml/badge.svg)](https://github.com/WitchDevelops/cloning-assistant/actions/workflows/ci.yml)
 
-Calculators and a 96-well plate map for screening colonies after a ligation and
-transformation.
+Calculators and a 96-well plate map for screening colonies after a ligation and transformation.
 
 ## Stack
 Python/FastAPI backend, React/TypeScript frontend.
 
-Early development - the calculators are not built yet.
+## How to run it locally
 
-## Requirements
+### Prerequisites
 
 - **[uv](https://docs.astral.sh/uv/)** - manages Python and the backend dependencies
 - **[Node.js](https://nodejs.org/)** - version in `frontend/.nvmrc`
@@ -18,7 +17,7 @@ Early development - the calculators are not built yet.
 You do not need to install Python separately. uv reads `backend/.python-version`
 and downloads the right interpreter itself.
 
-### Installing uv
+#### Installing uv
 
 **macOS / Linux**
 
@@ -34,7 +33,7 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | ie
 
 Or, with a package manager: `brew install uv`, `winget install --id=astral-sh.uv -e`.
 
-### Installing Node
+#### Installing Node
 
 **macOS / Linux** - with [nvm](https://github.com/nvm-sh/nvm):
 
@@ -111,9 +110,7 @@ cd backend && uv run pytest
 cd frontend && npm test
 ```
 
-Type checking runs in CI rather than in the commit hook, because mypy needs the
-project's installed dependencies and pre-commit's hook environments are isolated
-from them:
+Type checking runs in CI rather than in the commit hook, because mypy needs the project's installed dependencies and pre-commit's hook environments are isolated from them:
 
 ```bash
 cd backend && uv run mypy src
@@ -121,14 +118,25 @@ cd backend && uv run mypy src
 
 ### Validation
 
-Input validation is deliberately done twice: **Zod** on the front end for
-immediate feedback and data cleaning, and **Pydantic** on the back end as the
-real gate. Never trust the raw input from the user.
+Input validation is deliberately done twice:
+
+- **Zod** on the front end for immediate feedback and data cleaning,
+- **Pydantic** on the back end as the real gate.
+
+Never trust the raw input from the user.
+
+The units for calculations are declared twice (in Python backend and in TypeScript frontend) because waiting for server response for the dropdown is really bad UX and requires a separate endpoint. Two checks stop the copies from drifting: CI regenerates `contracts/units.json` from the Python enum and fails if the committed file is stale, and a Vitest test asserts the TypeScript table matches that file.
+
+From `backend/`, run:
+
+```
+uv run python scripts/export_units.py
+```
+
+to write a JSON file to `contracts/units.json`, then from `frontend/` `npm run test`.
 
 ## Planned work
 
-- The calculators: ligation, restriction digest, gel loading dye, colony PCR
-  master mix, dilution
-- The 96-well plate map: configurable start well, well states, multi-plate
-  overflow, print and JSON export
+- The calculators: ligation, restriction digest, gel loading dye, colony PCR master mix, dilution
+- The 96-well plate map: configurable start well, well states, multi-plate overflow, print and JSON export
 - Docker image and a deployed instance

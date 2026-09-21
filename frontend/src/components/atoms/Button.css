@@ -1,0 +1,42 @@
+.button {
+	border-radius: var(--radius-md);
+	padding: var(--space-xs) var(--space-sm);
+	min-width: 16ch;
+	background: var(--button-bg);
+	color: var(--button-fg);
+	border: var(--control-border-width) solid var(--button-border, var(--button-bg));
+	transition:
+		background-color 120ms ease,
+		border-color 120ms ease;
+	&:not(:disabled):hover {
+		background: color-mix(in srgb, var(--button-bg) 82%, var(--color-text));
+		border-color: color-mix(
+			in srgb,
+			var(--button-border, var(--button-bg)) 88%,
+			var(--color-text)
+		);
+	}
+	&:not(:disabled):active {
+		background: color-mix(in srgb, var(--button-bg) 76%, var(--color-text));
+	}
+	&[data-variant="primary"] {
+		--button-bg: var(--color-primary);
+		--button-fg: var(--color-on-primary);
+	}
+	&[data-variant="secondary"] {
+		--button-bg: var(--color-secondary);
+		--button-fg: var(--color-on-secondary);
+		--button-border: var(--color-secondary);
+	}
+	&[data-variant="ghost"] {
+		--button-bg: transparent;
+		--button-fg: var(--color-primary);
+		--button-border: var(--color-primary);
+	}
+	&:disabled {
+		--button-bg: var(--color-disabled-surface);
+		--button-fg: var(--color-on-disabled);
+		--button-border: var(--color-disabled-border);
+		cursor: not-allowed;
+	}
+}

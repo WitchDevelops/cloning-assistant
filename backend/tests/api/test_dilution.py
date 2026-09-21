@@ -8,7 +8,12 @@ client = TestClient(app)
 
 def test_dilution_returns_expected_volumes():
     response = client.post(
-        "/api/dilution", json={"stockConc": 100, "finalConc": 20, "finalVolume": 50}
+        "/api/dilution",
+        json={
+            "stockConc": {"value": 100, "unit": "mM"},
+            "finalConc": {"value": 20, "unit": "mM"},
+            "finalVolume": {"value": 50, "unit": "µL"},
+        },
     )
     assert response.status_code == 200
     assert response.json() == {"stock": 10, "diluent": 40}
@@ -16,7 +21,12 @@ def test_dilution_returns_expected_volumes():
 
 def test_dilution_handles_non_round_numbers():
     response = client.post(
-        "/api/dilution", json={"stockConc": 666.6666, "finalConc": 33.3333, "finalVolume": 100}
+        "/api/dilution",
+        json={
+            "stockConc": {"value": 666.6666, "unit": "mM"},
+            "finalConc": {"value": 33.3333, "unit": "mM"},
+            "finalVolume": {"value": 100, "unit": "µL"},
+        },
     )
 
     assert response.status_code == 200
@@ -25,23 +35,32 @@ def test_dilution_handles_non_round_numbers():
 
 def test_dilution_rejects_final_above_stock():
     response = client.post(
-        "/api/dilution", json={"stockConc": 100, "finalConc": 200, "finalVolume": 50}
+        "/api/dilution",
+        json={
+            "stockConc": {"value": 100, "unit": "mM"},
+            "finalConc": {"value": 200, "unit": "mM"},
+            "finalVolume": {"value": 50, "unit": "µL"},
+        },
     )
     error = response.json()["detail"][0]
     assert response.status_code == 422  # validation error
-    assert error["loc"] == ["body", "finalConc"]  # error in the response body, finalConc field
-    assert "must be lower than stock_conc" in error["msg"]
+    assert error["loc"] == ["body"]
+    assert "Final concentration must be lower than stock concentration." in error["msg"]
 
 
 # parametrize to test all combinations of input field and zero or negative input
 @pytest.mark.parametrize("field", ["stockConc", "finalConc", "finalVolume"])
 @pytest.mark.parametrize("bad_value", [0, -1])
 def test_dilution_rejects_non_positive_values(field, bad_value):
-    body = {"stockConc": 100, "finalConc": 20, "finalVolume": 50}
-    body[field] = bad_value
+    body = {
+        "stockConc": {"value": 100, "unit": "mM"},
+        "finalConc": {"value": 20, "unit": "mM"},
+        "finalVolume": {"value": 50, "unit": "µL"},
+    }
+    body[field]["value"] = bad_value
     response = client.post("/api/dilution", json=body)
     assert response.status_code == 422
-    assert response.json()["detail"][0]["loc"] == ["body", field]
+    assert response.json()["detail"][0]["loc"] == ["body", field, "value"]
 
 
 def test_dilution_rejects_empty_body():
@@ -53,9 +72,14 @@ def test_dilution_rejects_empty_body():
 
 def test_dilution_rejects_equal_concentrations_of_stock_and_final():
     response = client.post(
-        "/api/dilution", json={"stockConc": 100, "finalConc": 100, "finalVolume": 50}
+        "/api/dilution",
+        json={
+            "stockConc": {"value": 100, "unit": "mM"},
+            "finalConc": {"value": 100, "unit": "mM"},
+            "finalVolume": {"value": 50, "unit": "µL"},
+        },
     )
     error = response.json()["detail"][0]
     assert response.status_code == 422
-    assert error["loc"] == ["body", "finalConc"]
-    assert "final_conc must be lower than stock_conc" in error["msg"]
+    assert error["loc"] == ["body"]
+    assert "Final concentration must be lower than stock concentration." in error["msg"]

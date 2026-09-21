@@ -32,7 +32,9 @@ def calculate_dilution(payload: DilutionRequest) -> DilutionResponse:
 
     Takes stock concentration, final concentration, final volume (µL)
     and returns stock volume (µL) and diluent volume (µL)."""
-    result = dilution(payload.stock_conc, payload.final_conc, payload.final_volume)
+    result = dilution(
+        payload.stock_conc.to_base(), payload.final_conc.to_base(), payload.final_volume.to_base()
+    )
     return DilutionResponse(stock=result.stock, diluent=result.diluent)
 
 

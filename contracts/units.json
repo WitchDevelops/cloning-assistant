@@ -1,0 +1,38 @@
+{
+  "ng/µL": {
+    "family": "massPerVolume",
+    "factor": 1.0
+  },
+  "µg/µL": {
+    "family": "massPerVolume",
+    "factor": 1000.0
+  },
+  "mg/mL": {
+    "family": "massPerVolume",
+    "factor": 1000.0
+  },
+  "nM": {
+    "family": "molPerVolume",
+    "factor": 1.0
+  },
+  "µM": {
+    "family": "molPerVolume",
+    "factor": 1000.0
+  },
+  "mM": {
+    "family": "molPerVolume",
+    "factor": 1000000.0
+  },
+  "M": {
+    "family": "molPerVolume",
+    "factor": 1000000000.0
+  },
+  "µL": {
+    "family": "volume",
+    "factor": 1.0
+  },
+  "mL": {
+    "family": "volume",
+    "factor": 1000.0
+  }
+}

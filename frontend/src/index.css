@@ -179,6 +179,12 @@ button {
 	cursor: pointer;
 }
 
+hr {
+	color: var(--color-control-border);
+	border-style: solid;
+	border-width: var(--control-border-width);
+}
+
 /* Accessibility: screen reader only */
 /* display:none and visibility:hidden remove the element from the accessibility, so they can't be used here */
 .sr-only:not(:focus):not(:active) {

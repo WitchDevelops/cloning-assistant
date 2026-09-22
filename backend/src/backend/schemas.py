@@ -119,3 +119,19 @@ class DilutionResponse(ApiModel):
 
     stock: float
     diluent: float
+
+
+class Stock(ApiModel):
+    """Defines a stock solution (Cold Spring Harbor standards)."""
+
+    name: str
+    composition: dict[str, Concentration]
+    ph: float | None = None
+    note: str | None = None
+    citation: str | None = None
+
+
+class StockResponse(ApiModel):
+    """A list of predefined stock solutions."""
+
+    stocks: list[Stock]

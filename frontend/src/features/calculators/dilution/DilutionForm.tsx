@@ -27,7 +27,7 @@ export const DilutionForm = () => {
 	});
 
 	const onSubmit = (data: DilutionInput) => {
-		// TODO: wire it
+		// TODO: wire it in #16
 		console.log(data);
 	};
 
@@ -42,6 +42,7 @@ export const DilutionForm = () => {
 					<QuantityField
 						valueField="stockConcValue"
 						unitField="stockConcUnit"
+						label="Stock concentration"
 						unitOptions={CONCENTRATION_UNITS}
 						register={register}
 						valueError={errors.stockConcValue?.message}
@@ -52,6 +53,7 @@ export const DilutionForm = () => {
 					<QuantityField
 						valueField="finalConcValue"
 						unitField="finalConcUnit"
+						label="Working concentration"
 						unitOptions={CONCENTRATION_UNITS}
 						register={register}
 						valueError={errors.finalConcValue?.message}
@@ -62,6 +64,7 @@ export const DilutionForm = () => {
 					<QuantityField
 						valueField="finalVolumeValue"
 						unitField="finalVolumeUnit"
+						label="Final volume"
 						unitOptions={VOLUME_UNITS}
 						register={register}
 						valueError={errors.finalVolumeValue?.message}

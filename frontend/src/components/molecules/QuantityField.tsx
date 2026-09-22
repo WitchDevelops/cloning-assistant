@@ -6,6 +6,7 @@ type QuantityFieldProps<T extends FieldValues> = {
 	// Path<T> means a valid key of the form values, catches typos
 	valueField: Path<T>;
 	unitField: Path<T>;
+	label: string;
 	unitOptions: UnitOptions;
 	register: UseFormRegister<T>;
 	valueError?: string;
@@ -15,6 +16,7 @@ type QuantityFieldProps<T extends FieldValues> = {
 export const QuantityField = <T extends FieldValues>({
 	valueField,
 	unitField,
+	label,
 	unitOptions,
 	register,
 	valueError,
@@ -27,7 +29,7 @@ export const QuantityField = <T extends FieldValues>({
 		<div className="quantity-field">
 			<div className="quantity-field__wrapper">
 				<label htmlFor={valueField} className="sr-only">
-					Value
+					{`${label} value`}
 				</label>
 				<input
 					id={valueField}
@@ -40,7 +42,7 @@ export const QuantityField = <T extends FieldValues>({
 				/>
 
 				<label htmlFor={unitField} className="sr-only">
-					Unit
+					{`${label} unit`}
 				</label>
 				<select
 					id={unitField}

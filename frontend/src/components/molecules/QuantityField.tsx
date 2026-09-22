@@ -1,5 +1,5 @@
 import type { FieldValues, Path, UseFormRegister } from 'react-hook-form';
-import type { UnitOptions } from '../../features/calculators/units';
+import type { UnitOptions } from '../../features/calculators/utils/units';
 import './QuantityField.css';
 
 type QuantityFieldProps<T extends FieldValues> = {

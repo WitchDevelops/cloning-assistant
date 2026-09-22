@@ -1,6 +1,12 @@
 .quantity-field {
 	width: 100%;
 	display: flex;
+	flex-direction: column;
+}
+
+.quantity-field__wrapper {
+	width: 100%;
+	display: flex;
 }
 
 .quantity-field__input,
@@ -72,19 +78,13 @@
 	padding: var(--space-xs);
 }
 
-.quantity-field__hint {
-	flex-basis: 100%;
-	color: var(--color-text-muted);
-	font-size: 0.875rem;
-}
-
 .quantity-field__error {
 	min-height: 0;
 
 	&:not(:empty) {
 		flex-basis: 100%;
 		padding-block-start: var(--space-xs);
-		font-size: 0.875rem;
+		font-size: 0.8rem;
 		color: var(--color-danger);
 	}
 }

@@ -32,3 +32,6 @@ export const dilutionInputSchema = z
 			message: 'Final concentration must be lower than stock concentration.',
 		},
 	);
+
+export type DilutionInput = z.output<typeof dilutionInputSchema>;
+export type DilutionFormValues = z.input<typeof dilutionInputSchema>;

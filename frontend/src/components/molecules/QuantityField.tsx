@@ -1,58 +1,71 @@
+import type { FieldValues, Path, UseFormRegister } from 'react-hook-form';
 import type { UnitOptions } from '../../features/calculators/units';
 import './QuantityField.css';
 
-type QuantityFieldProps = {
-	name: string;
+type QuantityFieldProps<T extends FieldValues> = {
+	// Path<T> means a valid key of the form values, catches typos
+	valueField: Path<T>;
+	unitField: Path<T>;
 	unitOptions: UnitOptions;
-	error?: string;
-	invalid?: boolean;
+	register: UseFormRegister<T>;
+	valueError?: string;
+	unitError?: string;
 };
 
-export const QuantityField = ({
-	name,
+export const QuantityField = <T extends FieldValues>({
+	valueField,
+	unitField,
 	unitOptions,
-	error,
-	invalid,
-}: QuantityFieldProps) => {
-	const valueId = `${name}Value`;
-	const unitId = `${name}Unit`;
-	const errorId = `${valueId}-error`;
+	register,
+	valueError,
+	unitError,
+}: QuantityFieldProps<T>) => {
+	const errorId = `${valueField}-error`;
+	const error = valueError ?? unitError;
 
 	return (
 		<div className="quantity-field">
-			<label htmlFor={valueId} className="sr-only">
-				Value
-			</label>
-			<input
-				id={valueId}
-				name={valueId}
-				type="text"
-				inputMode="decimal"
-				className="quantity-field__input"
-				aria-describedby={errorId}
-				aria-invalid={invalid}
-			/>
+			<div className="quantity-field__wrapper">
+				<label htmlFor={valueField} className="sr-only">
+					Value
+				</label>
+				<input
+					id={valueField}
+					{...register(valueField)}
+					type="text"
+					inputMode="decimal"
+					className="quantity-field__input"
+					aria-describedby={errorId}
+					aria-invalid={valueError ? true : undefined}
+				/>
 
-			<label htmlFor={unitId} className="sr-only">
-				Unit
-			</label>
-			<select id={unitId} name={unitId} className="quantity-field__select">
-				{unitOptions.kind === 'grouped'
-					? unitOptions.groups.map(({ key, label, units }) => (
-							<optgroup key={key} label={label}>
-								{units.map((u) => (
-									<option key={u} value={u}>
-										{u}
-									</option>
-								))}
-							</optgroup>
-						))
-					: unitOptions.units.map((unit) => (
-							<option key={unit} value={unit}>
-								{unit}
-							</option>
-						))}
-			</select>
+				<label htmlFor={unitField} className="sr-only">
+					Unit
+				</label>
+				<select
+					id={unitField}
+					{...register(unitField)}
+					className="quantity-field__select"
+					aria-describedby={errorId}
+					aria-invalid={unitError ? true : undefined}
+				>
+					{unitOptions.kind === 'grouped'
+						? unitOptions.groups.map(({ key, label, units }) => (
+								<optgroup key={key} label={label}>
+									{units.map((u) => (
+										<option key={u} value={u}>
+											{u}
+										</option>
+									))}
+								</optgroup>
+							))
+						: unitOptions.units.map((unit) => (
+								<option key={unit} value={unit}>
+									{unit}
+								</option>
+							))}
+				</select>
+			</div>
 			<p id={errorId} aria-live="polite" className="quantity-field__error">
 				{error}
 			</p>

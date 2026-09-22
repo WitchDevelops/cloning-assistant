@@ -22,8 +22,8 @@ export const QuantityField = <T extends FieldValues>({
 	valueError,
 	unitError,
 }: QuantityFieldProps<T>) => {
-	const errorId = `${valueField}-error`;
-	const error = valueError ?? unitError;
+	const valueErrorId = `${valueField}-error`;
+	const unitErrorId = `${unitField}-error`;
 
 	return (
 		<div className="quantity-field">
@@ -37,7 +37,7 @@ export const QuantityField = <T extends FieldValues>({
 					type="text"
 					inputMode="decimal"
 					className="quantity-field__input"
-					aria-describedby={errorId}
+					aria-describedby={valueErrorId}
 					aria-invalid={valueError ? true : undefined}
 				/>
 
@@ -48,7 +48,7 @@ export const QuantityField = <T extends FieldValues>({
 					id={unitField}
 					{...register(unitField)}
 					className="quantity-field__select"
-					aria-describedby={errorId}
+					aria-describedby={unitErrorId}
 					aria-invalid={unitError ? true : undefined}
 				>
 					{unitOptions.kind === 'grouped'
@@ -68,8 +68,11 @@ export const QuantityField = <T extends FieldValues>({
 							))}
 				</select>
 			</div>
-			<p id={errorId} aria-live="polite" className="quantity-field__error">
-				{error}
+			<p id={valueErrorId} aria-live="polite" className="quantity-field__error">
+				{valueError}
+			</p>
+			<p id={unitErrorId} aria-live="polite" className="quantity-field__error">
+				{unitError}
 			</p>
 		</div>
 	);

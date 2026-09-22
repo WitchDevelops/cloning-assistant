@@ -79,6 +79,7 @@ export const DilutionForm = () => {
 							register={register}
 							valueError={errors.stockConcValue?.message}
 							unitError={errors.stockConcUnit?.message}
+							placeholder="e.g. 100"
 						/>
 					</Fieldset>
 					<Fieldset legend="Working concentration">
@@ -90,6 +91,7 @@ export const DilutionForm = () => {
 							register={register}
 							valueError={errors.finalConcValue?.message}
 							unitError={errors.finalConcUnit?.message}
+							placeholder="e.g. 50"
 						/>
 					</Fieldset>
 					<Fieldset legend="Final volume">
@@ -101,6 +103,7 @@ export const DilutionForm = () => {
 							register={register}
 							valueError={errors.finalVolumeValue?.message}
 							unitError={errors.finalVolumeUnit?.message}
+							placeholder="e.g. 100"
 						/>
 					</Fieldset>
 				</div>

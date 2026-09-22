@@ -11,6 +11,7 @@ type QuantityFieldProps<T extends FieldValues> = {
 	register: UseFormRegister<T>;
 	valueError?: string;
 	unitError?: string;
+	placeholder?: string;
 };
 
 export const QuantityField = <T extends FieldValues>({
@@ -21,6 +22,7 @@ export const QuantityField = <T extends FieldValues>({
 	register,
 	valueError,
 	unitError,
+	placeholder,
 }: QuantityFieldProps<T>) => {
 	const valueErrorId = `${valueField}-error`;
 	const unitErrorId = `${unitField}-error`;
@@ -37,6 +39,7 @@ export const QuantityField = <T extends FieldValues>({
 					type="text"
 					inputMode="decimal"
 					className="quantity-field__input"
+					placeholder={placeholder}
 					aria-describedby={valueErrorId}
 					aria-invalid={valueError ? true : undefined}
 				/>

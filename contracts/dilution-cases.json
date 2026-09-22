@@ -1,0 +1,110 @@
+[
+	{
+		"description": "valid input",
+		"input": {
+			"stockConcValue": 100,
+			"stockConcUnit": "mM",
+			"finalConcValue": 10,
+			"finalConcUnit": "mM",
+			"finalVolumeValue": 500,
+			"finalVolumeUnit": "µL"
+		},
+		"valid": true
+	},
+	{
+		"description": "valid: final concentration in a different unit of the same family",
+		"input": {
+			"stockConcValue": 100,
+			"stockConcUnit": "mM",
+			"finalConcValue": 10,
+			"finalConcUnit": "µM",
+			"finalVolumeValue": 500,
+			"finalVolumeUnit": "µL"
+		},
+		"valid": true
+	},
+	{
+		"description": "rejects a non-positive concentration value",
+		"input": {
+			"stockConcValue": -1,
+			"stockConcUnit": "mM",
+			"finalConcValue": 10,
+			"finalConcUnit": "mM",
+			"finalVolumeValue": 500,
+			"finalVolumeUnit": "µL"
+		},
+		"valid": false
+	},
+	{
+		"description": "rejects a final concentration at or above the stock concentration",
+		"input": {
+			"stockConcValue": 100,
+			"stockConcUnit": "mM",
+			"finalConcValue": 200,
+			"finalConcUnit": "mM",
+			"finalVolumeValue": 500,
+			"finalVolumeUnit": "µL"
+		},
+		"valid": false
+	},
+	{
+		"description": "rejects a final concentration above stock once converted to the same unit",
+		"input": {
+			"stockConcValue": 100,
+			"stockConcUnit": "nM",
+			"finalConcValue": 10,
+			"finalConcUnit": "µM",
+			"finalVolumeValue": 500,
+			"finalVolumeUnit": "µL"
+		},
+		"valid": false
+	},
+	{
+		"description": "rejects mismatched unit families",
+		"input": {
+			"stockConcValue": 100,
+			"stockConcUnit": "mg/mL",
+			"finalConcValue": 10,
+			"finalConcUnit": "mM",
+			"finalVolumeValue": 500,
+			"finalVolumeUnit": "µL"
+		},
+		"valid": false
+	},
+	{
+		"description": "rejects a volume unit in a concentration field",
+		"input": {
+			"stockConcValue": 100,
+			"stockConcUnit": "µL",
+			"finalConcValue": 10,
+			"finalConcUnit": "mM",
+			"finalVolumeValue": 500,
+			"finalVolumeUnit": "µL"
+		},
+		"valid": false
+	},
+	{
+		"description": "rejects a concentration unit in the volume field",
+		"input": {
+			"stockConcValue": 100,
+			"stockConcUnit": "mM",
+			"finalConcValue": 10,
+			"finalConcUnit": "mM",
+			"finalVolumeValue": 500,
+			"finalVolumeUnit": "mM"
+		},
+		"valid": false
+	},
+	{
+		"description": "rejects a unit outside the known set",
+		"input": {
+			"stockConcValue": 100,
+			"stockConcUnit": "pM",
+			"finalConcValue": 10,
+			"finalConcUnit": "mM",
+			"finalVolumeValue": 500,
+			"finalVolumeUnit": "µL"
+		},
+		"valid": false
+	}
+]

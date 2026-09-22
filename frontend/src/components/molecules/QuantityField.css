@@ -34,7 +34,7 @@
 	optgroup {
 		min-width: max-content;
 		font-weight: 600;
-		color: var(--color-text-accent);
+		color: var(--color-primary);
 		background-color: var(--color-surface);
 		font-size: 0.7rem;
 		text-transform: uppercase;

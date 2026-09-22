@@ -4,7 +4,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from backend.calculations import dilution
-from backend.schemas import DilutionRequest, DilutionResponse
+from backend.schemas import DilutionRequest, DilutionResponse, StockResponse
+from backend.stocks import STANDARD_STOCKS
 
 app = FastAPI(
     title="Cloning screening assistant",
@@ -36,6 +37,13 @@ def calculate_dilution(payload: DilutionRequest) -> DilutionResponse:
         payload.stock_conc.to_base(), payload.final_conc.to_base(), payload.final_volume.to_base()
     )
     return DilutionResponse(stock=result.stock, diluent=result.diluent)
+
+
+@app.get("/api/stocks")
+def get_standard_stocks() -> StockResponse:
+    """Return a list of predefined stocks."""
+
+    return StockResponse(stocks=STANDARD_STOCKS)
 
 
 def dev() -> None:

@@ -1,32 +1,19 @@
 import { z } from 'zod';
 import {
-	isConcentration,
-	isVolume,
+	CONCENTRATION_UNIT_VALUES,
 	toBase,
-	UNIT_VALUES,
 	UNITS,
+	VOLUME_UNIT_VALUES,
 } from '../units';
 
 export const dilutionInputSchema = z
 	.object({
 		stockConcValue: z.coerce.number().positive(),
-		stockConcUnit: z.enum(UNIT_VALUES),
+		stockConcUnit: z.enum(CONCENTRATION_UNIT_VALUES),
 		finalConcValue: z.coerce.number().positive(),
-		finalConcUnit: z.enum(UNIT_VALUES),
+		finalConcUnit: z.enum(CONCENTRATION_UNIT_VALUES),
 		finalVolumeValue: z.coerce.number().positive(),
-		finalVolumeUnit: z.enum(UNIT_VALUES),
-	})
-	.refine((data) => isConcentration(data.stockConcUnit), {
-		path: ['stockConcUnit'],
-		message: 'Stock concentration must be expressed in concentration units.',
-	})
-	.refine((data) => isConcentration(data.finalConcUnit), {
-		path: ['finalConcUnit'],
-		message: 'Final concentration must be expressed in concentration units.',
-	})
-	.refine((data) => isVolume(data.finalVolumeUnit), {
-		path: ['finalVolumeUnit'],
-		message: 'Final volume must be expressed in volume units.',
+		finalVolumeUnit: z.enum(VOLUME_UNIT_VALUES),
 	})
 	.refine(
 		(data) =>

@@ -1,61 +1,49 @@
-import { z } from 'zod';
-import type { Unit } from '../features/calculators/units';
+import type { z } from 'zod';
 
 const BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:8000';
-
-const dilutionResponseSchema = z.object({
-	stock: z.number().positive(),
-	diluent: z.number().positive(),
-});
-
-export type DilutionResponse = z.infer<typeof dilutionResponseSchema>;
 
 export type ApiResult<T> =
 	| { ok: true; data: T }
 	| { ok: false; kind: 'validation' | 'network'; message: string };
 
-type Quantity = { value: number; unit: Unit };
+export const api = {
+	post: async <T>(
+		path: string,
+		body: unknown,
+		schema: z.ZodType<T>,
+	): Promise<ApiResult<T>> => {
+		try {
+			const res = await fetch(`${BASE}${path}`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(body),
+			});
+			if (!res.ok) {
+				return {
+					ok: false,
+					kind: 'validation',
+					message: `Server rejected the request (${res.status}).`,
+				};
+			}
 
-export type DilutionRequest = {
-	stockConc: Quantity;
-	finalConc: Quantity;
-	finalVolume: Quantity;
-};
+			const json = await res.json();
+			const parsed = schema.safeParse(json);
 
-export const postDilution = async (
-	body: DilutionRequest,
-): Promise<ApiResult<DilutionResponse>> => {
-	try {
-		const res = await fetch(`${BASE}/api/dilution`, {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(body),
-		});
-		if (!res.ok) {
+			if (!parsed.success) {
+				return {
+					ok: false,
+					kind: 'validation',
+					message: 'The server sent a response in an unexpected shape.',
+				};
+			}
+
+			return { ok: true, data: parsed.data };
+		} catch {
 			return {
 				ok: false,
-				kind: 'validation',
-				message: `Server rejected the request (${res.status}).`,
+				kind: 'network',
+				message: 'Could not reach the server. Is it running?',
 			};
 		}
-
-		const json = await res.json();
-		const parsed = dilutionResponseSchema.safeParse(json);
-
-		if (!parsed.success) {
-			return {
-				ok: false,
-				kind: 'validation',
-				message: 'The server sent a response in an unexpected shape.',
-			};
-		}
-
-		return { ok: true, data: parsed.data };
-	} catch {
-		return {
-			ok: false,
-			kind: 'network',
-			message: 'Could not reach the server. Is it running?',
-		};
-	}
+	},
 };

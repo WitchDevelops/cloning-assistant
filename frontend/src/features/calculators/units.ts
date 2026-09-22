@@ -70,3 +70,16 @@ export const VOLUME_UNITS: UnitOptions = {
 	kind: 'flat',
 	units: unitsOf('volume'),
 };
+
+type UnitOf<F extends UnitFamily> = {
+	[K in Unit]: (typeof UNITS)[K]['family'] extends F ? K : never;
+}[Unit];
+
+export type ConcentrationUnit = UnitOf<'massPerVolume' | 'molPerVolume'>;
+export type VolumeUnit = UnitOf<'volume'>;
+
+// Generic with a default so that narrowing to Quantity<VolumeUnit> works
+export type Quantity<U extends Unit = Unit> = {
+	value: number;
+	unit: U;
+};

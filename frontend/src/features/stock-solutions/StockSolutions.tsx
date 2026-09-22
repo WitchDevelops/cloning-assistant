@@ -6,22 +6,75 @@ import {
 import { Card } from '../../components/molecules/Card';
 import './StockSolutions.css';
 
+const SKELETON_IDS = ['skeleton-1', 'skeleton-2', 'skeleton-3'];
+
+type Status =
+	| { kind: 'loading' }
+	| { kind: 'error'; message: string }
+	| { kind: 'success'; stocks: StockSolution[] };
+
+const StockSkeleton = () => (
+	<div className="card" aria-hidden="true">
+		<div className="skeleton__bar skeleton__bar--title" />
+		<div className="stock__row">
+			<div className="stock__section stock__box">
+				<div className="skeleton__bar skeleton__bar--label" />
+				<div className="skeleton__bar" />
+				<div className="skeleton__bar" />
+			</div>
+			<div className="stock__section stock__box">
+				<div className="skeleton__bar skeleton__bar--label" />
+				<div className="skeleton__bar" />
+			</div>
+		</div>
+		<div className="stock__section">
+			<div className="skeleton__bar skeleton__bar--label" />
+			<div className="skeleton__bar" />
+		</div>
+		<div className="stock__section">
+			<div className="skeleton__bar skeleton__bar--label" />
+			<div className="skeleton__bar" />
+		</div>
+	</div>
+);
+
 export const StockSolutions = () => {
-	const [stocks, setStocks] = useState<StockSolution[]>([]);
+	const [status, setStatus] = useState<Status>({ kind: 'loading' });
 
 	useEffect(() => {
 		getStockSolutions().then((result) => {
 			if (result.ok) {
-				setStocks(result.data.stocks);
+				setStatus({ kind: 'success', stocks: result.data.stocks });
 			} else {
-				console.log(result.message);
+				setStatus({ kind: 'error', message: result.message });
 			}
 		});
 	}, []);
 
+	if (status.kind === 'loading') {
+		return (
+			<div className="stocks__container" aria-busy="true">
+				<span className="sr-only" role="status">
+					Loading stock solutions…
+				</span>
+				{SKELETON_IDS.map((id) => (
+					<StockSkeleton key={id} />
+				))}
+			</div>
+		);
+	}
+
+	if (status.kind === 'error') {
+		return (
+			<p className="stocks__error" role="alert">
+				{status.message}
+			</p>
+		);
+	}
+
 	return (
 		<div className="stocks__container">
-			{stocks.map((stock) => (
+			{status.stocks.map((stock) => (
 				<Card key={stock.name} title={stock.name}>
 					<div className="stock__row">
 						<div className="stock__section stock__box">

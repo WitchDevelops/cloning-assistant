@@ -45,3 +45,37 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
+
+.stocks__error {
+	padding: var(--space-md);
+	border-radius: var(--radius-md);
+	background-color: var(--color-danger);
+	color: var(--color-on-danger);
+}
+
+.skeleton__bar {
+	height: 0.9rem;
+	border-radius: var(--radius-sm);
+	background-color: var(--color-disabled-surface);
+	animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+.skeleton__bar--title {
+	width: 50%;
+	height: 1.3rem;
+}
+
+.skeleton__bar--label {
+	width: 40%;
+	height: 0.6rem;
+}
+
+@keyframes skeleton-pulse {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.4;
+	}
+}

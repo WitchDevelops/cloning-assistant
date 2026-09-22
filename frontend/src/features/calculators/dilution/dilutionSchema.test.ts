@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import cases from '../../../../../contracts/dilution-cases.json';
 import { dilutionInputSchema } from './dilutionSchema';
 
 const valid = {
@@ -66,5 +67,11 @@ describe('dilutionInputSchema', () => {
 		expect(
 			rejectionPaths({ ...valid, stockConcUnit: 'nM', finalConcUnit: 'µM' }),
 		).toContain('finalConcValue');
+	});
+});
+
+describe('dilutionInputSchema matches the shared contract', () => {
+	it.each(cases)(`$description`, ({ input, valid }) => {
+		expect(dilutionInputSchema.safeParse(input).success).toBe(valid);
 	});
 });

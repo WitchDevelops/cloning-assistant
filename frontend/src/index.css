@@ -12,6 +12,7 @@
 	--violet-900: #4c1d95;
 	--orange-500: #f97316;
 	--amber-500: #f59e0b;
+	--red-400: #f87171;
 	--red-600: #dc2626;
 	--slate-50: #f8fafc;
 	--slate-200: #e2e8f0;
@@ -95,6 +96,7 @@
 		--color-text: var(--slate-50);
 		--color-primary: var(--teal-600);
 		--color-secondary: var(--violet-600);
+		--color-danger: var(--red-400);
 		--color-disabled-surface: var(--slate-800);
 		--color-on-disabled: var(--slate-400);
 	}

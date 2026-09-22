@@ -21,6 +21,13 @@ repos:
 
   - repo: local
     hooks:
+      - id: biome
+        name: biome
+        entry: npm --prefix frontend run format
+        language: system
+        files: ^frontend/.*\.(ts|tsx|json|css)$
+        pass_filenames: false
+
       - id: eslint
         name: eslint
         entry: npm --prefix frontend run lint

@@ -40,11 +40,14 @@ export const UNIT_VALUES = Object.keys(UNITS) as Unit[];
 export const toBase = (value: number, unit: Unit): number =>
 	value * UNITS[unit].factor;
 
-export const isConcentration = (unit: Unit): boolean =>
+export const isConcentration = (unit: Unit): unit is ConcentrationUnit =>
 	CONCENTRATION_FAMILIES.includes(UNITS[unit].family);
 
-export const isVolume = (unit: Unit): boolean =>
+export const isVolume = (unit: Unit): unit is VolumeUnit =>
 	UNITS[unit].family === 'volume';
+
+export const CONCENTRATION_UNIT_VALUES = UNIT_VALUES.filter(isConcentration);
+export const VOLUME_UNIT_VALUES = UNIT_VALUES.filter(isVolume);
 
 const unitsOf = (family: UnitFamily): Unit[] =>
 	(Object.keys(UNITS) as Unit[]).filter(
@@ -69,4 +72,17 @@ export const CONCENTRATION_UNITS: UnitOptions = {
 export const VOLUME_UNITS: UnitOptions = {
 	kind: 'flat',
 	units: unitsOf('volume'),
+};
+
+type UnitOf<F extends UnitFamily> = {
+	[K in Unit]: (typeof UNITS)[K]['family'] extends F ? K : never;
+}[Unit];
+
+export type ConcentrationUnit = UnitOf<'massPerVolume' | 'molPerVolume'>;
+export type VolumeUnit = UnitOf<'volume'>;
+
+// Generic with a default so that narrowing to Quantity<VolumeUnit> works
+export type Quantity<U extends Unit = Unit> = {
+	value: number;
+	unit: U;
 };

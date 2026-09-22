@@ -4,7 +4,8 @@
 	min-width: 16ch;
 	background: var(--button-bg);
 	color: var(--button-fg);
-	border: var(--control-border-width) solid var(--button-border, var(--button-bg));
+	border: var(--control-border-width) solid
+		var(--button-border, var(--button-bg));
 	transition:
 		background-color 120ms ease,
 		border-color 120ms ease;

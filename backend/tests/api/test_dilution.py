@@ -1,9 +1,14 @@
+import json
+from pathlib import Path
+
 import pytest
 from fastapi.testclient import TestClient
 
 from backend.api import app
 
 client = TestClient(app)
+
+CASES = json.loads((Path(__file__).parents[3] / "contracts" / "dilution-cases.json").read_text())
 
 
 def quantity(value: float, unit: str) -> dict:
@@ -140,3 +145,17 @@ def test_dilution_rejects_units_from_the_wrong_dimension(field, wrong_unit):
     assert response.status_code == 422
     locs = [error["loc"] for error in response.json()["detail"]]
     assert ["body", field, "unit"] in locs
+
+
+def to_nested(flat: dict) -> dict:
+    return {
+        "stockConc": {"value": flat["stockConcValue"], "unit": flat["stockConcUnit"]},
+        "finalConc": {"value": flat["finalConcValue"], "unit": flat["finalConcUnit"]},
+        "finalVolume": {"value": flat["finalVolumeValue"], "unit": flat["finalVolumeUnit"]},
+    }
+
+
+@pytest.mark.parametrize("case", CASES, ids=lambda c: c["description"])
+def test_matches_shared_contract(case):
+    response = client.post("/api/dilution", json=to_nested(case["input"]))
+    assert (response.status_code == 200) == case["valid"]

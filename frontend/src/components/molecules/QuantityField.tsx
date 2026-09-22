@@ -1,6 +1,18 @@
+import type { ChangeEvent } from 'react';
 import type { FieldValues, Path, UseFormRegister } from 'react-hook-form';
-import type { UnitOptions } from '../../features/calculators/units';
+import type { UnitOptions } from '../../features/calculators/utils/units';
 import './QuantityField.css';
+
+// Strips anything but digits and a single decimal point, keeping only the first "."
+const sanitizeDecimal = (value: string): string => {
+	const cleaned = value.replace(/[^\d.]/g, '');
+	const firstDot = cleaned.indexOf('.');
+	if (firstDot === -1) return cleaned;
+	return (
+		cleaned.slice(0, firstDot + 1) +
+		cleaned.slice(firstDot + 1).replace(/\./g, '')
+	);
+};
 
 type QuantityFieldProps<T extends FieldValues> = {
 	// Path<T> means a valid key of the form values, catches typos
@@ -11,6 +23,7 @@ type QuantityFieldProps<T extends FieldValues> = {
 	register: UseFormRegister<T>;
 	valueError?: string;
 	unitError?: string;
+	placeholder?: string;
 };
 
 export const QuantityField = <T extends FieldValues>({
@@ -21,9 +34,17 @@ export const QuantityField = <T extends FieldValues>({
 	register,
 	valueError,
 	unitError,
+	placeholder,
 }: QuantityFieldProps<T>) => {
 	const valueErrorId = `${valueField}-error`;
 	const unitErrorId = `${unitField}-error`;
+
+	const { onChange: onValueChange, ...valueRegister } = register(valueField);
+
+	const handleValueChange = (event: ChangeEvent<HTMLInputElement>) => {
+		event.target.value = sanitizeDecimal(event.target.value);
+		onValueChange(event);
+	};
 
 	return (
 		<div className="quantity-field">
@@ -33,10 +54,12 @@ export const QuantityField = <T extends FieldValues>({
 				</label>
 				<input
 					id={valueField}
-					{...register(valueField)}
+					{...valueRegister}
+					onChange={handleValueChange}
 					type="text"
 					inputMode="decimal"
 					className="quantity-field__input"
+					placeholder={placeholder}
 					aria-describedby={valueErrorId}
 					aria-invalid={valueError ? true : undefined}
 				/>

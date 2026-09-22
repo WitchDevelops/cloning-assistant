@@ -21,8 +21,49 @@
 	gap: 1rem;
 }
 
-.submit__button {
+.form__submit {
+	display: flex;
+	/* flex-wrap: wrap; */
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.75rem;
 	width: 100%;
+}
+
+.submit__button,
+.reset__button {
+	width: 100%;
+	min-width: unset;
+}
+
+.result__header {
+	margin-bottom: var(--space-md);
+}
+
+.result__wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+}
+
+.result__label {
+	font-size: 0.7rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	color: var(--color-text-secondary);
+	margin-bottom: var(--space-xs);
+}
+
+.result__warning {
+	display: inline-block;
+	margin-block: var(--space-sm);
+	padding: 2px 8px;
+	border-radius: var(--radius-sm);
+	background-color: var(--color-warning);
+	color: var(--color-on-warning);
+	font-size: 0.75rem;
+	font-weight: 600;
 }
 
 .calculators__container {

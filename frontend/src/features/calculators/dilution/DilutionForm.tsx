@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { postDilution } from '../../../api/dilution';
 import { Button } from '../../../components/atoms/Button';
 import { Fieldset } from '../../../components/molecules/Fieldset';
 import { QuantityField } from '../../../components/molecules/QuantityField';
@@ -9,6 +10,7 @@ import {
 	type DilutionInput,
 	dilutionInputSchema,
 } from './dilutionSchema';
+import { toDilutionRequest } from './toDilutionRequest';
 
 export const DilutionForm = () => {
 	const {
@@ -26,9 +28,15 @@ export const DilutionForm = () => {
 		},
 	});
 
-	const onSubmit = (data: DilutionInput) => {
-		// TODO: wire it in #16
-		console.log(data);
+	const onSubmit = async (data: DilutionInput) => {
+		const request = toDilutionRequest(data);
+		const result = await postDilution(request);
+		// TODO: display the received data #16
+		if (result.ok) {
+			console.log(result.data);
+		} else {
+			console.log(result.message);
+		}
 	};
 
 	return (

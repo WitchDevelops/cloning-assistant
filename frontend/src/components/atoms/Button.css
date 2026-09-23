@@ -34,6 +34,20 @@
 		--button-fg: var(--color-primary);
 		--button-border: var(--color-primary);
 	}
+	&[data-variant="menu"] {
+		--button-bg: transparent;
+		--button-fg: var(--color-primary);
+		--button-border: var(--color-primary-muted);
+		min-width: unset;
+	}
+	&[data-variant="menu"]:not(:disabled):hover {
+		background: color-mix(in srgb, var(--button-bg) 92%, var(--color-text));
+		border-color: color-mix(
+			in srgb,
+			var(--button-border, var(--button-bg)) 94%,
+			var(--color-text)
+		);
+	}
 	&:disabled {
 		--button-bg: var(--color-disabled-surface);
 		--button-fg: var(--color-on-disabled);

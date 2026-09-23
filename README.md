@@ -1,11 +1,24 @@
 # Cloning Screening Assistant
 
-[![CI](https://github.com/WitchDevelops/cloning-assistant/actions/workflows/ci.yml/badge.svg)](https://github.com/WitchDevelops/cloning-assistant/actions/workflows/ci.yml)
+[![CI](https://github.com/WitchDevelops/cloning-assistant/actions/workflows/ci.yml/badge.svg)](https://github.com/WitchDevelops/cloning-assistant/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/github/license/WitchDevelops/cloning-assistant)](LICENSE) [![FAIR checklist badge](https://fairsoftwarechecklist.net/badge.svg)](https://fairsoftwarechecklist.net/v0.2?f=21&a=30112&i=20300&r=123)
+
 
 Calculators and a 96-well plate map for screening colonies after a ligation and transformation.
 
 ## Stack
-Python/FastAPI backend, React/TypeScript frontend.
+
+Python/FastAPI backend, React/TypeScript frontend
+
+## What works today
+
+- Dilution calculator
+- Endpoint returning standard buffers (predefined set)
+
+## Planned work
+
+- The calculators: ligation, restriction digest, gel loading dye, colony PCR master mix, ~~dilution~~
+- The 96-well plate map: configurable start well, well states, multi-plate overflow, print and JSON export
+- Docker image and a deployed instance
 
 ## How to run it locally
 
@@ -78,7 +91,7 @@ Serves on <http://localhost:5173>.
 
 ## Contributing
 
-(for now contributions are closed, I'm still setting it up and working on an MVP)
+Not accepting contributions yet; issues and feedback welcome
 
 ### Pre-commit hooks
 
@@ -135,8 +148,4 @@ uv run python scripts/export_units.py
 
 to write a JSON file to `contracts/units.json`, then from `frontend/` `npm run test`.
 
-## Planned work
 
-- The calculators: ligation, restriction digest, gel loading dye, colony PCR master mix, dilution
-- The 96-well plate map: configurable start well, well states, multi-plate overflow, print and JSON export
-- Docker image and a deployed instance

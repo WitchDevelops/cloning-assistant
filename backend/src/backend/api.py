@@ -8,7 +8,7 @@ from backend.schemas import DilutionRequest, DilutionResponse, StockResponse
 from backend.stocks import STANDARD_STOCKS
 
 app = FastAPI(
-    title="Cloning screening assistant",
+    title="Molecular biology assistant",
     description="Calculators for molecular cloning workflows.",
     version=version("backend"),
 )

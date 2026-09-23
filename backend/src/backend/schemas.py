@@ -126,6 +126,7 @@ class Stock(ApiModel):
 
     name: str
     composition: dict[str, Concentration]
+    concentration_factor: int | None = None
     ph: float | None = None
     note: str | None = None
     citation: str | None = None

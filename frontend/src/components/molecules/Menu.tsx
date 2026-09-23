@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useId, useRef, useState } from 'react';
 import { Button } from '../atoms/Button';
 import './Menu.css';
 
@@ -15,12 +15,22 @@ type MenuProps = {
 const testItems = [
 	{ label: 'item 1', onSelect: () => console.log(`helo`) },
 	{ label: 'item 2', onSelect: () => console.log(`helo`) },
+	{ label: 'item 3', onSelect: () => console.log(`helo`) },
 ];
 
 export const Menu = ({ label, items = testItems }: MenuProps) => {
 	const [isOpen, setIsOpen] = useState(false);
+	const [activeIndex, setActiveIndex] = useState(0);
 	const containerRef = useRef<HTMLDivElement>(null);
 	const triggerRef = useRef<HTMLButtonElement>(null);
+	const itemRefs = useRef<(HTMLButtonElement | null)[]>([]);
+	const menuId = useId();
+
+	useEffect(() => {
+		if (isOpen) {
+			itemRefs.current[activeIndex]?.focus();
+		}
+	}, [isOpen, activeIndex]);
 
 	// close on clicking outside needs binding an event, same is true for closing with Esc
 	useEffect(() => {
@@ -48,6 +58,68 @@ export const Menu = ({ label, items = testItems }: MenuProps) => {
 		};
 	}, [isOpen]);
 
+	const openMenu = (index: number) => {
+		setActiveIndex(index);
+		setIsOpen(true);
+	};
+
+	// focus the first item when opened - WAI/ARIA Menu button pattern
+	// https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/
+
+	const focusItem = (index: number) => {
+		const wrapped = (index + items.length) % items.length;
+		setActiveIndex(wrapped);
+		itemRefs.current[wrapped]?.focus();
+	};
+
+	const handleTriggerClick = () => {
+		if (isOpen) {
+			setIsOpen(false);
+		} else {
+			openMenu(0);
+		}
+	};
+
+	// keyboard accessibility - WAI/ARIA Menu button pattern
+	// https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/
+
+	const handleTriggerKeyDown = (event: React.KeyboardEvent) => {
+		if (event.key === 'ArrowDown') {
+			event.preventDefault();
+			openMenu(0);
+		} else if (event.key === 'ArrowUp') {
+			event.preventDefault();
+			openMenu(items.length - 1);
+		}
+	};
+
+	const handlePanelKeyDown = (event: React.KeyboardEvent) => {
+		switch (event.key) {
+			case 'ArrowDown':
+				event.preventDefault();
+				focusItem(activeIndex + 1);
+				break;
+			case 'ArrowUp':
+				event.preventDefault();
+				focusItem(activeIndex - 1);
+				break;
+			case 'Home':
+				event.preventDefault();
+				focusItem(0);
+				break;
+			case 'End':
+				event.preventDefault();
+				focusItem(items.length - 1);
+				break;
+		}
+	};
+
+	const handlePanelBlur = (event: React.FocusEvent) => {
+		if (!containerRef.current?.contains(event.relatedTarget as Node)) {
+			setIsOpen(false);
+		}
+	};
+
 	return (
 		<div className="menu" ref={containerRef}>
 			<Button
@@ -57,14 +129,22 @@ export const Menu = ({ label, items = testItems }: MenuProps) => {
 				className="menu__trigger"
 				aria-haspopup="menu"
 				aria-expanded={isOpen}
+				aria-controls={menuId}
 				aria-label={label}
-				onClick={() => setIsOpen((open) => !open)}
+				onClick={handleTriggerClick}
+				onKeyDown={handleTriggerKeyDown}
 			>
 				⋮
 			</Button>
 			{isOpen && items && (
-				<div className="menu__panel" role="menu">
-					{items.map((item) => (
+				<div
+					className="menu__panel"
+					role="menu"
+					id={menuId}
+					onKeyDown={handlePanelKeyDown}
+					onBlur={handlePanelBlur}
+				>
+					{items.map((item, index) => (
 						<Button
 							type="button"
 							variant="ghost"
@@ -75,6 +155,10 @@ export const Menu = ({ label, items = testItems }: MenuProps) => {
 								item.onSelect();
 								setIsOpen(false);
 							}}
+							ref={(el) => {
+								itemRefs.current[index] = el;
+							}}
+							tabIndex={index === activeIndex ? 0 : -1}
 						>
 							{item.label}
 						</Button>

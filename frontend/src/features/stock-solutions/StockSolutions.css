@@ -21,13 +21,18 @@
 	}
 }
 
+.stock__section {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-xs);
+}
+
 .stock__label {
 	font-size: 0.7rem;
 	font-weight: 600;
 	text-transform: uppercase;
 	letter-spacing: 1px;
 	color: var(--color-primary);
-	margin-bottom: var(--space-xs);
 }
 
 .stock__composition {

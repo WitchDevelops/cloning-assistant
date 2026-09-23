@@ -8,6 +8,7 @@
   },
   "biome.configurationPath": "frontend/biome.json",
   "editor.formatOnSave": true,
+  "files.insertFinalNewline": true,
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.codeActionsOnSave": {

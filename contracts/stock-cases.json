@@ -1,0 +1,71 @@
+[
+	{
+		"description": "valid: concentrationFactor omitted",
+		"input": {
+			"name": "TE Buffer",
+			"composition": {
+				"tris": { "value": 10, "unit": "mM" }
+			},
+			"ph": null,
+			"note": null,
+			"citation": null
+		},
+		"valid": true
+	},
+	{
+		"description": "valid: concentrationFactor null",
+		"input": {
+			"name": "TE Buffer",
+			"composition": {
+				"tris": { "value": 10, "unit": "mM" }
+			},
+			"concentrationFactor": null,
+			"ph": null,
+			"note": null,
+			"citation": null
+		},
+		"valid": true
+	},
+	{
+		"description": "valid: concentrationFactor is a positive number",
+		"input": {
+			"name": "TE Buffer",
+			"composition": {
+				"tris": { "value": 10, "unit": "mM" }
+			},
+			"concentrationFactor": 5,
+			"ph": null,
+			"note": null,
+			"citation": null
+		},
+		"valid": true
+	},
+	{
+		"description": "rejects a negative concentrationFactor",
+		"input": {
+			"name": "TE Buffer",
+			"composition": {
+				"tris": { "value": 10, "unit": "mM" }
+			},
+			"concentrationFactor": -5,
+			"ph": null,
+			"note": null,
+			"citation": null
+		},
+		"valid": false
+	},
+	{
+		"description": "rejects a zero concentrationFactor",
+		"input": {
+			"name": "TE Buffer",
+			"composition": {
+				"tris": { "value": 10, "unit": "mM" }
+			},
+			"concentrationFactor": 0,
+			"ph": null,
+			"note": null,
+			"citation": null
+		},
+		"valid": false
+	}
+]

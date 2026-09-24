@@ -89,11 +89,17 @@ export const StockSolutions = () => {
 								{
 									label: 'Dilute',
 									onSelect: () => {
+										const [firstConcentration] = Object.values(
+											stock.composition,
+										);
+
 										navigate('/', {
 											state: {
 												dilutionPrefill: toDilutionPrefill(stock),
 												stockName: stock.name,
-												stockConcentration: `${Object.values(stock.composition)[0]?.value}${Object.values(stock.composition)[0]?.unit}`,
+												stockConcentration: firstConcentration
+													? `${firstConcentration.value}${firstConcentration.unit}`
+													: undefined,
 												stockConcentrationFactor: stock.concentrationFactor,
 												stockPh: stock.ph,
 											},

@@ -125,7 +125,7 @@ class Stock(ApiModel):
     """Defines a stock solution (Cold Spring Harbor standards)."""
 
     name: str
-    composition: dict[str, Concentration]
+    composition: dict[str, Concentration] = Field(min_length=1)
     concentration_factor: int | None = Field(default=None, gt=0)
     ph: float | None = None
     note: str | None = None

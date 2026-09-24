@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import {
 	getStockSolutions,
 	type StockSolution,
@@ -6,7 +7,7 @@ import {
 import { Card } from '../../components/molecules/Card';
 import { Menu } from '../../components/molecules/Menu';
 import './StockSolutions.css';
-import { useNavigate } from 'react-router';
+import { toDilutionPrefill } from './toDilutionPrefill';
 
 const SKELETON_IDS = ['skeleton-1', 'skeleton-2', 'skeleton-3'];
 
@@ -88,8 +89,21 @@ export const StockSolutions = () => {
 								{
 									label: 'Dilute',
 									onSelect: () => {
-										navigate('/');
-										console.log('clicked');
+										const [firstConcentration] = Object.values(
+											stock.composition,
+										);
+
+										navigate('/', {
+											state: {
+												dilutionPrefill: toDilutionPrefill(stock),
+												stockName: stock.name,
+												stockConcentration: firstConcentration
+													? `${firstConcentration.value}${firstConcentration.unit}`
+													: undefined,
+												stockConcentrationFactor: stock.concentrationFactor,
+												stockPh: stock.ph,
+											},
+										});
 									},
 								},
 							]}

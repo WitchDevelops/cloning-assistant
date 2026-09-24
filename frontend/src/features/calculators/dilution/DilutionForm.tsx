@@ -15,7 +15,11 @@ import {
 } from './dilutionSchema';
 import { toDilutionRequest } from './toDilutionRequest';
 
-export const DilutionForm = () => {
+type DilutionFormProps = {
+	prefill?: Partial<DilutionFormValues>;
+};
+
+export const DilutionForm = ({ prefill }: DilutionFormProps) => {
 	const {
 		register,
 		handleSubmit,
@@ -29,6 +33,7 @@ export const DilutionForm = () => {
 			stockConcUnit: 'mM',
 			finalConcUnit: 'mM',
 			finalVolumeUnit: 'µL',
+			...prefill,
 		},
 	});
 

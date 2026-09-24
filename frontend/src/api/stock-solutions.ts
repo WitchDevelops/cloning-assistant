@@ -10,7 +10,7 @@ const concentrationSchema = z.object({
 const stockSchema = z.object({
 	name: z.string(),
 	composition: z.record(z.string(), concentrationSchema),
-	concentrationFactor: z.number().positive().nullable(),
+	concentrationFactor: z.number().positive().nullable().optional(),
 	ph: z.number().nullable(),
 	note: z.string().nullable(),
 	citation: z.string().nullable(),

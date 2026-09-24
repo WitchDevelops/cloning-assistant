@@ -19,6 +19,7 @@ STANDARD_STOCKS: list[Stock] = [
             "Tris": Concentration(value=50, unit=ConcentrationUnit.MM),
             "EDTA": Concentration(value=5, unit=ConcentrationUnit.MM),
         },
+        concentration_factor=5,
         note="TE Buffer 5x concentrated. Dilute before use.",
         citation="https://cshprotocols.cshlp.org/content/2016/5/pdb.rec092320.full",
     ),

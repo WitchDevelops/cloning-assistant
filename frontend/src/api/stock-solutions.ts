@@ -7,9 +7,10 @@ const concentrationSchema = z.object({
 	unit: z.enum(CONCENTRATION_UNIT_VALUES),
 });
 
-const stockSchema = z.object({
+export const stockSchema = z.object({
 	name: z.string(),
 	composition: z.record(z.string(), concentrationSchema),
+	concentrationFactor: z.number().positive().nullable().optional(),
 	ph: z.number().nullable(),
 	note: z.string().nullable(),
 	citation: z.string().nullable(),

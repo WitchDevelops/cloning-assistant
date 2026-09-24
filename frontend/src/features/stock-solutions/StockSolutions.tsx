@@ -4,7 +4,9 @@ import {
 	type StockSolution,
 } from '../../api/stock-solutions';
 import { Card } from '../../components/molecules/Card';
+import { Menu } from '../../components/molecules/Menu';
 import './StockSolutions.css';
+import { useNavigate } from 'react-router';
 
 const SKELETON_IDS = ['skeleton-1', 'skeleton-2', 'skeleton-3'];
 
@@ -40,6 +42,7 @@ const StockSkeleton = () => (
 
 export const StockSolutions = () => {
 	const [status, setStatus] = useState<Status>({ kind: 'loading' });
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		getStockSolutions().then((result) => {
@@ -75,7 +78,24 @@ export const StockSolutions = () => {
 	return (
 		<div className="stocks__container">
 			{status.stocks.map((stock) => (
-				<Card key={stock.name} title={stock.name}>
+				<Card
+					key={stock.name}
+					title={stock.name}
+					actions={
+						<Menu
+							label={`${stock.name} actions`}
+							items={[
+								{
+									label: 'Dilute',
+									onSelect: () => {
+										navigate('/');
+										console.log('clicked');
+									},
+								},
+							]}
+						/>
+					}
+				>
 					<div className="stock__row">
 						<div className="stock__section stock__box">
 							<h3 className="stock__label">Composition</h3>

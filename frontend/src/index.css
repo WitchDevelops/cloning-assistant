@@ -52,6 +52,11 @@
 		var(--color-text) 35%,
 		var(--color-secondary)
 	);
+	--color-primary-muted: color-mix(
+		in srgb,
+		var(--color-primary) 70%,
+		transparent
+	);
 
 	/* Borders: --color-border is decorative only (fails 3:1).
 	   Form control boundaries must use --color-control-border (WCAG 1.4.11). */

@@ -6,7 +6,9 @@
   "biome.lsp.bin": {
     "linux-x64": "frontend/node_modules/@biomejs/cli-linux-x64/biome"
   },
+  "biome.configurationPath": "frontend/biome.json",
   "editor.formatOnSave": true,
+  "files.insertFinalNewline": true,
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.codeActionsOnSave": {

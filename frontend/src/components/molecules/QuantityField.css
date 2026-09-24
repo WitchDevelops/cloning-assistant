@@ -62,6 +62,11 @@
 			background: var(--color-primary);
 			color: var(--color-on-primary);
 			border-radius: var(--radius-sm);
+			@media (forced-colors: active) {
+				outline: var(--focus-ring-width) solid Highlight;
+				outline-offset: -2px;
+				color: Highlight;
+			}
 		}
 		&:hover {
 			background: color-mix(
@@ -69,6 +74,9 @@
 				var(--color-primary) 65%,
 				var(--color-surface)
 			);
+			@media (forced-colors: active) {
+				color: unset;
+			}
 		}
 	}
 }

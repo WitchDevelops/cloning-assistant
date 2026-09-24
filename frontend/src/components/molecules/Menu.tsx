@@ -148,6 +148,7 @@ export const Menu = ({ label, items }: MenuProps) => {
 							onClick={() => {
 								item.onSelect();
 								setIsOpen(false);
+								triggerRef.current?.focus();
 							}}
 							ref={(el) => {
 								itemRefs.current[index] = el;

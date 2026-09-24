@@ -60,10 +60,20 @@
 				var(--color-surface)
 			);
 			color: var(--color-on-primary);
+			@media (forced-colors: active) {
+				outline: var(--focus-ring-width) solid Highlight;
+				outline-offset: -2px;
+			}
 		}
 		&:not(:disabled):active {
 			background: var(--color-primary);
 			color: var(--color-on-primary);
+			@media (forced-colors: active) {
+				border-radius: var(--radius-md);
+				outline: var(--focus-ring-width) solid Highlight;
+				color: Highlight;
+				outline-offset: -2px;
+			}
 		}
 	}
 

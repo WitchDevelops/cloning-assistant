@@ -12,13 +12,7 @@ type MenuProps = {
 	items: MenuItem[];
 };
 
-const testItems = [
-	{ label: 'item 1', onSelect: () => console.log(`helo`) },
-	{ label: 'item 2', onSelect: () => console.log(`helo`) },
-	{ label: 'item 3', onSelect: () => console.log(`helo`) },
-];
-
-export const Menu = ({ label, items = testItems }: MenuProps) => {
+export const Menu = ({ label, items }: MenuProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [activeIndex, setActiveIndex] = useState(0);
 	const containerRef = useRef<HTMLDivElement>(null);

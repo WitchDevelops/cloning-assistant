@@ -1,5 +1,5 @@
+import cases from '@contracts/stock-cases.json';
 import { describe, expect, it } from 'vitest';
-import cases from '../../../contracts/stock-cases.json';
 import { stockSchema } from './stock-solutions';
 
 describe('stockSchema matches the shared contract', () => {

@@ -1,5 +1,5 @@
+import cases from '@contracts/dilution-cases.json';
 import { describe, expect, it } from 'vitest';
-import cases from '../../../../../contracts/dilution-cases.json';
 import { dilutionInputSchema } from './dilutionSchema';
 
 const valid = {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { StockSolution } from '../../api/stock-solutions';
+import type { StockSolution } from '@/api/stock-solutions';
 import { toDilutionPrefill } from './toDilutionPrefill';
 
 const emptyStock: StockSolution = {

@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router';
-import { Card } from '../../components/molecules/Card';
+import { Card } from '@/components/molecules/Card';
 import { DilutionForm } from './dilution/DilutionForm';
 import type { DilutionFormValues } from './dilution/dilutionSchema';
 import './Calculators.css';

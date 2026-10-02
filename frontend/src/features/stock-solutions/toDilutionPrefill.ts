@@ -1,5 +1,5 @@
-import type { StockSolution } from '../../api/stock-solutions';
-import type { DilutionFormValues } from '../calculators/dilution/dilutionSchema';
+import type { StockSolution } from '@/api/stock-solutions';
+import type { DilutionFormValues } from '@/features/calculators/dilution/dilutionSchema';
 
 export const toDilutionPrefill = (stock: StockSolution) => {
 	const [bufferConcentration] = Object.values(stock.composition);

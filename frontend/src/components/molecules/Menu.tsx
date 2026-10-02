@@ -1,5 +1,5 @@
 import React, { useEffect, useId, useRef, useState } from 'react';
-import { Button } from '../atoms/Button';
+import { Button } from '@/components/atoms/Button';
 import './Menu.css';
 
 type MenuItem = {

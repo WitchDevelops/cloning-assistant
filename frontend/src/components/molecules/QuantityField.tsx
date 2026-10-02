@@ -1,6 +1,6 @@
 import type { ChangeEvent } from 'react';
 import type { FieldValues, Path, UseFormRegister } from 'react-hook-form';
-import type { UnitOptions } from '../../features/calculators/utils/units';
+import type { UnitOptions } from '@/features/calculators/utils/units';
 import './QuantityField.css';
 
 // Strips anything but digits and a single decimal point, keeping only the first "."

@@ -1,4 +1,4 @@
-import type { DilutionRequest } from '../../../api/dilution';
+import type { DilutionRequest } from '@/api/dilution';
 import type { DilutionInput } from './dilutionSchema';
 
 export const toDilutionRequest = (input: DilutionInput): DilutionRequest => ({

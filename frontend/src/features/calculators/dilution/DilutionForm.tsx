@@ -1,13 +1,16 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { type DilutionResponse, postDilution } from '../../../api/dilution';
-import { Button } from '../../../components/atoms/Button';
-import { Fieldset } from '../../../components/molecules/Fieldset';
-import { QuantityField } from '../../../components/molecules/QuantityField';
-import { formatVolume } from '../utils/formatVolume';
-import { roundToPipette } from '../utils/roundToPipette';
-import { CONCENTRATION_UNITS, VOLUME_UNITS } from '../utils/units';
+import { type DilutionResponse, postDilution } from '@/api/dilution';
+import { Button } from '@/components/atoms/Button';
+import { Fieldset } from '@/components/molecules/Fieldset';
+import { QuantityField } from '@/components/molecules/QuantityField';
+import { formatVolume } from '@/features/calculators/utils/formatVolume';
+import { roundToPipette } from '@/features/calculators/utils/roundToPipette';
+import {
+	CONCENTRATION_UNITS,
+	VOLUME_UNITS,
+} from '@/features/calculators/utils/units';
 import {
 	type DilutionFormValues,
 	type DilutionInput,

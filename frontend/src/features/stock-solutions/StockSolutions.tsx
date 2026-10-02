@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import {
-	getStockSolutions,
-	type StockSolution,
-} from '../../api/stock-solutions';
-import { Card } from '../../components/molecules/Card';
-import { Menu } from '../../components/molecules/Menu';
+import { getStockSolutions, type StockSolution } from '@/api/stock-solutions';
+import { Card } from '@/components/molecules/Card';
+import { Menu } from '@/components/molecules/Menu';
 import './StockSolutions.css';
 import { toDilutionPrefill } from './toDilutionPrefill';
 

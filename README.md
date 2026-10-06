@@ -61,7 +61,7 @@ or the installer from [nodejs.org](https://nodejs.org/).
 
 ## Running it locally
 
-Every command below is identical on Linux, macOS and Windows.
+Commands below for running each server are identical on Linux, macOS and Windows.
 
 ### Backend
 
@@ -88,6 +88,16 @@ npm run dev
 ```
 
 Serves on <http://localhost:5173>.
+
+### Running both servers with a single command
+
+This is possible only on Linux, macOS and WSL (no Windows support). To run both servers at once from a single terminal, run from the repo root:
+
+```bash
+uv run dev.py
+```
+
+Then stop both with Ctrl+C. If one server crashes, the other one is stopped to free the port.
 
 ## Contributing
 
@@ -147,5 +157,3 @@ uv run python scripts/export_units.py
 ```
 
 to write a JSON file to `contracts/units.json`, then from `frontend/` `npm run test`.
-
-

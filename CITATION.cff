@@ -9,6 +9,7 @@ authors:
   - family-names: Wojewska
     given-names: Dominika Natalia
     orcid: "https://orcid.org/0000-0003-4145-5194"
+doi: 10.5281/zenodo.23218042
 repository-code: "https://github.com/WitchDevelops/cloning-assistant"
 license: MIT
 version: 0.1.0

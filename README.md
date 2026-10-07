@@ -1,6 +1,6 @@
 # Cloning Screening Assistant
 
-[![CI](https://github.com/WitchDevelops/cloning-assistant/actions/workflows/ci.yml/badge.svg)](https://github.com/WitchDevelops/cloning-assistant/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/github/license/WitchDevelops/cloning-assistant)](LICENSE) [![FAIR checklist badge](https://fairsoftwarechecklist.net/badge.svg)](https://fairsoftwarechecklist.net/v0.2?f=21&a=30112&i=20300&r=123)
+[![CI](https://github.com/WitchDevelops/cloning-assistant/actions/workflows/ci.yml/badge.svg)](https://github.com/WitchDevelops/cloning-assistant/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/github/license/WitchDevelops/cloning-assistant)](LICENSE) [![FAIR checklist badge](https://fairsoftwarechecklist.net/badge.svg)](https://fairsoftwarechecklist.net/v0.2?f=21&a=30112&i=20300&r=123) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23218042.svg)](https://doi.org/10.5281/zenodo.23218042)
 
 
 Calculators and a 96-well plate map for screening colonies after a ligation and transformation.

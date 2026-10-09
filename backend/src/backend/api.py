@@ -1,3 +1,4 @@
+import os
 from importlib.metadata import version
 
 from fastapi import APIRouter, FastAPI
@@ -13,10 +14,14 @@ app = FastAPI(
     version=version("backend"),
 )
 
-# Sets up CORS so that backend can talk to frontend on the allowed port (default Vite port)
+# Sets up CORS so that backend can talk to frontend on the allowed port
+# (ALLOWED_ORIGINS env var, see .env.example)
+# strip() to remove spaces between the items, .split() to get individual ones
+ALLOWED_ORIGINS = [origin.strip() for origin in os.environ["ALLOWED_ORIGINS"].split(",")]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=ALLOWED_ORIGINS,
     allow_methods=["GET", "POST"],
     allow_headers=["Content-Type"],
 )
@@ -50,10 +55,3 @@ def get_standard_stocks() -> StockResponse:
 
 
 app.include_router(router)
-
-
-def dev() -> None:
-    """Run the development server."""
-    import uvicorn
-
-    uvicorn.run("backend.api:app", reload=True, port=8000)

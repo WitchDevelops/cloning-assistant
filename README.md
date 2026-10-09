@@ -67,6 +67,7 @@ Commands below for running each server are identical on Linux, macOS and Windows
 
 ```bash
 cd backend
+cp .env.example .env
 uv sync
 uv run dev
 ```

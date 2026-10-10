@@ -1,4 +1,5 @@
 import { NavLink, Outlet } from 'react-router';
+import { ServerStatus } from './ServerStatus';
 
 export function Layout() {
 	return (
@@ -9,6 +10,7 @@ export function Layout() {
 				<NavLink to="/stock-solutions">Stock solutions</NavLink>
 			</nav>
 			<main className="main">
+				<ServerStatus />
 				<Outlet />
 			</main>
 		</div>

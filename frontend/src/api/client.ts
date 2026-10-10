@@ -1,6 +1,8 @@
 import type { z } from 'zod';
 
 const BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:8000';
+const SERVER_UNAVAILABLE_MESSAGE =
+	'Could not reach the server. Check your connection and try again.';
 
 export type ApiResult<T> =
 	| { ok: true; data: T }
@@ -78,7 +80,7 @@ export const api = {
 			return {
 				ok: false,
 				kind: 'network',
-				message: 'Could not reach the server. Is it running?',
+				message: SERVER_UNAVAILABLE_MESSAGE,
 			};
 		}
 
@@ -101,7 +103,7 @@ export const api = {
 			return {
 				ok: false,
 				kind: 'network',
-				message: 'Could not reach the server. Is it running?',
+				message: SERVER_UNAVAILABLE_MESSAGE,
 			};
 		}
 

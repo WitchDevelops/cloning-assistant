@@ -1,9 +1,18 @@
 # Cloning Screening Assistant
 
-[![CI](https://github.com/WitchDevelops/cloning-assistant/actions/workflows/ci.yml/badge.svg)](https://github.com/WitchDevelops/cloning-assistant/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/github/license/WitchDevelops/cloning-assistant)](LICENSE) [![FAIR checklist badge](https://fairsoftwarechecklist.net/badge.svg)](https://fairsoftwarechecklist.net/v0.2?f=21&a=32113&i=22300&r=123) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23218042.svg)](https://doi.org/10.5281/zenodo.23218042)
-
+[![CI](https://github.com/WitchDevelops/cloning-assistant/actions/workflows/ci.yml/badge.svg)](https://github.com/WitchDevelops/cloning-assistant/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/github/license/WitchDevelops/cloning-assistant)](LICENSE)
+[![FAIR checklist badge](https://fairsoftwarechecklist.net/badge.svg)](https://fairsoftwarechecklist.net/v0.2?f=21&a=32113&i=22300&r=123)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23218042.svg)](https://doi.org/10.5281/zenodo.23218042)
 
 Calculators and a 96-well plate map for screening colonies after a ligation and transformation.
+
+**Live:** https://cloning-assistant.onrender.com/
+
+**API docs:** https://cloning-assistant-api.onrender.com/docs
+
+(free tier: the API sleeps when idle, so the first calculation can take up to a minute while it wakes up)
+
 
 ## Stack
 
@@ -16,9 +25,9 @@ Python/FastAPI backend, React/TypeScript frontend
 
 ## Planned work
 
-- The calculators: ligation, restriction digest, gel loading dye, colony PCR master mix, ~~dilution~~
+- The calculators: ligation, restriction digest, gel loading dye, colony PCR master mix
 - The 96-well plate map: configurable start well, well states, multi-plate overflow, print and JSON export
-- Docker image and a deployed instance
+- Docker image
 
 ## How to run it locally
 

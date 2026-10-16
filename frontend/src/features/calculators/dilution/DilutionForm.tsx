@@ -135,37 +135,39 @@ export const DilutionForm = ({ prefill }: DilutionFormProps) => {
 					)}
 				</div>
 			</form>
-			{stockDisplay && diluentDisplay && (
-				<>
-					<hr />
-					<section aria-live="polite" aria-label="Result">
-						<h3 className="result__header">Calculation result</h3>
-						<div className="result__wrapper">
-							<p>
-								<span className="result__label">Stock solution: </span>
-								<span>{stockDisplay.value}</span> {stockDisplay.unit}
-								{stockDisplay.warning && (
-									<span className="result__warning">
-										Below reliable pipetting volume - dilute the stock further
-										or increase the final volume.
-									</span>
-								)}
-							</p>
+			<div role="status" className="result__sr-wrapper">
+				{stockDisplay && diluentDisplay && (
+					<>
+						<hr />
+						<section aria-label="Result">
+							<h3 className="result__header">Calculation result</h3>
+							<div className="result__wrapper">
+								<p>
+									<span className="result__label">Stock solution: </span>
+									<span>{stockDisplay.value}</span> {stockDisplay.unit}
+									{stockDisplay.warning && (
+										<span className="result__warning">
+											Below reliable pipetting volume - dilute the stock further
+											or increase the final volume.
+										</span>
+									)}
+								</p>
 
-							<p>
-								<span className="result__label">Diluent: </span>
-								<span>{diluentDisplay.value}</span> {diluentDisplay.unit}
-								{diluentDisplay.warning && (
-									<span className="result__warning">
-										Below reliable pipetting volume - dilute the stock further
-										or increase the final volume.
-									</span>
-								)}
-							</p>
-						</div>
-					</section>
-				</>
-			)}
+								<p>
+									<span className="result__label">Diluent: </span>
+									<span>{diluentDisplay.value}</span> {diluentDisplay.unit}
+									{diluentDisplay.warning && (
+										<span className="result__warning">
+											Below reliable pipetting volume - dilute the stock further
+											or increase the final volume.
+										</span>
+									)}
+								</p>
+							</div>
+						</section>
+					</>
+				)}
+			</div>
 		</>
 	);
 };

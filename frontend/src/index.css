@@ -94,6 +94,7 @@
 
 	/* Controls */
 	--control-min-height: 38px;
+	--control-min-width: 24px;
 	--control-border-width: 1px;
 	--unit-select-width: 100px;
 }

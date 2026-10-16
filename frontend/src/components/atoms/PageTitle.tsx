@@ -3,5 +3,10 @@ type PageTitleProps = {
 };
 
 export const PageTitle = ({ title }: PageTitleProps) => {
-	return <title>{`${title} · Molecular biology assistant`}</title>;
+	return (
+		<>
+			<title>{`${title} · Molecular biology assistant`}</title>{' '}
+			<h1 className="sr-only">{title}</h1>
+		</>
+	);
 };

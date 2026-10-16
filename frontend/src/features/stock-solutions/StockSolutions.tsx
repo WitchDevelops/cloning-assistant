@@ -4,6 +4,7 @@ import { getStockSolutions, type StockSolution } from '@/api/stock-solutions';
 import { Card } from '@/components/molecules/Card';
 import { Menu } from '@/components/molecules/Menu';
 import './StockSolutions.css';
+import { PageTitle } from '@/components/atoms/PageTitle';
 import { toDilutionPrefill } from './toDilutionPrefill';
 
 const SKELETON_IDS = ['skeleton-1', 'skeleton-2', 'skeleton-3'];
@@ -74,80 +75,83 @@ export const StockSolutions = () => {
 	}
 
 	return (
-		<div className="stocks__container">
-			{status.stocks.map((stock) => (
-				<Card
-					key={stock.name}
-					title={stock.name}
-					actions={
-						<Menu
-							label={`${stock.name} actions`}
-							items={[
-								{
-									label: 'Dilute',
-									onSelect: () => {
-										const [firstConcentration] = Object.values(
-											stock.composition,
-										);
+		<>
+			<PageTitle title="Stock solutions" />
+			<div className="stocks__container">
+				{status.stocks.map((stock) => (
+					<Card
+						key={stock.name}
+						title={stock.name}
+						actions={
+							<Menu
+								label={`${stock.name} actions`}
+								items={[
+									{
+										label: 'Dilute',
+										onSelect: () => {
+											const [firstConcentration] = Object.values(
+												stock.composition,
+											);
 
-										navigate('/', {
-											state: {
-												dilutionPrefill: toDilutionPrefill(stock),
-												stockName: stock.name,
-												stockConcentration: firstConcentration
-													? `${firstConcentration.value}${firstConcentration.unit}`
-													: undefined,
-												stockConcentrationFactor: stock.concentrationFactor,
-												stockPh: stock.ph,
-											},
-										});
+											navigate('/', {
+												state: {
+													dilutionPrefill: toDilutionPrefill(stock),
+													stockName: stock.name,
+													stockConcentration: firstConcentration
+														? `${firstConcentration.value}${firstConcentration.unit}`
+														: undefined,
+													stockConcentrationFactor: stock.concentrationFactor,
+													stockPh: stock.ph,
+												},
+											});
+										},
 									},
-								},
-							]}
-						/>
-					}
-				>
-					<div className="stock__row">
-						<div className="stock__section stock__box">
-							<h3 className="stock__label">Composition</h3>
-							<div className="stock__composition">
-								{Object.entries(stock.composition).map(
-									([ingredient, concentration]) => (
-										<p key={ingredient}>
-											{ingredient}, {concentration.value} {concentration.unit}
-										</p>
-									),
-								)}
-							</div>
-						</div>
-						{stock.ph !== null && (
+								]}
+							/>
+						}
+					>
+						<div className="stock__row">
 							<div className="stock__section stock__box">
-								<h3 className="stock__label">pH</h3>
-								<p>{stock.ph.toFixed(1)}</p>
+								<h3 className="stock__label">Composition</h3>
+								<div className="stock__composition">
+									{Object.entries(stock.composition).map(
+										([ingredient, concentration]) => (
+											<p key={ingredient}>
+												{ingredient}, {concentration.value} {concentration.unit}
+											</p>
+										),
+									)}
+								</div>
+							</div>
+							{stock.ph !== null && (
+								<div className="stock__section stock__box">
+									<h3 className="stock__label">pH</h3>
+									<p>{stock.ph.toFixed(1)}</p>
+								</div>
+							)}
+						</div>
+						{stock.note !== null && (
+							<div className="stock__section">
+								<h3 className="stock__label">Note</h3>
+								<p>{stock.note}</p>
 							</div>
 						)}
-					</div>
-					{stock.note !== null && (
-						<div className="stock__section">
-							<h3 className="stock__label">Note</h3>
-							<p>{stock.note}</p>
-						</div>
-					)}
-					{stock.citation !== null && (
-						<div className="stock__section">
-							<h3 className="stock__label">Citation</h3>
-							<a
-								className="stock__citation"
-								href={stock.citation}
-								target="_blank"
-								rel="noreferrer"
-							>
-								{stock.citation}
-							</a>
-						</div>
-					)}
-				</Card>
-			))}
-		</div>
+						{stock.citation !== null && (
+							<div className="stock__section">
+								<h3 className="stock__label">Citation</h3>
+								<a
+									className="stock__citation"
+									href={stock.citation}
+									target="_blank"
+									rel="noreferrer"
+								>
+									{stock.citation}
+								</a>
+							</div>
+						)}
+					</Card>
+				))}
+			</div>
+		</>
 	);
 };

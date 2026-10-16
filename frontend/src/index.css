@@ -112,7 +112,9 @@
 	:root {
 		--color-surface: var(--slate-900);
 		--color-text: var(--slate-50);
-		--color-primary: var(--teal-600);
+		--color-text-primary: var(--teal-600);
+		--color-primary: var(--teal-700);
+		--color-on-primary: var(--slate-50);
 		--color-secondary: var(--violet-600);
 		--color-info: var(--blue-950);
 		--color-on-info: var(--blue-50);

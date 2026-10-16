@@ -27,7 +27,7 @@
 		text-decoration: none;
 
 		&[aria-current="page"] {
-			color: var(--color-primary);
+			color: var(--color-text-primary);
 			&:after {
 				content: "";
 				position: absolute;

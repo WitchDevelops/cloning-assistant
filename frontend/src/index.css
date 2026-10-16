@@ -33,6 +33,7 @@
 	/* Layer 2: semantic */
 	--color-surface: var(--slate-50);
 	--color-text: var(--slate-900);
+	--color-text-primary: var(--teal-700);
 	--color-text-danger: var(--red-700);
 	--color-primary: var(--teal-700);
 	--color-on-primary: var(--teal-50);

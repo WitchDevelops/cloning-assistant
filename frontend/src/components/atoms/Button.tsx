@@ -1,7 +1,13 @@
 import './Button.css';
 
 type ButtonProps = React.ComponentProps<'button'> & {
-	variant?: 'primary' | 'secondary' | 'accent' | 'ghost' | 'outline' | 'menu';
+	variant?:
+		| 'primary'
+		| 'secondary'
+		| 'accent'
+		| 'outline'
+		| 'menu-trigger'
+		| 'menu-item';
 };
 
 export const Button = ({

@@ -35,7 +35,7 @@
 		--button-fg: var(--color-primary);
 		--button-border: var(--color-primary);
 	}
-	&[data-variant="menu"] {
+	&[data-variant="menu-trigger"] {
 		--button-bg: transparent;
 		--button-fg: var(--color-primary);
 		--button-border: var(--color-primary-muted);
@@ -49,25 +49,19 @@
 			);
 		}
 	}
-	&[data-variant="ghost"] {
+	&[data-variant="menu-item"] {
 		--button-bg: transparent;
 		--button-fg: var(--color-text);
 		--button-border: transparent;
 		&:not(:disabled):hover {
-			background: color-mix(
-				in srgb,
-				var(--color-primary) 65%,
-				var(--color-surface)
-			);
-			color: var(--color-on-primary);
+			background: color-mix(in srgb, var(--color-primary) 12%, transparent);
 			@media (forced-colors: active) {
 				outline: var(--focus-ring-width) solid Highlight;
 				outline-offset: -2px;
 			}
 		}
 		&:not(:disabled):active {
-			background: var(--color-primary);
-			color: var(--color-on-primary);
+			background: color-mix(in srgb, var(--color-primary) 24%, transparent);
 			@media (forced-colors: active) {
 				border-radius: var(--radius-md);
 				outline: var(--focus-ring-width) solid Highlight;

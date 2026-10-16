@@ -18,7 +18,9 @@
 	--orange-500: #f97316;
 	--amber-500: #f59e0b;
 	--red-400: #f87171;
+	--red-500: #ef4444;
 	--red-600: #dc2626;
+	--red-700: #b91c1c;
 	--slate-50: #f8fafc;
 	--slate-200: #e2e8f0;
 	--slate-400: #94a3b8;
@@ -31,6 +33,8 @@
 	/* Layer 2: semantic */
 	--color-surface: var(--slate-50);
 	--color-text: var(--slate-900);
+	--color-text-primary: var(--teal-700);
+	--color-text-danger: var(--red-700);
 	--color-primary: var(--teal-700);
 	--color-on-primary: var(--teal-50);
 	--color-secondary: var(--violet-700);
@@ -91,6 +95,7 @@
 
 	/* Controls */
 	--control-min-height: 38px;
+	--control-min-width: 24px;
 	--control-border-width: 1px;
 	--unit-select-width: 100px;
 }
@@ -112,12 +117,16 @@
 	:root {
 		--color-surface: var(--slate-900);
 		--color-text: var(--slate-50);
-		--color-primary: var(--teal-600);
+		--color-text-primary: var(--teal-600);
+		--color-text-danger: var(--red-500);
+		--color-primary: var(--teal-700);
+		--color-on-primary: var(--slate-50);
 		--color-secondary: var(--violet-600);
 		--color-info: var(--blue-950);
 		--color-on-info: var(--blue-50);
 		--color-info-border: var(--blue-400);
-		--color-danger: var(--red-400);
+		--color-danger: var(--red-700);
+		--color-on-danger: var(--blue-50);
 		--color-disabled-surface: var(--slate-800);
 		--color-on-disabled: var(--slate-400);
 	}

@@ -119,7 +119,7 @@ export const Menu = ({ label, items }: MenuProps) => {
 			<Button
 				ref={triggerRef}
 				type="button"
-				variant="menu"
+				variant="menu-trigger"
 				className="menu__trigger"
 				aria-haspopup="menu"
 				aria-expanded={isOpen}
@@ -141,7 +141,7 @@ export const Menu = ({ label, items }: MenuProps) => {
 					{items.map((item, index) => (
 						<Button
 							type="button"
-							variant="ghost"
+							variant="menu-item"
 							key={item.label}
 							role="menuitem"
 							className="menu__item"

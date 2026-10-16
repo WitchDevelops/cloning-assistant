@@ -29,6 +29,17 @@ Python/FastAPI backend, React/TypeScript frontend
 - The 96-well plate map: configurable start well, well states, multi-plate overflow, print and JSON export
 - Docker image
 
+## Accessibility
+
+Built to WCAG 2.2 AA.
+Current state:
+
+- **Automated:** axe DevTools reports zero violations on every page, including best-practice rules.
+- **Manual:** keyboard navigation throughout, including the menu button (WAI-ARIA APG pattern); visible focus; forced-colors and
+  `prefers-reduced-motion` honoured; per-route page titles; calculation results announced via a live region, tested with a screen reader (NVDA). The live-region behaviour is additionally covered by a DOM-level test.
+
+Colour tokens are checked against [1.4.3](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html) and [1.4.11](https://www.w3.org/WAI/WCAG21/Understanding/non-text-contrast.html) in both light and dark mode.
+
 ## How to run it locally
 
 ### Prerequisites

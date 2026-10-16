@@ -1,3 +1,10 @@
+import { PageTitle } from '@/components/atoms/PageTitle';
+
 export const Protocols = () => {
-	return <div>Protocols</div>;
+	return (
+		<>
+			<PageTitle title="Protocols" />
+			<div>Protocols</div>
+		</>
+	);
 };

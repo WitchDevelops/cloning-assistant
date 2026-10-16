@@ -32,8 +32,3 @@
 		}
 	}
 }
-
-.menu__item:hover,
-.menu__item:focus-visible {
-	background-color: color-mix(in srgb, var(--color-primary) 12%, transparent);
-}

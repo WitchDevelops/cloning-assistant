@@ -34,5 +34,21 @@
   "mL": {
     "family": "volume",
     "factor": 1000.0
+  },
+  "bp": {
+    "family": "length",
+    "factor": 1.0
+  },
+  "kb": {
+    "family": "length",
+    "factor": 1000.0
+  },
+  "ng": {
+    "family": "mass",
+    "factor": 1.0
+  },
+  "µg": {
+    "family": "mass",
+    "factor": 1000.0
   }
 }

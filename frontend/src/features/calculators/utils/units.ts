@@ -15,6 +15,8 @@ export const UNIT_FAMILIES = [
 	'massPerVolume',
 	'molPerVolume',
 	'volume',
+	'DNALength',
+	'DNAMass',
 ] as const;
 
 export const CONCENTRATION_FAMILIES: readonly UnitFamily[] = [
@@ -32,6 +34,10 @@ export const UNITS = {
 	M: { family: 'molPerVolume', factor: 1_000_000_000 },
 	µL: { family: 'volume', factor: 1 },
 	mL: { family: 'volume', factor: 1_000 },
+	bp: { family: 'DNALength', factor: 1 },
+	kp: { family: 'DNALength', factor: 1_000 },
+	ng: { family: 'DNAMass', factor: 1 },
+	µg: { family: 'DNAMass', factor: 1_000 },
 } as const satisfies Record<string, { family: UnitFamily; factor: number }>;
 
 export const UNIT_VALUES = Object.keys(UNITS) as Unit[];
@@ -46,6 +52,12 @@ export const isConcentration = (unit: Unit): unit is ConcentrationUnit =>
 export const isVolume = (unit: Unit): unit is VolumeUnit =>
 	UNITS[unit].family === 'volume';
 
+export const isDNALength = (unit: Unit): unit is DNALength =>
+	UNITS[unit].family === 'DNALength';
+
+export const isDNAMass = (unit: Unit): unit is DNAMass =>
+	UNITS[unit].family === 'DNAMass';
+
 export const CONCENTRATION_UNIT_VALUES = UNIT_VALUES.filter(isConcentration);
 export const VOLUME_UNIT_VALUES = UNIT_VALUES.filter(isVolume);
 
@@ -58,6 +70,8 @@ const FAMILY_LABELS: Record<UnitFamily, string> = {
 	massPerVolume: 'Mass per volume',
 	molPerVolume: 'Mol per volume',
 	volume: 'Volume',
+	DNALength: 'DNA/RNA length',
+	DNAMass: 'DNA/RNA mass',
 };
 
 export const CONCENTRATION_UNITS: UnitOptions = {
@@ -80,6 +94,8 @@ type UnitOf<F extends UnitFamily> = {
 
 export type ConcentrationUnit = UnitOf<'massPerVolume' | 'molPerVolume'>;
 export type VolumeUnit = UnitOf<'volume'>;
+export type DNALength = UnitOf<'DNALength'>;
+export type DNAMass = UnitOf<'DNAMass'>;
 
 // Generic with a default so that narrowing to Quantity<VolumeUnit> works
 export type Quantity<U extends Unit = Unit> = {

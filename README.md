@@ -178,3 +178,15 @@ uv run python scripts/export_units.py
 ```
 
 to write a JSON file to `contracts/units.json`, then from `frontend/` `npm run test`.
+
+## References:
+
+### NEB protocols
+
+- Ligation: https://www.neb.com/en/protocols/dna-ligation-with-t4-dna-ligase-m0202
+
+### Cold Spring Harbor protocols
+
+- Tris-HCl: https://cshprotocols.cshlp.org/content/2006/1/pdb.rec8747
+- TE Buffer: https://cshprotocols.cshlp.org/content/2016/5/pdb.rec092320.full
+- NaCl: https://cshprotocols.cshlp.org/content/2006/1/pdb.rec8038

@@ -1,6 +1,6 @@
 [project]
 name = "backend"
-version = "0.1.0"
+version = "0.2.0"
 description = "Molecular cloning screening calculators and 96-well plate map"
 readme = "README.md"
 authors = [{ name = "WitchDevelops", email = "d.n.wojewska@gmail.com" }]

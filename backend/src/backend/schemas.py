@@ -16,8 +16,8 @@ class UnitFamily(StrEnum):
     MASS_PER_VOLUME = "mass_per_volume"
     MOL_PER_VOLUME = "mol_per_volume"
     VOLUME = "volume"
-    DNA_LENGTH = "length"
-    DNA_MASS = "mass"
+    DNA_LENGTH = "dna_length"
+    DNA_MASS = "dna_mass"
 
 
 class ConcentrationUnit(StrEnum):

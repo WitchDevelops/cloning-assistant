@@ -36,19 +36,19 @@
     "factor": 1000.0
   },
   "bp": {
-    "family": "length",
+    "family": "dnaLength",
     "factor": 1.0
   },
   "kb": {
-    "family": "length",
+    "family": "dnaLength",
     "factor": 1000.0
   },
   "ng": {
-    "family": "mass",
+    "family": "dnaMass",
     "factor": 1.0
   },
   "µg": {
-    "family": "mass",
+    "family": "dnaMass",
     "factor": 1000.0
   }
 }

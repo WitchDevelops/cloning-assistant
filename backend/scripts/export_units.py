@@ -6,7 +6,7 @@ from pathlib import Path
 
 from pydantic.alias_generators import to_camel
 
-from backend.schemas import ConcentrationUnit, UnitFamily, VolumeUnit
+from backend.schemas import ConcentrationUnit, DNALengthUnit, DNAMassUnit, UnitFamily, VolumeUnit
 
 # walks up to repo root to store the result there
 OUTPUT = Path(__file__).resolve().parents[2] / "contracts" / "units.json"
@@ -22,7 +22,23 @@ def unit_table() -> dict[str, dict[str, object]]:
         vol_unit.value: {"family": to_camel(UnitFamily.VOLUME), "factor": vol_unit.factor}
         for vol_unit in VolumeUnit
     }
-    return conc_table | vol_table
+
+    dna_length_table = {
+        dna_length_unit.value: {
+            "family": to_camel(UnitFamily.DNA_LENGTH),
+            "factor": dna_length_unit.factor,
+        }
+        for dna_length_unit in DNALengthUnit
+    }
+
+    dna_mass_table = {
+        dna_mass_unit.value: {
+            "family": to_camel(UnitFamily.DNA_MASS),
+            "factor": dna_mass_unit.factor,
+        }
+        for dna_mass_unit in DNAMassUnit
+    }
+    return conc_table | vol_table | dna_length_table | dna_mass_table
 
 
 def main() -> None:

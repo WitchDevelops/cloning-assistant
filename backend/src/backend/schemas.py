@@ -9,12 +9,15 @@ from pydantic.alias_generators import to_camel
 
 
 class UnitFamily(StrEnum):
-    """Concentration units are only interconvertible within a family.
-    Crossing families needs a molecular weight, which this API does not take."""
+    """A dimension whose units are interconvertible by a plain factor.
+    Crossing families needs extra information (a molecular weight, a density)
+    that this API does not take."""
 
     MASS_PER_VOLUME = "mass_per_volume"
     MOL_PER_VOLUME = "mol_per_volume"
     VOLUME = "volume"
+    DNA_LENGTH = "dna_length"
+    DNA_MASS = "dna_mass"
 
 
 class ConcentrationUnit(StrEnum):
@@ -42,7 +45,7 @@ class ConcentrationUnit(StrEnum):
 
 
 class VolumeUnit(StrEnum):
-    """Volume units. `factor` converts to µL. One family, so no family attribute."""
+    """Volume units. `factor` converts to µL."""
 
     factor: float
 
@@ -54,6 +57,36 @@ class VolumeUnit(StrEnum):
 
     UL = "µL", 1.0
     ML = "mL", 1_000.0
+
+
+class DNALengthUnit(StrEnum):
+    """DNA/RNA length units. `factor` converts to bp."""
+
+    factor: float
+
+    def __new__(cls, value: str, factor: float) -> "DNALengthUnit":
+        obj = str.__new__(cls, value)
+        obj._value_ = value
+        obj.factor = factor
+        return obj
+
+    BP = "bp", 1.0
+    KB = "kb", 1_000.0
+
+
+class DNAMassUnit(StrEnum):
+    """DNA/RNA mass units. `factor` converts to ng."""
+
+    factor: float
+
+    def __new__(cls, value: str, factor: float) -> "DNAMassUnit":
+        obj = str.__new__(cls, value)
+        obj._value_ = value
+        obj.factor = factor
+        return obj
+
+    NG = "ng", 1.0
+    UG = "µg", 1_000.0
 
 
 class ApiModel(BaseModel):
@@ -73,11 +106,12 @@ class Quantity(ApiModel):
     # Declared as a union here only so `to_base` can see `.factor`; each subclass
     # narrows it to one dimension. The `strict` constraint lives on the subclasses
     # because it cannot be applied to a union.
-    unit: ConcentrationUnit | VolumeUnit
+    unit: ConcentrationUnit | VolumeUnit | DNALengthUnit | DNAMassUnit
 
     def to_base(self) -> float:
         """This quantity's value converted to its family's base unit:
-        ng/µL for mass per volume, nM for molar, µL for volume."""
+        ng/µL for mass per volume, nM for molar, µL for volume, bp for DNA/RNA length,
+        ng for DNA/RNA mass."""
         return self.value * self.unit.factor
 
 
@@ -93,6 +127,18 @@ class Volume(Quantity):
     """A volume."""
 
     unit: VolumeUnit = Field(strict=False)
+
+
+class DNALength(Quantity):
+    """DNA/RNA Length."""
+
+    unit: DNALengthUnit = Field(strict=False)
+
+
+class DNAMass(Quantity):
+    """DNA/RNA Mass."""
+
+    unit: DNAMassUnit = Field(strict=False)
 
 
 class DilutionRequest(ApiModel):

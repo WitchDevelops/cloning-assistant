@@ -34,5 +34,21 @@
   "mL": {
     "family": "volume",
     "factor": 1000.0
+  },
+  "bp": {
+    "family": "dnaLength",
+    "factor": 1.0
+  },
+  "kb": {
+    "family": "dnaLength",
+    "factor": 1000.0
+  },
+  "ng": {
+    "family": "dnaMass",
+    "factor": 1.0
+  },
+  "µg": {
+    "family": "dnaMass",
+    "factor": 1000.0
   }
 }

@@ -12,8 +12,8 @@ authors:
 doi: 10.5281/zenodo.23218042
 repository-code: "https://github.com/WitchDevelops/cloning-assistant"
 license: MIT
-version: 0.1.0
-date-released: "2026-10-07"
+version: 0.2.0
+date-released: "2026-10-17"
 keywords:
   - molecular cloning
   - laboratory

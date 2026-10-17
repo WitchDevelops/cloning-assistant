@@ -1,6 +1,6 @@
 import pytest
 
-from backend.calculations import Dilution, LigationMix, dilution, ligation
+from backend.calculations import Dilution, LigationMix, dilution, ligation, ligation_control
 
 
 def test_dilution_returns_stock_and_diluent_volumes():
@@ -35,20 +35,15 @@ def test_ligation_returns_correct_reactant_volumes():
 
 def test_ligation_returns_correct_reactant_volumes_for_negative_control():
     # 50 ng vector, 4000 bp vector length, no insert, 20 µL final volume, 50 ng/µL vector
-    result = ligation(
+    result = ligation_control(
         vector_mass=50.0,
-        vector_length=4_000,
-        insert_length=0,
         vector_conc=50.0,
-        insert_conc=0.0,
-        ratio=3,
         final_volume=20.0,
-        with_insert=False,
     )
     assert result == pytest.approx(
         LigationMix(
             vector_volume=1.0,
-            insert_volume=0,
+            insert_volume=0.0,
             ligase_buffer_volume=2.0,
             ligase_volume=1.0,
             water_volume=16,

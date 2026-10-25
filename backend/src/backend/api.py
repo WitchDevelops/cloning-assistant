@@ -4,8 +4,15 @@ from importlib.metadata import version
 from fastapi import APIRouter, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.calculations import dilution
-from backend.schemas import DilutionRequest, DilutionResponse, StockResponse
+from backend.calculations import dilution, ligation, ligation_control
+from backend.schemas import (
+    DilutionRequest,
+    DilutionResponse,
+    LigationReaction,
+    LigationRequest,
+    LigationResponse,
+    StockResponse,
+)
 from backend.stocks import STANDARD_STOCKS
 
 app = FastAPI(
@@ -45,6 +52,37 @@ def calculate_dilution(payload: DilutionRequest) -> DilutionResponse:
         payload.stock_conc.to_base(), payload.final_conc.to_base(), payload.final_volume.to_base()
     )
     return DilutionResponse(stock=result.stock, diluent=result.diluent)
+
+
+@router.post("/ligation", tags=["Calculators"])
+def calculate_ligation(payload: LigationRequest) -> LigationResponse:
+    """Calculate the volumes of the insert, vector and water for a single ligation reaction.
+
+    Takes insert size and concentration, vector size and concentration
+    and molar ratio (insert:vector)."""
+    vector_mass = payload.vector_mass.to_base()
+    vector_conc = payload.vector_conc.to_base()
+    final_volume = payload.final_volume.to_base()
+
+    reaction_data = ligation(
+        vector_mass=vector_mass,
+        vector_length=payload.vector_length.to_base(),
+        vector_conc=vector_conc,
+        insert_length=payload.insert_length.to_base(),
+        insert_conc=payload.insert_conc.to_base(),
+        ratio=payload.molar_ratio,
+        final_volume=final_volume,
+    )
+    control_data = ligation_control(
+        vector_mass=vector_mass,
+        vector_conc=vector_conc,
+        final_volume=final_volume,
+    )
+    return LigationResponse(
+        insert_mass=reaction_data.insert_volume * payload.insert_conc.to_base(),
+        reaction=LigationReaction(**reaction_data._asdict()),
+        control=LigationReaction(**control_data._asdict()),
+    )
 
 
 @router.get("/stocks", tags=["Stock solutions"])

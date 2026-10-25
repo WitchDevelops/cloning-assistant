@@ -102,7 +102,7 @@ class Quantity(ApiModel):
     """A magnitude paired with a unit. Subclasses narrow `unit` to one dimension,
     so a volume cannot be supplied where a concentration is expected."""
 
-    value: float = Field(gt=0)
+    value: float = Field(gt=0, allow_inf_nan=False)
     # Declared as a union here only so `to_base` can see `.factor`; each subclass
     # narrows it to one dimension. The `strict` constraint lives on the subclasses
     # because it cannot be applied to a union.
@@ -190,7 +190,7 @@ class LigationRequest(ApiModel):
     vector_mass: DNAMass = Field(examples=[{"value": 50, "unit": "ng"}])
     insert_length: DNALength = Field(examples=[{"value": 1200, "unit": "bp"}])
     insert_conc: MassConcentration = Field(examples=[{"value": 20, "unit": "ng/µL"}])
-    molar_ratio: float = Field(gt=0, examples=[3])
+    molar_ratio: float = Field(gt=0, allow_inf_nan=False, examples=[3])
     final_volume: Volume = Field(examples=[{"value": 20, "unit": "µL"}])
 
 

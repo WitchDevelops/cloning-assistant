@@ -5,7 +5,7 @@
 [![FAIR checklist badge](https://fairsoftwarechecklist.net/badge.svg)](https://fairsoftwarechecklist.net/v0.2?f=21&a=32113&i=22300&r=123)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23218042.svg)](https://doi.org/10.5281/zenodo.23218042)
 
-Calculators and a 96-well plate map for screening colonies after a ligation and transformation.
+Calculators and a 96-well plate map for screening colonies after ligation and transformation.
 
 **Live:** https://cloning-assistant.onrender.com/
 
@@ -22,10 +22,11 @@ Python/FastAPI backend, React/TypeScript frontend
 
 - Dilution calculator
 - Endpoint returning standard buffers (predefined set)
+- Endpoint returning ligation reaction volumes (frontend coming soon)
 
 ## Planned work
 
-- The calculators: ligation, restriction digest, gel loading dye, colony PCR master mix
+- The calculators: ligation (in progress), restriction digest, gel loading dye, colony PCR master mix
 - The 96-well plate map: configurable start well, well states, multi-plate overflow, print and JSON export
 - Docker image
 
@@ -184,6 +185,7 @@ to write a JSON file to `contracts/units.json`, then from `frontend/` `npm run t
 ### NEB protocols
 
 - Ligation: https://www.neb.com/en/protocols/dna-ligation-with-t4-dna-ligase-m0202
+- NEB Calculators: https://nebiocalculator.neb.com/
 
 ### Cold Spring Harbor protocols
 

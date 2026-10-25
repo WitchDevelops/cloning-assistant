@@ -4,7 +4,7 @@ as is expected by the React client."""
 
 from enum import StrEnum
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 from pydantic.alias_generators import to_camel
 
 
@@ -123,6 +123,20 @@ class Concentration(Quantity):
     unit: ConcentrationUnit = Field(strict=False)
 
 
+class MassConcentration(Concentration):
+    """A concentration restricted to mass-per-volume, useful for DNA calculations."""
+
+    @field_validator("unit")
+    @classmethod
+    def reject_molar_units(cls, unit: ConcentrationUnit) -> ConcentrationUnit:
+        if unit.unit_family is not UnitFamily.MASS_PER_VOLUME:
+            raise ValueError(
+                "Concentration must be in ng/µL, µg/µL or mg/mL;"
+                " molar units need a molecular weight."
+            )
+        return unit
+
+
 class Volume(Quantity):
     """A volume."""
 
@@ -172,10 +186,10 @@ class LigationRequest(ApiModel):
     DNA concentrations must be mass per volume, molar ratio is insert:vector."""
 
     vector_length: DNALength = Field(examples=[{"value": 4, "unit": "kb"}])
-    vector_conc: Concentration = Field(examples=[{"value": 100, "unit": "ng/µL"}])
+    vector_conc: MassConcentration = Field(examples=[{"value": 100, "unit": "ng/µL"}])
     vector_mass: DNAMass = Field(examples=[{"value": 50, "unit": "ng"}])
     insert_length: DNALength = Field(examples=[{"value": 1200, "unit": "bp"}])
-    insert_conc: Concentration = Field(examples=[{"value": 20, "unit": "ng/µL"}])
+    insert_conc: MassConcentration = Field(examples=[{"value": 20, "unit": "ng/µL"}])
     molar_ratio: float = Field(gt=0, examples=[3])
     final_volume: Volume = Field(examples=[{"value": 20, "unit": "µL"}])
 

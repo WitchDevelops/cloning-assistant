@@ -194,6 +194,24 @@ class LigationRequest(ApiModel):
     final_volume: Volume = Field(examples=[{"value": 20, "unit": "µL"}])
 
 
+class LigationReaction(ApiModel):
+    """Volumes of reagents for one reaction in µL; control has insert_volume = 0.0."""
+
+    vector_volume: float
+    insert_volume: float
+    ligase_volume: float
+    ligase_buffer_volume: float
+    water_volume: float
+
+
+class LigationResponse(ApiModel):
+    """Volumes for ligation reaction with negative control. Insert mass in ng."""
+
+    insert_mass: float
+    reaction: LigationReaction
+    control: LigationReaction
+
+
 class Stock(ApiModel):
     """Defines a stock solution (Cold Spring Harbor standards)."""
 

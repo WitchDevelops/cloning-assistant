@@ -25,6 +25,13 @@ def body(**overrides) -> dict:
 
 
 def test_ligation_returns_reaction_and_control():
+    # Worked by hand from the body() defaults:
+    #   insert mass   = 50 ng × (1200 bp / 4000 bp) × 3 = 45 ng
+    #   vector volume = 50 ng / 100 ng/µL = 0.5 µL
+    #   insert volume = 45 ng / 20 ng/µL  = 2.25 µL
+    #   buffer 10 % of 20 µL = 2 µL, ligase 5 % = 1 µL
+    #   water, reaction = 20 − (0.5 + 2.25 + 2 + 1) = 14.25 µL
+    #   water, control  = 20 − (0.5 + 2 + 1) = 16.5 µL
     response = client.post("/api/ligation", json=body())
     assert response.status_code == 200
     assert response.json() == {
@@ -47,6 +54,8 @@ def test_ligation_returns_reaction_and_control():
 
 
 def test_ligation_rejects_reagents_exceeding_final_volume():
+    # Vector at 1 ng/µL needs 50 µL for 50 ng, already more than the 20 µL reaction,
+    # before insert (2.25 µL), buffer (2 µL) and ligase (1 µL) are added.
     response = client.post("/api/ligation", json=body(vectorConc=quantity(1, "ng/µL")))
     assert response.status_code == 422
     assert response.json()["detail"][0]["loc"] == ["body"]

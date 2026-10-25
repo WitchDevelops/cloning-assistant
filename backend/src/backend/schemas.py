@@ -167,6 +167,19 @@ class DilutionResponse(ApiModel):
     diluent: float
 
 
+class LigationRequest(ApiModel):
+    """Vector and insert size and concentration and a desired molar ratio of them.
+    DNA concentrations must be mass per volume, molar ratio is insert:vector."""
+
+    vector_length: DNALength = Field(examples=[{"value": 4, "unit": "kb"}])
+    vector_conc: Concentration = Field(examples=[{"value": 100, "unit": "ng/µL"}])
+    vector_mass: DNAMass = Field(examples=[{"value": 50, "unit": "ng"}])
+    insert_length: DNALength = Field(examples=[{"value": 1200, "unit": "bp"}])
+    insert_conc: Concentration = Field(examples=[{"value": 20, "unit": "ng/µL"}])
+    molar_ratio: float = Field(gt=0, examples=[3])
+    final_volume: Volume = Field(examples=[{"value": 20, "unit": "µL"}])
+
+
 class Stock(ApiModel):
     """Defines a stock solution (Cold Spring Harbor standards)."""
 

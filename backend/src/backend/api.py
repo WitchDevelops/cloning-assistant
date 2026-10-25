@@ -1,7 +1,7 @@
 import os
 from importlib.metadata import version
 
-from fastapi import APIRouter, FastAPI
+from fastapi import APIRouter, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from backend.calculations import dilution, ligation, ligation_control
@@ -64,20 +64,28 @@ def calculate_ligation(payload: LigationRequest) -> LigationResponse:
     vector_conc = payload.vector_conc.to_base()
     final_volume = payload.final_volume.to_base()
 
-    reaction_data = ligation(
-        vector_mass=vector_mass,
-        vector_length=payload.vector_length.to_base(),
-        vector_conc=vector_conc,
-        insert_length=payload.insert_length.to_base(),
-        insert_conc=payload.insert_conc.to_base(),
-        ratio=payload.molar_ratio,
-        final_volume=final_volume,
-    )
-    control_data = ligation_control(
-        vector_mass=vector_mass,
-        vector_conc=vector_conc,
-        final_volume=final_volume,
-    )
+    try:
+        reaction_data = ligation(
+            vector_mass=vector_mass,
+            vector_length=payload.vector_length.to_base(),
+            vector_conc=vector_conc,
+            insert_length=payload.insert_length.to_base(),
+            insert_conc=payload.insert_conc.to_base(),
+            ratio=payload.molar_ratio,
+            final_volume=final_volume,
+        )
+        control_data = ligation_control(
+            vector_mass=vector_mass,
+            vector_conc=vector_conc,
+            final_volume=final_volume,
+        )
+
+    except ValueError as exception:
+        raise HTTPException(
+            status_code=422,
+            detail=[{"loc": ["body"], "msg": str(exception), "type": "value_error"}],
+        ) from exception
+
     return LigationResponse(
         insert_mass=reaction_data.insert_volume * payload.insert_conc.to_base(),
         reaction=LigationReaction(**reaction_data._asdict()),

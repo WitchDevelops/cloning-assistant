@@ -68,7 +68,7 @@ def _assemble_ligation_mix(
     if water_volume < 0:
         raise ValueError(
             f"Reagents need {final_volume - water_volume:.1f} µL"
-            f" but the reaction volume is {final_volume} µL."
+            f" but the reaction volume is {final_volume} µL. "
             f"Negative water volume: {-water_volume:.1f} µL. "
             "Increase the reaction volume, use less vector, or concentrate the insert."
         )

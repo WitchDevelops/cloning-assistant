@@ -49,6 +49,10 @@ export const toBase = (value: number, unit: Unit): number =>
 export const isConcentration = (unit: Unit): unit is ConcentrationUnit =>
 	CONCENTRATION_FAMILIES.includes(UNITS[unit].family);
 
+export const isMassPerVolConcentration = (
+	unit: Unit,
+): unit is MassConcentrationUnit => UNITS[unit].family === 'massPerVolume';
+
 export const isVolume = (unit: Unit): unit is VolumeUnit =>
 	UNITS[unit].family === 'volume';
 
@@ -59,7 +63,12 @@ export const isDNAMass = (unit: Unit): unit is DNAMass =>
 	UNITS[unit].family === 'dnaMass';
 
 export const CONCENTRATION_UNIT_VALUES = UNIT_VALUES.filter(isConcentration);
+export const MASS_PER_VOL_CONCENTRATION_UNIT_VALUES = UNIT_VALUES.filter(
+	isMassPerVolConcentration,
+);
 export const VOLUME_UNIT_VALUES = UNIT_VALUES.filter(isVolume);
+export const DNA_LENGTH_UNIT_VALUES = UNIT_VALUES.filter(isDNALength);
+export const DNA_MASS_UNIT_VALUES = UNIT_VALUES.filter(isDNAMass);
 
 const unitsOf = (family: UnitFamily): Unit[] =>
 	(Object.keys(UNITS) as Unit[]).filter(
@@ -93,6 +102,7 @@ type UnitOf<F extends UnitFamily> = {
 }[Unit];
 
 export type ConcentrationUnit = UnitOf<'massPerVolume' | 'molPerVolume'>;
+export type MassConcentrationUnit = UnitOf<'massPerVolume'>;
 export type VolumeUnit = UnitOf<'volume'>;
 export type DNALength = UnitOf<'dnaLength'>;
 export type DNAMass = UnitOf<'dnaMass'>;

@@ -82,6 +82,18 @@ def _assemble_ligation_mix(
     )
 
 
+def compute_insert_mass(
+    vector_mass: float, vector_length: float, insert_length: float, ratio: float
+) -> float:
+    """Helper that calculates insert mass (ng) for a given mass of the vector (ng),
+    vector length (bp), insert length (bp) and insert to vector ratio.
+    Uses formula `ng insert = ng vector × (bp insert / bp vector) × ratio`.
+    Based on Ligation Protocol with T4 DNA Ligase (NEB# M0202) (https://www.neb.com/en/protocols/dna-ligation-with-t4-dna-ligase-m0202).
+    """
+    insert_mass = vector_mass * (insert_length / vector_length) * ratio
+    return insert_mass
+
+
 def ligation(
     vector_mass: float,
     vector_length: float,
@@ -92,7 +104,6 @@ def ligation(
     final_volume: float,
 ) -> LigationMix:
     """Values needed to calculate the volumes for a ligation mixture.
-    Uses formula `ng insert = ng vector × (bp insert / bp vector) × ratio`.
     Based on Ligation Protocol with T4 DNA Ligase (NEB# M0202) (https://www.neb.com/en/protocols/dna-ligation-with-t4-dna-ligase-m0202).
 
     Args:
@@ -111,7 +122,7 @@ def ligation(
         ValueError for negative water volume.
     """
 
-    insert_mass = vector_mass * (insert_length / vector_length) * ratio
+    insert_mass = compute_insert_mass(vector_mass, vector_length, insert_length, ratio)
     vector_volume = vector_mass / vector_conc
     insert_volume = insert_mass / insert_conc
 

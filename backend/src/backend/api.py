@@ -4,7 +4,7 @@ from importlib.metadata import version
 from fastapi import APIRouter, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.calculations import dilution, ligation, ligation_control
+from backend.calculations import compute_insert_mass, dilution, ligation, ligation_control
 from backend.schemas import (
     DilutionRequest,
     DilutionResponse,
@@ -60,18 +60,28 @@ def calculate_ligation(payload: LigationRequest) -> LigationResponse:
 
     Takes insert size and concentration, vector size and concentration
     and molar ratio (insert:vector)."""
-    vector_mass = payload.vector_mass.to_base()
+
+    vector_length = payload.vector_length.to_base()
     vector_conc = payload.vector_conc.to_base()
+    vector_mass = payload.vector_mass.to_base()
+    insert_length = payload.insert_length.to_base()
     final_volume = payload.final_volume.to_base()
+    ratio = payload.molar_ratio
 
     try:
+        insert_mass = compute_insert_mass(
+            vector_mass=vector_mass,
+            vector_length=vector_length,
+            insert_length=insert_length,
+            ratio=ratio,
+        )
         reaction_data = ligation(
             vector_mass=vector_mass,
-            vector_length=payload.vector_length.to_base(),
+            vector_length=vector_length,
+            insert_length=insert_length,
             vector_conc=vector_conc,
-            insert_length=payload.insert_length.to_base(),
             insert_conc=payload.insert_conc.to_base(),
-            ratio=payload.molar_ratio,
+            ratio=ratio,
             final_volume=final_volume,
         )
         control_data = ligation_control(
@@ -87,7 +97,7 @@ def calculate_ligation(payload: LigationRequest) -> LigationResponse:
         ) from exception
 
     return LigationResponse(
-        insert_mass=reaction_data.insert_volume * payload.insert_conc.to_base(),
+        insert_mass=insert_mass,
         reaction=LigationReaction(**reaction_data._asdict()),
         control=LigationReaction(**control_data._asdict()),
     )

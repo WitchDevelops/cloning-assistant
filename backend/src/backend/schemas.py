@@ -4,7 +4,7 @@ as is expected by the React client."""
 
 from enum import StrEnum
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 from pydantic.alias_generators import to_camel
 
 
@@ -102,7 +102,7 @@ class Quantity(ApiModel):
     """A magnitude paired with a unit. Subclasses narrow `unit` to one dimension,
     so a volume cannot be supplied where a concentration is expected."""
 
-    value: float = Field(gt=0)
+    value: float = Field(gt=0, allow_inf_nan=False)
     # Declared as a union here only so `to_base` can see `.factor`; each subclass
     # narrows it to one dimension. The `strict` constraint lives on the subclasses
     # because it cannot be applied to a union.
@@ -121,6 +121,20 @@ class Concentration(Quantity):
     # strict=False because a JSON body carries the unit as a plain string;
     # under strict=True Pydantic would demand an enum instance and reject "mM".
     unit: ConcentrationUnit = Field(strict=False)
+
+
+class MassConcentration(Concentration):
+    """A concentration restricted to mass-per-volume, useful for DNA calculations."""
+
+    @field_validator("unit")
+    @classmethod
+    def reject_molar_units(cls, unit: ConcentrationUnit) -> ConcentrationUnit:
+        if unit.unit_family is not UnitFamily.MASS_PER_VOLUME:
+            raise ValueError(
+                "Concentration must be in ng/µL, µg/µL or mg/mL;"
+                " molar units need a molecular weight."
+            )
+        return unit
 
 
 class Volume(Quantity):
@@ -165,6 +179,37 @@ class DilutionResponse(ApiModel):
 
     stock: float
     diluent: float
+
+
+class LigationRequest(ApiModel):
+    """Vector and insert size and concentration and a desired molar ratio of them.
+    DNA concentrations must be mass per volume, molar ratio is insert:vector."""
+
+    vector_length: DNALength = Field(examples=[{"value": 4, "unit": "kb"}])
+    vector_conc: MassConcentration = Field(examples=[{"value": 100, "unit": "ng/µL"}])
+    vector_mass: DNAMass = Field(examples=[{"value": 50, "unit": "ng"}])
+    insert_length: DNALength = Field(examples=[{"value": 1200, "unit": "bp"}])
+    insert_conc: MassConcentration = Field(examples=[{"value": 20, "unit": "ng/µL"}])
+    molar_ratio: float = Field(gt=0, allow_inf_nan=False, examples=[3])
+    final_volume: Volume = Field(examples=[{"value": 20, "unit": "µL"}])
+
+
+class LigationReaction(ApiModel):
+    """Volumes of reagents for one reaction in µL; control has insert_volume = 0.0."""
+
+    vector_volume: float
+    insert_volume: float
+    ligase_volume: float
+    ligase_buffer_volume: float
+    water_volume: float
+
+
+class LigationResponse(ApiModel):
+    """Volumes for ligation reaction with negative control. Insert mass in ng."""
+
+    insert_mass: float
+    reaction: LigationReaction
+    control: LigationReaction
 
 
 class Stock(ApiModel):

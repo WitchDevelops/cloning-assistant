@@ -1,11 +1,18 @@
 import os
 from importlib.metadata import version
 
-from fastapi import APIRouter, FastAPI
+from fastapi import APIRouter, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.calculations import dilution
-from backend.schemas import DilutionRequest, DilutionResponse, StockResponse
+from backend.calculations import compute_insert_mass, dilution, ligation, ligation_control
+from backend.schemas import (
+    DilutionRequest,
+    DilutionResponse,
+    LigationReaction,
+    LigationRequest,
+    LigationResponse,
+    StockResponse,
+)
 from backend.stocks import STANDARD_STOCKS
 
 app = FastAPI(
@@ -45,6 +52,55 @@ def calculate_dilution(payload: DilutionRequest) -> DilutionResponse:
         payload.stock_conc.to_base(), payload.final_conc.to_base(), payload.final_volume.to_base()
     )
     return DilutionResponse(stock=result.stock, diluent=result.diluent)
+
+
+@router.post("/ligation", tags=["Calculators"])
+def calculate_ligation(payload: LigationRequest) -> LigationResponse:
+    """Calculate the volumes of the insert, vector and water for a single ligation reaction.
+
+    Takes insert size and concentration, vector size and concentration
+    and molar ratio (insert:vector)."""
+
+    vector_length = payload.vector_length.to_base()
+    vector_conc = payload.vector_conc.to_base()
+    vector_mass = payload.vector_mass.to_base()
+    insert_length = payload.insert_length.to_base()
+    final_volume = payload.final_volume.to_base()
+    ratio = payload.molar_ratio
+
+    try:
+        insert_mass = compute_insert_mass(
+            vector_mass=vector_mass,
+            vector_length=vector_length,
+            insert_length=insert_length,
+            ratio=ratio,
+        )
+        reaction_data = ligation(
+            vector_mass=vector_mass,
+            vector_length=vector_length,
+            insert_length=insert_length,
+            vector_conc=vector_conc,
+            insert_conc=payload.insert_conc.to_base(),
+            ratio=ratio,
+            final_volume=final_volume,
+        )
+        control_data = ligation_control(
+            vector_mass=vector_mass,
+            vector_conc=vector_conc,
+            final_volume=final_volume,
+        )
+
+    except ValueError as exception:
+        raise HTTPException(
+            status_code=422,
+            detail=[{"loc": ["body"], "msg": str(exception), "type": "value_error"}],
+        ) from exception
+
+    return LigationResponse(
+        insert_mass=insert_mass,
+        reaction=LigationReaction(**reaction_data._asdict()),
+        control=LigationReaction(**control_data._asdict()),
+    )
 
 
 @router.get("/stocks", tags=["Stock solutions"])

@@ -1,0 +1,289 @@
+[
+	{
+		"description": "valid input",
+		"input": {
+			"vectorLengthValue": 4,
+			"vectorLengthUnit": "kb",
+			"vectorConcValue": 100,
+			"vectorConcUnit": "ng/µL",
+			"vectorMassValue": 50,
+			"vectorMassUnit": "ng",
+			"insertLengthValue": 1200,
+			"insertLengthUnit": "bp",
+			"insertConcValue": 20,
+			"insertConcUnit": "ng/µL",
+			"molarRatio": 3,
+			"finalVolumeValue": 20,
+			"finalVolumeUnit": "µL"
+		},
+		"valid": true
+	},
+	{
+		"description": "valid: vector mass in µg",
+		"input": {
+			"vectorLengthValue": 4,
+			"vectorLengthUnit": "kb",
+			"vectorConcValue": 100,
+			"vectorConcUnit": "ng/µL",
+			"vectorMassValue": 0.05,
+			"vectorMassUnit": "µg",
+			"insertLengthValue": 1200,
+			"insertLengthUnit": "bp",
+			"insertConcValue": 20,
+			"insertConcUnit": "ng/µL",
+			"molarRatio": 3,
+			"finalVolumeValue": 20,
+			"finalVolumeUnit": "µL"
+		},
+		"valid": true
+	},
+	{
+		"description": "valid: custom molar ratio outside the presets",
+		"input": {
+			"vectorLengthValue": 4,
+			"vectorLengthUnit": "kb",
+			"vectorConcValue": 100,
+			"vectorConcUnit": "ng/µL",
+			"vectorMassValue": 50,
+			"vectorMassUnit": "ng",
+			"insertLengthValue": 1200,
+			"insertLengthUnit": "bp",
+			"insertConcValue": 20,
+			"insertConcUnit": "ng/µL",
+			"molarRatio": 2,
+			"finalVolumeValue": 20,
+			"finalVolumeUnit": "µL"
+		},
+		"valid": true
+	},
+	{
+		"description": "rejects a non-positive vector mass",
+		"input": {
+			"vectorLengthValue": 4,
+			"vectorLengthUnit": "kb",
+			"vectorConcValue": 100,
+			"vectorConcUnit": "ng/µL",
+			"vectorMassValue": 0,
+			"vectorMassUnit": "ng",
+			"insertLengthValue": 1200,
+			"insertLengthUnit": "bp",
+			"insertConcValue": 20,
+			"insertConcUnit": "ng/µL",
+			"molarRatio": 3,
+			"finalVolumeValue": 20,
+			"finalVolumeUnit": "µL"
+		},
+		"valid": false
+	},
+	{
+		"description": "rejects a non-positive molar ratio",
+		"input": {
+			"vectorLengthValue": 4,
+			"vectorLengthUnit": "kb",
+			"vectorConcValue": 100,
+			"vectorConcUnit": "ng/µL",
+			"vectorMassValue": 50,
+			"vectorMassUnit": "ng",
+			"insertLengthValue": 1200,
+			"insertLengthUnit": "bp",
+			"insertConcValue": 20,
+			"insertConcUnit": "ng/µL",
+			"molarRatio": 0,
+			"finalVolumeValue": 20,
+			"finalVolumeUnit": "µL"
+		},
+		"valid": false
+	},
+	{
+		"description": "rejects a molar unit for vector concentration",
+		"input": {
+			"vectorLengthValue": 4,
+			"vectorLengthUnit": "kb",
+			"vectorConcValue": 100,
+			"vectorConcUnit": "nM",
+			"vectorMassValue": 50,
+			"vectorMassUnit": "ng",
+			"insertLengthValue": 1200,
+			"insertLengthUnit": "bp",
+			"insertConcValue": 20,
+			"insertConcUnit": "ng/µL",
+			"molarRatio": 3,
+			"finalVolumeValue": 20,
+			"finalVolumeUnit": "µL"
+		},
+		"valid": false
+	},
+	{
+		"description": "rejects a molar unit for insert concentration",
+		"input": {
+			"vectorLengthValue": 4,
+			"vectorLengthUnit": "kb",
+			"vectorConcValue": 100,
+			"vectorConcUnit": "ng/µL",
+			"vectorMassValue": 50,
+			"vectorMassUnit": "ng",
+			"insertLengthValue": 1200,
+			"insertLengthUnit": "bp",
+			"insertConcValue": 20,
+			"insertConcUnit": "µM",
+			"molarRatio": 3,
+			"finalVolumeValue": 20,
+			"finalVolumeUnit": "µL"
+		},
+		"valid": false
+	},
+	{
+		"description": "rejects a mass unit in a length field",
+		"input": {
+			"vectorLengthValue": 4,
+			"vectorLengthUnit": "ng",
+			"vectorConcValue": 100,
+			"vectorConcUnit": "ng/µL",
+			"vectorMassValue": 50,
+			"vectorMassUnit": "ng",
+			"insertLengthValue": 1200,
+			"insertLengthUnit": "bp",
+			"insertConcValue": 20,
+			"insertConcUnit": "ng/µL",
+			"molarRatio": 3,
+			"finalVolumeValue": 20,
+			"finalVolumeUnit": "µL"
+		},
+		"valid": false
+	},
+	{
+		"description": "rejects a length unit in the mass field",
+		"input": {
+			"vectorLengthValue": 4,
+			"vectorLengthUnit": "kb",
+			"vectorConcValue": 100,
+			"vectorConcUnit": "ng/µL",
+			"vectorMassValue": 50,
+			"vectorMassUnit": "bp",
+			"insertLengthValue": 1200,
+			"insertLengthUnit": "bp",
+			"insertConcValue": 20,
+			"insertConcUnit": "ng/µL",
+			"molarRatio": 3,
+			"finalVolumeValue": 20,
+			"finalVolumeUnit": "µL"
+		},
+		"valid": false
+	},
+	{
+		"description": "rejects a concentration unit in the volume field",
+		"input": {
+			"vectorLengthValue": 4,
+			"vectorLengthUnit": "kb",
+			"vectorConcValue": 100,
+			"vectorConcUnit": "ng/µL",
+			"vectorMassValue": 50,
+			"vectorMassUnit": "ng",
+			"insertLengthValue": 1200,
+			"insertLengthUnit": "bp",
+			"insertConcValue": 20,
+			"insertConcUnit": "ng/µL",
+			"molarRatio": 3,
+			"finalVolumeValue": 20,
+			"finalVolumeUnit": "ng/µL"
+		},
+		"valid": false
+	},
+	{
+		"description": "rejects a unit outside the known set",
+		"input": {
+			"vectorLengthValue": 4,
+			"vectorLengthUnit": "kb",
+			"vectorConcValue": 100,
+			"vectorConcUnit": "ng/µL",
+			"vectorMassValue": 50,
+			"vectorMassUnit": "ng",
+			"insertLengthValue": 1200,
+			"insertLengthUnit": "bp",
+			"insertConcValue": 20,
+			"insertConcUnit": "ng/µL",
+			"molarRatio": 3,
+			"finalVolumeValue": 20,
+			"finalVolumeUnit": "nL"
+		},
+		"valid": false
+	},
+	{
+		"description": "rejects a negative vector length",
+		"input": {
+			"vectorLengthValue": -4,
+			"vectorLengthUnit": "kb",
+			"vectorConcValue": 100,
+			"vectorConcUnit": "ng/µL",
+			"vectorMassValue": 50,
+			"vectorMassUnit": "ng",
+			"insertLengthValue": 1200,
+			"insertLengthUnit": "bp",
+			"insertConcValue": 20,
+			"insertConcUnit": "ng/µL",
+			"molarRatio": 3,
+			"finalVolumeValue": 20,
+			"finalVolumeUnit": "µL"
+		},
+		"valid": false
+	},
+	{
+		"description": "rejects a negative insert length",
+		"input": {
+			"vectorLengthValue": 4,
+			"vectorLengthUnit": "kb",
+			"vectorConcValue": 100,
+			"vectorConcUnit": "ng/µL",
+			"vectorMassValue": 50,
+			"vectorMassUnit": "ng",
+			"insertLengthValue": -1200,
+			"insertLengthUnit": "bp",
+			"insertConcValue": 20,
+			"insertConcUnit": "ng/µL",
+			"molarRatio": 3,
+			"finalVolumeValue": 20,
+			"finalVolumeUnit": "µL"
+		},
+		"valid": false
+	},
+	{
+		"description": "valid: dilute vector overflows the reaction (25 µL vector in 20 µL)",
+		"note": "Both schemas accept this. The overflow is caught by the calculation, which raises for negative water volume; it is not a validation rule.",
+		"input": {
+			"vectorLengthValue": 4,
+			"vectorLengthUnit": "kb",
+			"vectorConcValue": 2,
+			"vectorConcUnit": "ng/µL",
+			"vectorMassValue": 50,
+			"vectorMassUnit": "ng",
+			"insertLengthValue": 1200,
+			"insertLengthUnit": "bp",
+			"insertConcValue": 20,
+			"insertConcUnit": "ng/µL",
+			"molarRatio": 3,
+			"finalVolumeValue": 20,
+			"finalVolumeUnit": "µL"
+		},
+		"valid": true
+	},
+	{
+		"description": "valid: concentrated vector gives 0.1 µL, below the P2 threshold",
+		"note": "The minimum pipetting volume warning is a frontend display concern, not part of the request contract.",
+		"input": {
+			"vectorLengthValue": 4,
+			"vectorLengthUnit": "kb",
+			"vectorConcValue": 500,
+			"vectorConcUnit": "ng/µL",
+			"vectorMassValue": 50,
+			"vectorMassUnit": "ng",
+			"insertLengthValue": 1200,
+			"insertLengthUnit": "bp",
+			"insertConcValue": 20,
+			"insertConcUnit": "ng/µL",
+			"molarRatio": 3,
+			"finalVolumeValue": 20,
+			"finalVolumeUnit": "µL"
+		},
+		"valid": true
+	}
+]

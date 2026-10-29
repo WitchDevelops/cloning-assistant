@@ -32,7 +32,7 @@ export const ligationInputSchema = z.object({
 		error:
 			'Insert concentration must be expressed in a mass per volume concentration unit.',
 	}),
-	molarRatio: z.coerce.number().positive().default(DEFAULT_MOLAR_RATIO),
+	molarRatio: z.coerce.number().positive(),
 	finalVolumeValue: z.coerce.number().positive(),
 	finalVolumeUnit: z.enum(VOLUME_UNIT_VALUES, {
 		error: 'Final reaction volume must be given in a volume unit.',

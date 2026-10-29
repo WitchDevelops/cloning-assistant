@@ -4,7 +4,7 @@ import {
 	DNA_MASS_UNIT_VALUES,
 	MASS_PER_VOL_CONCENTRATION_UNIT_VALUES,
 	VOLUME_UNIT_VALUES,
-} from '../utils/units';
+} from '@/features/calculators/utils/units';
 
 export const MOLAR_RATIO_PRESETS = [1, 3, 5, 10] as const;
 export const DEFAULT_MOLAR_RATIO: (typeof MOLAR_RATIO_PRESETS)[number] = 3;

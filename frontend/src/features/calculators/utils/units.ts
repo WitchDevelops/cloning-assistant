@@ -56,10 +56,10 @@ export const isMassPerVolConcentration = (
 export const isVolume = (unit: Unit): unit is VolumeUnit =>
 	UNITS[unit].family === 'volume';
 
-export const isDNALength = (unit: Unit): unit is DNALength =>
+export const isDNALength = (unit: Unit): unit is DNALengthUnit =>
 	UNITS[unit].family === 'dnaLength';
 
-export const isDNAMass = (unit: Unit): unit is DNAMass =>
+export const isDNAMass = (unit: Unit): unit is DNAMassUnit =>
 	UNITS[unit].family === 'dnaMass';
 
 export const CONCENTRATION_UNIT_VALUES = UNIT_VALUES.filter(isConcentration);
@@ -104,8 +104,8 @@ type UnitOf<F extends UnitFamily> = {
 export type ConcentrationUnit = UnitOf<'massPerVolume' | 'molPerVolume'>;
 export type MassConcentrationUnit = UnitOf<'massPerVolume'>;
 export type VolumeUnit = UnitOf<'volume'>;
-export type DNALength = UnitOf<'dnaLength'>;
-export type DNAMass = UnitOf<'dnaMass'>;
+export type DNALengthUnit = UnitOf<'dnaLength'>;
+export type DNAMassUnit = UnitOf<'dnaMass'>;
 
 // Generic with a default so that narrowing to Quantity<VolumeUnit> works
 export type Quantity<U extends Unit = Unit> = {

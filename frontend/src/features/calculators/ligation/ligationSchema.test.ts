@@ -80,6 +80,9 @@ describe('ligationInputSchema', () => {
 	});
 });
 
+// The contract covers typed values only. Zod coerces form strings ("3" → 3) before
+// the request is built, so Pydantic, which is strict, never sees a string. A fixture
+// case with a string value would pass here and fail on the Python side by design.
 describe('ligationInputSchema matches the shared contract', () => {
 	it.each(cases)(`$description`, ({ input, valid }) => {
 		expect(ligationInputSchema.safeParse(input).success).toBe(valid);

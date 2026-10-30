@@ -1,9 +1,16 @@
+import json
+from pathlib import Path
+
 import pytest
 from fastapi.testclient import TestClient
+from pydantic import ValidationError
 
 from backend.api import app
+from backend.schemas import LigationRequest
 
 client = TestClient(app)
+
+CASES = json.loads((Path(__file__).parents[3] / "contracts" / "ligation-cases.json").read_text())
 
 
 def quantity(value: float, unit: str) -> dict:
@@ -122,3 +129,51 @@ def test_ligation_rejects_empty_body():
     response = client.post("/api/ligation", json={})
     assert response.status_code == 422
     assert len(response.json()["detail"]) == 7
+
+
+KNOWN_FLAT_KEYS = {
+    "vectorLengthValue",
+    "vectorLengthUnit",
+    "vectorConcValue",
+    "vectorConcUnit",
+    "vectorMassValue",
+    "vectorMassUnit",
+    "insertLengthValue",
+    "insertLengthUnit",
+    "insertConcValue",
+    "insertConcUnit",
+    "molarRatio",
+    "finalVolumeValue",
+    "finalVolumeUnit",
+}
+
+
+def to_nested(flat: dict) -> dict:
+    nested = {
+        "vectorLength": {"value": flat["vectorLengthValue"], "unit": flat["vectorLengthUnit"]},
+        "vectorConc": {"value": flat["vectorConcValue"], "unit": flat["vectorConcUnit"]},
+        "vectorMass": {"value": flat["vectorMassValue"], "unit": flat["vectorMassUnit"]},
+        "insertLength": {"value": flat["insertLengthValue"], "unit": flat["insertLengthUnit"]},
+        "insertConc": {"value": flat["insertConcValue"], "unit": flat["insertConcUnit"]},
+        "molarRatio": flat["molarRatio"],
+        "finalVolume": {"value": flat["finalVolumeValue"], "unit": flat["finalVolumeUnit"]},
+    }
+    extras = {key: value for key, value in flat.items() if key not in KNOWN_FLAT_KEYS}
+    return {**nested, **extras}
+
+
+def is_valid(payload: dict) -> bool:
+    try:
+        LigationRequest.model_validate(payload)
+    except ValidationError:
+        return False
+    return True
+
+
+# Shared frontend / backend contracts tests: does Pydantic accept the same input as Zod?
+# Validate the model instead of the endpoint, because endpoint answers 422 also on
+# a calculation error (reaction overflows final volume), which is not schema rule.
+# Going through the model means only schema errors can occur.
+@pytest.mark.parametrize("case", CASES, ids=lambda c: c["description"])
+def test_matches_shared_contract(case):
+    assert is_valid(to_nested(case["input"])) == case["valid"]

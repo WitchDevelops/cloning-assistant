@@ -1,3 +1,4 @@
+import cases from '@contracts/ligation-cases.json';
 import { describe, expect, it } from 'vitest';
 import { ligationInputSchema } from './ligationSchema';
 
@@ -76,5 +77,11 @@ describe('ligationInputSchema', () => {
 		expect(
 			ligationInputSchema.safeParse({ ...valid, molarRatio: 2 }).success,
 		).toBe(true);
+	});
+});
+
+describe('ligationInputSchema matches the shared contract', () => {
+	it.each(cases)(`$description`, ({ input, valid }) => {
+		expect(ligationInputSchema.safeParse(input).success).toBe(valid);
 	});
 });

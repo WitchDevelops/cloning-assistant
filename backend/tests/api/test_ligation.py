@@ -131,8 +131,25 @@ def test_ligation_rejects_empty_body():
     assert len(response.json()["detail"]) == 7
 
 
+KNOWN_FLAT_KEYS = {
+    "vectorLengthValue",
+    "vectorLengthUnit",
+    "vectorConcValue",
+    "vectorConcUnit",
+    "vectorMassValue",
+    "vectorMassUnit",
+    "insertLengthValue",
+    "insertLengthUnit",
+    "insertConcValue",
+    "insertConcUnit",
+    "molarRatio",
+    "finalVolumeValue",
+    "finalVolumeUnit",
+}
+
+
 def to_nested(flat: dict) -> dict:
-    return {
+    nested = {
         "vectorLength": {"value": flat["vectorLengthValue"], "unit": flat["vectorLengthUnit"]},
         "vectorConc": {"value": flat["vectorConcValue"], "unit": flat["vectorConcUnit"]},
         "vectorMass": {"value": flat["vectorMassValue"], "unit": flat["vectorMassUnit"]},
@@ -141,6 +158,8 @@ def to_nested(flat: dict) -> dict:
         "molarRatio": flat["molarRatio"],
         "finalVolume": {"value": flat["finalVolumeValue"], "unit": flat["finalVolumeUnit"]},
     }
+    extras = {key: value for key, value in flat.items() if key not in KNOWN_FLAT_KEYS}
+    return {**nested, **extras}
 
 
 def is_valid(payload: dict) -> bool:

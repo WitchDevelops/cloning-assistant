@@ -285,5 +285,63 @@
 			"finalVolumeUnit": "µL"
 		},
 		"valid": true
+	},
+	{
+		"description": "rejects a zero final volume",
+		"input": {
+			"vectorLengthValue": 4,
+			"vectorLengthUnit": "kb",
+			"vectorConcValue": 100,
+			"vectorConcUnit": "ng/µL",
+			"vectorMassValue": 50,
+			"vectorMassUnit": "ng",
+			"insertLengthValue": 1200,
+			"insertLengthUnit": "bp",
+			"insertConcValue": 20,
+			"insertConcUnit": "ng/µL",
+			"molarRatio": 3,
+			"finalVolumeValue": 0,
+			"finalVolumeUnit": "µL"
+		},
+		"valid": false
+	},
+	{
+		"description": "rejects a negative insert concentration",
+		"input": {
+			"vectorLengthValue": 4,
+			"vectorLengthUnit": "kb",
+			"vectorConcValue": 100,
+			"vectorConcUnit": "ng/µL",
+			"vectorMassValue": 50,
+			"vectorMassUnit": "ng",
+			"insertLengthValue": 1200,
+			"insertLengthUnit": "bp",
+			"insertConcValue": -20,
+			"insertConcUnit": "ng/µL",
+			"molarRatio": 3,
+			"finalVolumeValue": 20,
+			"finalVolumeUnit": "µL"
+		},
+		"valid": false
+	},
+	{
+		"description": "valid: an unknown key is ignored, not rejected",
+		"input": {
+			"vectorLengthValue": 4,
+			"vectorLengthUnit": "kb",
+			"vectorConcValue": 100,
+			"vectorConcUnit": "ng/µL",
+			"vectorMassValue": 50,
+			"vectorMassUnit": "ng",
+			"insertLengthValue": 1200,
+			"insertLengthUnit": "bp",
+			"insertConcValue": 20,
+			"insertConcUnit": "ng/µL",
+			"molarRatio": 3,
+			"finalVolumeValue": 20,
+			"finalVolumeUnit": "µL",
+			"label": "pUC19 + GFP"
+		},
+		"valid": true
 	}
 ]

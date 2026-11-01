@@ -6,22 +6,23 @@ import { StockSolutions } from './features/stock-solutions/StockSolutions';
 import './App.css';
 import { DilutionCalculatorPage } from './features/calculators/dilution/DilutionCalculatorPage';
 import { LigationCalculatorPage } from './features/calculators/ligation/LigationCalculatorPage';
+import { ROUTES } from './routes';
 
 function App() {
 	return (
 		<Routes>
 			<Route element={<Layout />}>
-				<Route path="/" element={<Calculators />} />
+				<Route path={ROUTES.home} element={<Calculators />} />
 				<Route
-					path="/calculators/dilution"
+					path={ROUTES.dilutionCalculator}
 					element={<DilutionCalculatorPage />}
 				/>
 				<Route
-					path="/calculators/ligation"
+					path={ROUTES.ligationCalculator}
 					element={<LigationCalculatorPage />}
 				/>
-				<Route path="/protocols" element={<Protocols />} />
-				<Route path="/stock-solutions" element={<StockSolutions />} />
+				<Route path={ROUTES.protocols} element={<Protocols />} />
+				<Route path={ROUTES.stockSolutions} element={<StockSolutions />} />
 			</Route>
 		</Routes>
 	);

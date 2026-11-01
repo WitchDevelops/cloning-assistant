@@ -6,6 +6,7 @@ import { Menu } from '@/components/molecules/Menu';
 import './StockSolutions.css';
 import { PageTitle } from '@/components/atoms/PageTitle';
 import { toDilutionPrefill } from './toDilutionPrefill';
+import { ROUTES } from '@/routes';
 
 const SKELETON_IDS = ['skeleton-1', 'skeleton-2', 'skeleton-3'];
 
@@ -93,7 +94,7 @@ export const StockSolutions = () => {
 												stock.composition,
 											);
 
-											navigate('/calculators/dilution', {
+											navigate(ROUTES.dilutionCalculator, {
 												state: {
 													dilutionPrefill: toDilutionPrefill(stock),
 													stockName: stock.name,

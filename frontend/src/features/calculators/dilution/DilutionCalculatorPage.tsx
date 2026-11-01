@@ -5,7 +5,7 @@ import type { DilutionFormValues } from './dilutionSchema';
 import '../Calculators.css';
 import { PageTitle } from '@/components/atoms/PageTitle';
 
-type CalculatorsLocationState = {
+type DilutionLocationState = {
 	dilutionPrefill?: Partial<DilutionFormValues>;
 	stockName?: string;
 	stockConcentration?: string;
@@ -15,7 +15,7 @@ type CalculatorsLocationState = {
 
 export const DilutionCalculatorPage = () => {
 	const location = useLocation();
-	const state = location.state as CalculatorsLocationState | null;
+	const state = location.state as DilutionLocationState | null;
 
 	const concentrationLabel = state?.stockConcentrationFactor
 		? ''

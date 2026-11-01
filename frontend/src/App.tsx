@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router';
+import { Navigate, Route, Routes } from 'react-router';
 import { Layout } from './components/Layout';
 import { Calculators } from './features/calculators/Calculators';
 import { DilutionCalculatorPage } from './features/calculators/dilution/DilutionCalculatorPage';
@@ -12,6 +12,12 @@ function App() {
 	return (
 		<Routes>
 			<Route element={<Layout />}>
+				{/* TODO: Add a homepage */}
+				{/* TODO: Add a 404 for unmatched routes */}
+				<Route
+					path={ROUTES.home}
+					element={<Navigate to={ROUTES.calculators} replace />}
+				/>
 				<Route path={ROUTES.calculators} element={<Calculators />} />
 				<Route
 					path={ROUTES.dilutionCalculator}

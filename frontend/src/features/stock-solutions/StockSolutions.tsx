@@ -93,7 +93,7 @@ export const StockSolutions = () => {
 												stock.composition,
 											);
 
-											navigate('/', {
+											navigate('/calculators/dilution', {
 												state: {
 													dilutionPrefill: toDilutionPrefill(stock),
 													stockName: stock.name,

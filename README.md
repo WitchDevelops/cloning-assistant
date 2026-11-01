@@ -71,14 +71,24 @@ Or, with a package manager: `brew install uv`, `winget install --id=astral-sh.uv
 
 **macOS / Linux** - with [nvm](https://github.com/nvm-sh/nvm):
 
+Run the command from `frontend/`:
+
 ```bash
 nvm install
 ```
 
-Run from `frontend/`; nvm reads `.nvmrc`.
+then once it installs, point it at the Node version that this project uses with:
+```bash
+nvm use
+```
 
 **Windows** - [nvm-windows](https://github.com/coreybutler/nvm-windows), [fnm](https://github.com/Schniz/fnm),
 or the installer from [nodejs.org](https://nodejs.org/).
+
+then once it installs, point it at the Node version that this project uses with:
+```bash
+nvm use
+```
 
 ## Running it locally
 
@@ -123,18 +133,18 @@ Then stop both with Ctrl+C. If one server crashes, the other one is stopped to f
 
 ## Contributing
 
-Not accepting contributions yet; issues and feedback welcome
+Issues and feedback are very welcome. If you'd like to work on an issue, first comment on it - for now I'm writing issue descriptions for myself, so it might not be fully clear what is the scope of work. Get it touch and I'll contact you with futher details.
 
 ### Pre-commit hooks
 
-Install once after cloning:
+This repo uses pre-commit hooks. To set it up, install pre-commit after cloning:
 
 ```bash
 uv tool install pre-commit
 pre-commit install
 ```
 
-On every commit this runs, against staged files only:
+This runs on every commit, only against the staged files:
 
 - `ruff` - lint and format the backend
 - `eslint` - lint the frontend
@@ -149,6 +159,8 @@ pre-commit run --all-files
 ```
 
 ### Tests
+
+Frontend uses Vitest, backend uses pytest. Commands to run the tests:
 
 ```bash
 cd backend && uv run pytest
@@ -165,12 +177,12 @@ cd backend && uv run mypy src
 
 Input validation is deliberately done twice:
 
-- **Zod** on the front end for immediate feedback and data cleaning,
+- **Zod** on the front end for immediate user feedback and data cleaning,
 - **Pydantic** on the back end as the real gate.
 
 Never trust the raw input from the user.
 
-The units for calculations are declared twice (in Python backend and in TypeScript frontend) because waiting for server response for the dropdown is really bad UX and requires a separate endpoint. Two checks stop the copies from drifting: CI regenerates `contracts/units.json` from the Python enum and fails if the committed file is stale, and a Vitest test asserts the TypeScript table matches that file.
+The units shown in the dropdowns for calculations are declared twice (in Python backend and in TypeScript frontend) because waiting for server response for the dropdown is really bad UX and requires a separate endpoint. Two checks stop the copies from drifting: CI regenerates `contracts/units.json` from the Python enum and fails if the committed file is stale, and a Vitest test asserts the TypeScript table matches that file.
 
 From `backend/`, run:
 

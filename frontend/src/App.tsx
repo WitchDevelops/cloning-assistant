@@ -1,12 +1,12 @@
 import { Route, Routes } from 'react-router';
 import { Layout } from './components/Layout';
 import { Calculators } from './features/calculators/Calculators';
-import { Protocols } from './features/protocols/Protocols';
-import { StockSolutions } from './features/stock-solutions/StockSolutions';
-import './App.css';
 import { DilutionCalculatorPage } from './features/calculators/dilution/DilutionCalculatorPage';
 import { LigationCalculatorPage } from './features/calculators/ligation/LigationCalculatorPage';
+import { Protocols } from './features/protocols/Protocols';
+import { StockSolutions } from './features/stock-solutions/StockSolutions';
 import { ROUTES } from './routes';
+import './App.css';
 
 function App() {
 	return (

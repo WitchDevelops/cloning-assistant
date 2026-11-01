@@ -6,7 +6,7 @@ import { ROUTES } from '@/routes';
 export const Calculators = () => {
 	return (
 		<>
-			<PageTitle title="Calculator" />
+			<PageTitle title="Calculators" />
 			<div className="calculators__container">
 				<Card title={'Dilution calculator'} to={ROUTES.dilutionCalculator}>
 					<p>

@@ -8,7 +8,7 @@ export const Calculators = () => {
 		<>
 			<PageTitle title="Calculators" />
 			<div className="calculators__container">
-				<Card title={'Dilution calculator'} to={ROUTES.dilutionCalculator}>
+				<Card title="Dilution calculator" to={ROUTES.dilutionCalculator}>
 					<p>
 						Calculates required volumes of stock solution and diluent to achieve
 						the desired final concentration at a given volume.
@@ -18,7 +18,7 @@ export const Calculators = () => {
 						formula.
 					</p>
 				</Card>
-				<Card title={'Ligation calculator'} to={ROUTES.ligationCalculator}>
+				<Card title="Ligation calculator" to={ROUTES.ligationCalculator}>
 					<p>
 						Calculates the volumes needed for a single ligation reaction using
 						the T4 ligase.

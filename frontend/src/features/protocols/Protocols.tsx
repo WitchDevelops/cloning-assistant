@@ -4,7 +4,7 @@ export const Protocols = () => {
 	return (
 		<>
 			<PageTitle title="Protocols" />
-			<div>Protocols</div>
+			<p>Coming soon...</p>
 		</>
 	);
 };

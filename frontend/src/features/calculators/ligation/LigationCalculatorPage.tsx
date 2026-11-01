@@ -1,3 +1,10 @@
+import { PageTitle } from '@/components/atoms/PageTitle';
+
 export const LigationCalculatorPage = () => {
-	return <div>LigationCalculatorPage</div>;
+	return (
+		<>
+			<PageTitle title="Ligation calculator" />
+			<p>Coming soon...</p>
+		</>
+	);
 };

@@ -5,7 +5,7 @@ import { PageTitle } from '@/components/atoms/PageTitle';
 export const Calculators = () => {
 	return (
 		<>
-			<PageTitle title="Dilution calculator" />
+			<PageTitle title="Calculator" />
 			<div className="calculators__container">
 				<Card title={'Dilution calculator'} to={'/calculators/dilution'}>
 					<p>

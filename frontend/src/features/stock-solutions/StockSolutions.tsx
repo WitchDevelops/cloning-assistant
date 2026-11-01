@@ -5,8 +5,8 @@ import { Card } from '@/components/molecules/Card';
 import { Menu } from '@/components/molecules/Menu';
 import './StockSolutions.css';
 import { PageTitle } from '@/components/atoms/PageTitle';
-import { toDilutionPrefill } from './toDilutionPrefill';
 import { ROUTES } from '@/routes';
+import { toDilutionPrefill } from './toDilutionPrefill';
 
 const SKELETON_IDS = ['skeleton-1', 'skeleton-2', 'skeleton-3'];
 

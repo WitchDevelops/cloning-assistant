@@ -12,7 +12,7 @@ function App() {
 	return (
 		<Routes>
 			<Route element={<Layout />}>
-				<Route path={ROUTES.home} element={<Calculators />} />
+				<Route path={ROUTES.calculators} element={<Calculators />} />
 				<Route
 					path={ROUTES.dilutionCalculator}
 					element={<DilutionCalculatorPage />}

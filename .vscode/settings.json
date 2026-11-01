@@ -33,5 +33,6 @@
   },
   "[json]": {
     "editor.defaultFormatter": "biomejs.biome"
-  }
+  },
+  "python.terminal.useEnvFile": true
 }

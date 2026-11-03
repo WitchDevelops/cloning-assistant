@@ -5,6 +5,7 @@ import { Card } from '@/components/molecules/Card';
 import { Menu } from '@/components/molecules/Menu';
 import './StockSolutions.css';
 import { PageTitle } from '@/components/atoms/PageTitle';
+import { ROUTES } from '@/routes';
 import { toDilutionPrefill } from './toDilutionPrefill';
 
 const SKELETON_IDS = ['skeleton-1', 'skeleton-2', 'skeleton-3'];
@@ -93,12 +94,12 @@ export const StockSolutions = () => {
 												stock.composition,
 											);
 
-											navigate('/', {
+											navigate(ROUTES.dilutionCalculator, {
 												state: {
 													dilutionPrefill: toDilutionPrefill(stock),
 													stockName: stock.name,
 													stockConcentration: firstConcentration
-														? `${firstConcentration.value}${firstConcentration.unit}`
+														? firstConcentration
 														: undefined,
 													stockConcentrationFactor: stock.concentrationFactor,
 													stockPh: stock.ph,

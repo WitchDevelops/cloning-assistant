@@ -1,35 +1,28 @@
-import { useLocation } from 'react-router';
 import { Card } from '@/components/molecules/Card';
-import { DilutionForm } from './dilution/DilutionForm';
-import type { DilutionFormValues } from './dilution/dilutionSchema';
 import './Calculators.css';
 import { PageTitle } from '@/components/atoms/PageTitle';
-
-type CalculatorsLocationState = {
-	dilutionPrefill?: Partial<DilutionFormValues>;
-	stockName?: string;
-	stockConcentration?: string;
-	stockConcentrationFactor?: number | null;
-	stockPh?: number;
-};
+import { ROUTES } from '@/routes';
 
 export const Calculators = () => {
-	const location = useLocation();
-	const state = location.state as CalculatorsLocationState | null;
-
-	const concentrationLabel = state?.stockConcentrationFactor
-		? ''
-		: `${state?.stockConcentration}`;
-	const phLabel = state?.stockPh != null ? `, pH = ${state.stockPh}` : '';
-	const stockLabel = state?.stockName
-		? `Diluting ${concentrationLabel}${state.stockName}${phLabel}`
-		: 'Diluting stock';
 	return (
 		<>
-			<PageTitle title="Dilution calculator" />
+			<PageTitle title="Calculators" />
 			<div className="calculators__container">
-				<Card title={stockLabel}>
-					<DilutionForm prefill={state?.dilutionPrefill} />
+				<Card title="Dilution calculator" to={ROUTES.dilutionCalculator}>
+					<p>
+						Calculates required volumes of stock solution and diluent to achieve
+						the desired final concentration at a given volume.
+					</p>
+					<p>
+						Uses the c<sub>1</sub>V<sub>1</sub> = c<sub>2</sub>V<sub>2</sub>{' '}
+						formula.
+					</p>
+				</Card>
+				<Card title="Ligation calculator" to={ROUTES.ligationCalculator}>
+					<p>
+						Calculates the volumes needed for a single ligation reaction using
+						the T4 ligase.
+					</p>
 				</Card>
 			</div>
 		</>

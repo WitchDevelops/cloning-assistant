@@ -99,7 +99,7 @@ export const StockSolutions = () => {
 													dilutionPrefill: toDilutionPrefill(stock),
 													stockName: stock.name,
 													stockConcentration: firstConcentration
-														? `${firstConcentration.value}${firstConcentration.unit}`
+														? firstConcentration
 														: undefined,
 													stockConcentrationFactor: stock.concentrationFactor,
 													stockPh: stock.ph,

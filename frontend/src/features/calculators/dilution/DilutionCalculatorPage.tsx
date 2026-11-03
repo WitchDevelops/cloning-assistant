@@ -7,7 +7,7 @@ import type { DilutionFormValues } from './dilutionSchema';
 type DilutionLocationState = {
 	dilutionPrefill?: Partial<DilutionFormValues>;
 	stockName?: string;
-	stockConcentration?: string;
+	stockConcentration?: { value: number; unit: string };
 	stockConcentrationFactor?: number | null;
 	stockPh?: number;
 };
@@ -18,10 +18,10 @@ export const DilutionCalculatorPage = () => {
 
 	const concentrationLabel = state?.stockConcentrationFactor
 		? ''
-		: `${state?.stockConcentration}`;
+		: `${state?.stockConcentration?.value}${state?.stockConcentration?.unit}`;
 	const phLabel = state?.stockPh != null ? `, pH = ${state.stockPh}` : '';
 	const stockLabel = state?.stockName
-		? `Diluting ${concentrationLabel}${state.stockName}${phLabel}`
+		? `Diluting ${concentrationLabel} ${state.stockName}${phLabel}`
 		: 'Diluting stock';
 	return (
 		<>

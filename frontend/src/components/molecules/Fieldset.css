@@ -31,6 +31,11 @@
 		outline: var(--control-border-width) solid CanvasText;
 		background-color: Canvas;
 	}
+	@media print {
+		background-color: transparent;
+		color: inherit;
+		outline: var(--control-border-width) solid currentColor;
+	}
 }
 
 .fieldset--outlined-group > .fieldset__content {

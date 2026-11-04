@@ -16,6 +16,9 @@
 	min-height: var(--control-min-height);
 	background-color: transparent;
 	color: var(--color-text);
+	@media print {
+		border-color: currentColor;
+	}
 }
 
 .quantity-field__input {
@@ -24,6 +27,9 @@
 	min-width: 3ch;
 	&::placeholder {
 		color: var(--color-text-muted);
+		@media print {
+			color: transparent;
+		}
 	}
 }
 

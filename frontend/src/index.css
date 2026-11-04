@@ -233,3 +233,15 @@ hr {
 		scroll-behavior: auto !important;
 	}
 }
+
+@media print {
+	:root {
+		--color-surface: white;
+		--color-text: black;
+		--color-text-primary: black;
+		--color-primary: black;
+		--color-on-primary: black;
+		--color-control-border: black;
+		--color-border: black;
+	}
+}

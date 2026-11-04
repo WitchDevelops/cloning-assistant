@@ -1,0 +1,16 @@
+.ligation-calculator__container {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	max-width: 1200px;
+	.form__body {
+		@media (min-width: 992px) {
+			flex-direction: row;
+			flex-wrap: wrap;
+			& > .fieldset--outlined-group {
+				width: 100%;
+				flex: 1 1 0;
+			}
+		}
+	}
+}

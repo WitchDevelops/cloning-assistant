@@ -75,7 +75,7 @@ export const LigationCalculatorPage = () => {
 							</Fieldset>
 						</Fieldset>
 						<Fieldset legend="Reaction Parameters" variant="outlined-group">
-							<Fieldset legend="Molar Ratio">
+							<Fieldset legend="Molar Ratio (insert:vector)">
 								{/* TODO: create a Field input type, with styling and validation */}
 								<input type="text" inputMode="decimal"></input>
 							</Fieldset>

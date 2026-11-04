@@ -4,13 +4,14 @@ import { PageTitle } from '@/components/atoms/PageTitle';
 import { Card } from '@/components/molecules/Card';
 import { Fieldset } from '@/components/molecules/Fieldset';
 import { QuantityField } from '@/components/molecules/QuantityField';
+import { RatioField } from '@/components/molecules/RatioField';
 import {
 	DNA_LENGTH_UNITS,
 	DNA_MASS_UNITS,
 	MASS_VOLUME_UNITS,
 	VOLUME_UNITS,
 } from '../utils/units';
-import type { LigationFormValues } from './ligationSchema';
+import { type LigationFormValues, MOLAR_RATIO_PRESETS } from './ligationSchema';
 
 export const LigationCalculatorPage = () => {
 	const { register } = useForm<LigationFormValues>();
@@ -75,9 +76,14 @@ export const LigationCalculatorPage = () => {
 							</Fieldset>
 						</Fieldset>
 						<Fieldset legend="Reaction Parameters" variant="outlined-group">
-							<Fieldset legend="Molar Ratio (insert:vector)">
-								{/* TODO: create a Field input type, with styling and validation */}
-								<input type="text" inputMode="decimal"></input>
+							<Fieldset legend="Molar Ratio">
+								<RatioField
+									field="molarRatio"
+									label="Molar ratio (insert:vector)"
+									presets={MOLAR_RATIO_PRESETS}
+									suffix="insert:vector"
+									register={register}
+								></RatioField>
 							</Fieldset>
 							<Fieldset legend="Final Volume">
 								<QuantityField

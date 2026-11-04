@@ -85,7 +85,7 @@ export const LigationCalculatorPage = () => {
 									register={register}
 								></RatioField>
 							</Fieldset>
-							<Fieldset legend="Final Volume">
+							<Fieldset legend="Final Reaction Volume">
 								<QuantityField
 									valueField="finalVolumeValue"
 									unitField="finalVolumeUnit"

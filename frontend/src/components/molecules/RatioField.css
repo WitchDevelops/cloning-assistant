@@ -1,0 +1,25 @@
+.ratio-field {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.ratio-field__wrapper {
+	width: 100%;
+	display: flex;
+}
+
+.ratio-field__select {
+	border-left: none;
+	border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+	min-width: max-content;
+	width: var(--unit-select-width);
+}
+
+.ratio-field__suffix {
+	border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+	display: flex;
+	align-items: center;
+	flex: 1 1 0;
+	color: var(--color-text);
+}

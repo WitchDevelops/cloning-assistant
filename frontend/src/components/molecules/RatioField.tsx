@@ -1,4 +1,6 @@
 import type { FieldValues, Path, UseFormRegister } from 'react-hook-form';
+import '@/styles/form-control.css';
+import './RatioField.css';
 
 type RatioFieldProps<T extends FieldValues> = {
 	field: Path<T>;
@@ -23,10 +25,17 @@ export const RatioField = <T extends FieldValues>({
 				<label htmlFor={field} className="sr-only">
 					{label}
 				</label>
+				{suffix ? (
+					<span aria-hidden="true" className="form-control ratio-field__suffix">
+						{suffix}
+					</span>
+				) : (
+					''
+				)}
 				<select
 					id={field}
 					{...register(field)}
-					className="ratio-field__select"
+					className="ratio-field__select form-control form-control--select"
 					aria-describedby={error}
 					aria-invalid={error ? true : undefined}
 				>
@@ -36,9 +45,8 @@ export const RatioField = <T extends FieldValues>({
 						</option>
 					))}
 				</select>
-				{suffix ? <span aria-hidden="true">{suffix}</span> : ''}
 			</div>
-			<p aria-live="polite" className="ratio-field__error">
+			<p aria-live="polite" className="form-control__error">
 				{error}
 			</p>
 		</div>

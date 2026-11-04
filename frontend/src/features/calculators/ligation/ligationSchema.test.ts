@@ -75,7 +75,7 @@ describe('ligationInputSchema', () => {
 
 	it('accepts a custom molar ratio outside the presets', () => {
 		expect(
-			ligationInputSchema.safeParse({ ...valid, molarRatio: 2 }).success,
+			ligationInputSchema.safeParse({ ...valid, molarRatio: 2.4 }).success,
 		).toBe(true);
 	});
 });

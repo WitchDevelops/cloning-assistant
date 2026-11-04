@@ -11,11 +11,19 @@ import {
 	MASS_VOLUME_UNITS,
 	VOLUME_UNITS,
 } from '../utils/units';
-import { type LigationFormValues, MOLAR_RATIO_PRESETS } from './ligationSchema';
+import {
+	DEFAULT_MOLAR_RATIO,
+	type LigationFormValues,
+	MOLAR_RATIO_PRESETS,
+} from './ligationSchema';
 import './LigationCalculatorPage.css';
 
 export const LigationCalculatorPage = () => {
-	const { register } = useForm<LigationFormValues>();
+	const { register } = useForm<LigationFormValues>({
+		defaultValues: {
+			molarRatio: DEFAULT_MOLAR_RATIO,
+		},
+	});
 	return (
 		<>
 			<PageTitle title="Ligation calculator" />
@@ -85,7 +93,7 @@ export const LigationCalculatorPage = () => {
 										presets={MOLAR_RATIO_PRESETS}
 										suffix="insert:vector"
 										register={register}
-									></RatioField>
+									/>
 								</Fieldset>
 								<Fieldset legend="Final Reaction Volume">
 									<QuantityField

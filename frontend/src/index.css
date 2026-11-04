@@ -87,11 +87,13 @@
 	/* Layer 3: sizing */
 	--radius-sm: 6px;
 	--radius-md: 8px;
+	--radius-lg: 12px;
 
 	/* Spacing sits on a 4px grid */
 	--space-xs: 4px;
 	--space-sm: 8px;
 	--space-md: 12px;
+	--space-lg: 24px;
 
 	/* Controls */
 	--control-min-height: 38px;
@@ -229,5 +231,17 @@ hr {
 		animation-iteration-count: 1 !important;
 		transition-duration: 0.01ms !important;
 		scroll-behavior: auto !important;
+	}
+}
+
+@media print {
+	:root {
+		--color-surface: white;
+		--color-text: black;
+		--color-text-primary: black;
+		--color-primary: black;
+		--color-on-primary: black;
+		--color-control-border: black;
+		--color-border: black;
 	}
 }

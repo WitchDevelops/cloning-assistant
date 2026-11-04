@@ -14,3 +14,32 @@
 .fieldset__content {
 	width: 100%;
 }
+
+.fieldset--outlined-group {
+	border: var(--control-border-width) solid var(--color-primary);
+	padding: var(--space-lg);
+}
+
+.fieldset--outlined-group > .fieldset__legend {
+	background-color: var(--color-primary-muted);
+	color: var(--color-text);
+	padding: var(--space-xs) var(--space-sm);
+	border-radius: var(--radius-sm);
+	margin-inline-start: -2px;
+	margin-bottom: 0;
+	@media (forced-colors: active) {
+		outline: var(--control-border-width) solid CanvasText;
+		background-color: Canvas;
+	}
+	@media print {
+		background-color: transparent;
+		color: inherit;
+		outline: var(--control-border-width) solid currentColor;
+	}
+}
+
+.fieldset--outlined-group > .fieldset__content {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-lg);
+}

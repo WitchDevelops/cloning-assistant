@@ -1,14 +1,18 @@
 .card {
-	border-radius: 12px;
+	border-radius: var(--radius-lg);
 	background-color: var(--color-surface);
 	box-shadow: 0px 4px 16px 0px
 		color-mix(in srgb, var(--color-primary) 46%, var(--color-surface));
-	padding: 1.5rem;
+	padding: var(--space-lg);
 	display: flex;
 	flex-direction: column;
-	gap: 1.5rem;
+	gap: var(--space-lg);
 	@media (forced-colors: active) {
 		outline: var(--control-border-width) solid CanvasText;
+	}
+	@media print {
+		box-shadow: none;
+		border: var(--control-border-width) solid currentColor;
 	}
 }
 
@@ -16,7 +20,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	gap: 1rem;
+	gap: var(--space-md);
 }
 
 .card--link {
@@ -27,5 +31,5 @@
 	position: absolute;
 	inset: 0;
 	content: "";
-	border-radius: 12px;
+	border-radius: var(--radius-lg);
 }

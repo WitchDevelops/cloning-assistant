@@ -3,6 +3,7 @@ import { PageTitle } from '@/components/atoms/PageTitle';
 import { Card } from '@/components/molecules/Card';
 import { DilutionForm } from './DilutionForm';
 import type { DilutionFormValues } from './dilutionSchema';
+import './DilutionCalculatorPage.css';
 
 type DilutionLocationState = {
 	dilutionPrefill?: Partial<DilutionFormValues>;
@@ -26,7 +27,7 @@ export const DilutionCalculatorPage = () => {
 	return (
 		<>
 			<PageTitle title="Dilution calculator" />
-			<div className="calculators__container">
+			<div className="dilution-calculator__container">
 				<Card title={stockLabel}>
 					<DilutionForm prefill={state?.dilutionPrefill} />
 				</Card>

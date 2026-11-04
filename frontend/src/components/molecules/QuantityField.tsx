@@ -1,6 +1,7 @@
 import type { ChangeEvent } from 'react';
 import type { FieldValues, Path, UseFormRegister } from 'react-hook-form';
 import type { UnitOptions } from '@/features/calculators/utils/units';
+import '@/styles/form-control.css';
 import './QuantityField.css';
 
 // Strips anything but digits and a single decimal point, keeping only the first "."
@@ -58,7 +59,7 @@ export const QuantityField = <T extends FieldValues>({
 					onChange={handleValueChange}
 					type="text"
 					inputMode="decimal"
-					className="quantity-field__input"
+					className="quantity-field__input form-control"
 					placeholder={placeholder}
 					aria-describedby={valueErrorId}
 					aria-invalid={valueError ? true : undefined}
@@ -70,7 +71,7 @@ export const QuantityField = <T extends FieldValues>({
 				<select
 					id={unitField}
 					{...register(unitField)}
-					className="quantity-field__select"
+					className="quantity-field__select form-control form-control--select"
 					aria-describedby={unitErrorId}
 					aria-invalid={unitError ? true : undefined}
 				>
@@ -91,10 +92,10 @@ export const QuantityField = <T extends FieldValues>({
 							))}
 				</select>
 			</div>
-			<p id={valueErrorId} aria-live="polite" className="quantity-field__error">
+			<p id={valueErrorId} aria-live="polite" className="form-control__error">
 				{valueError}
 			</p>
-			<p id={unitErrorId} aria-live="polite" className="quantity-field__error">
+			<p id={unitErrorId} aria-live="polite" className="form-control__error">
 				{unitError}
 			</p>
 		</div>

@@ -6,7 +6,7 @@ import {
 	VOLUME_UNIT_VALUES,
 } from '@/features/calculators/utils/units';
 
-export const MOLAR_RATIO_PRESETS = [1, 3, 5, 10] as const;
+export const MOLAR_RATIO_PRESETS = [1, 2, 3, 5, 7] as const;
 export const DEFAULT_MOLAR_RATIO: (typeof MOLAR_RATIO_PRESETS)[number] = 3;
 
 export const ligationInputSchema = z.object({

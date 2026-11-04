@@ -92,9 +92,24 @@ export const CONCENTRATION_UNITS: UnitOptions = {
 	})),
 };
 
+export const MASS_VOLUME_UNITS: UnitOptions = {
+	kind: 'flat',
+	units: unitsOf('massPerVolume'),
+};
+
 export const VOLUME_UNITS: UnitOptions = {
 	kind: 'flat',
 	units: unitsOf('volume'),
+};
+
+export const DNA_LENGTH_UNITS: UnitOptions = {
+	kind: 'flat',
+	units: unitsOf('dnaLength'),
+};
+
+export const DNA_MASS_UNITS: UnitOptions = {
+	kind: 'flat',
+	units: unitsOf('dnaMass'),
 };
 
 type UnitOf<F extends UnitFamily> = {

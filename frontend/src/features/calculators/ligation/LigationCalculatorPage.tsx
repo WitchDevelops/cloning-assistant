@@ -6,17 +6,17 @@ import { Fieldset } from '@/components/molecules/Fieldset';
 import { QuantityField } from '@/components/molecules/QuantityField';
 import { RatioField } from '@/components/molecules/RatioField';
 import {
+	DEFAULT_MOLAR_RATIO,
+	type LigationFormValues,
+	MOLAR_RATIO_PRESETS,
+} from '@/features/calculators/ligation/ligationSchema';
+import {
 	DNA_LENGTH_UNITS,
 	DNA_MASS_UNITS,
 	MASS_VOLUME_UNITS,
 	VOLUME_UNITS,
-} from '../utils/units';
-import {
-	DEFAULT_MOLAR_RATIO,
-	type LigationFormValues,
-	MOLAR_RATIO_PRESETS,
-} from './ligationSchema';
-import './LigationCalculatorPage.css';
+} from '@/features/calculators/utils/units';
+import '@/features/calculators/ligation/LigationCalculatorPage.css';
 
 export const LigationCalculatorPage = () => {
 	const { register } = useForm<LigationFormValues>({

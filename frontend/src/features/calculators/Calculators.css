@@ -38,6 +38,20 @@
 	}
 }
 
+.form__error {
+	color: var(--color-text-danger);
+	padding: var(--space-md);
+	border: 1px solid var(--color-danger);
+	border-radius: var(--radius-md);
+	i {
+		text-transform: uppercase;
+		font-weight: 700;
+		font-style: normal;
+		letter-spacing: 1px;
+		display: block;
+	}
+}
+
 .submit__button,
 .reset__button {
 	width: 100%;

@@ -19,6 +19,7 @@ export const RatioField = <T extends FieldValues>({
 	register,
 	error,
 }: RatioFieldProps<T>) => {
+	const errorId = `${field}-error`;
 	return (
 		<div className="ratio-field">
 			<div className="ratio-field__wrapper">
@@ -36,7 +37,7 @@ export const RatioField = <T extends FieldValues>({
 					id={field}
 					{...register(field)}
 					className="ratio-field__select form-control form-control--select"
-					aria-describedby={error}
+					aria-describedby={errorId}
 					aria-invalid={error ? true : undefined}
 				>
 					{presets.map((preset_ratio) => (
@@ -46,7 +47,7 @@ export const RatioField = <T extends FieldValues>({
 					))}
 				</select>
 			</div>
-			<p aria-live="polite" className="form-control__error">
+			<p id={errorId} aria-live="polite" className="form-control__error">
 				{error}
 			</p>
 		</div>

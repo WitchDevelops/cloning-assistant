@@ -20,8 +20,8 @@ export const LigationCalculatorPage = () => {
 			<Card title="Calculate Volumes for Ligation">
 				<form className="calculators__form">
 					<div className="form__body">
-						<Card title="Vector Data">
-							<Fieldset legend="Vector Length">
+						<Fieldset legend="Vector Data" variant="outlined-group">
+							<Fieldset legend="Length">
 								<QuantityField
 									valueField="vectorLengthValue"
 									unitField="vectorLengthUnit"
@@ -31,7 +31,7 @@ export const LigationCalculatorPage = () => {
 									placeholder="e.g. 3 000"
 								/>
 							</Fieldset>
-							<Fieldset legend="Vector Concentration">
+							<Fieldset legend="Concentration">
 								<QuantityField
 									valueField="vectorConcValue"
 									unitField="vectorConcUnit"
@@ -41,7 +41,7 @@ export const LigationCalculatorPage = () => {
 									placeholder="e.g. 100"
 								/>
 							</Fieldset>
-							<Fieldset legend="Vector mass">
+							<Fieldset legend="Mass">
 								<QuantityField
 									valueField="vectorMassValue"
 									unitField="vectorMassUnit"
@@ -51,9 +51,9 @@ export const LigationCalculatorPage = () => {
 									placeholder="e.g. 50"
 								/>
 							</Fieldset>
-						</Card>
-						<Card title="Insert Data">
-							<Fieldset legend="Insert Length">
+						</Fieldset>
+						<Fieldset legend="Insert Data" variant="outlined-group">
+							<Fieldset legend="Length">
 								<QuantityField
 									valueField="insertLengthValue"
 									unitField="insertLengthUnit"
@@ -63,7 +63,7 @@ export const LigationCalculatorPage = () => {
 									placeholder="e.g. 1 400"
 								/>
 							</Fieldset>
-							<Fieldset legend="Insert Concentration">
+							<Fieldset legend="Concentration">
 								<QuantityField
 									valueField="insertConcValue"
 									unitField="insertConcUnit"
@@ -73,8 +73,8 @@ export const LigationCalculatorPage = () => {
 									placeholder="e.g. 20"
 								/>
 							</Fieldset>
-						</Card>
-						<Card title="Reaction Parameters">
+						</Fieldset>
+						<Fieldset legend="Reaction Parameters" variant="outlined-group">
 							<Fieldset legend="Molar Ratio">
 								{/* TODO: create a Field input type, with styling and validation */}
 								<input type="text" inputMode="decimal"></input>
@@ -89,7 +89,7 @@ export const LigationCalculatorPage = () => {
 									placeholder="e.g. 20"
 								/>
 							</Fieldset>
-						</Card>
+						</Fieldset>
 					</div>
 					<div className="form__submit">
 						<Button className="submit__button" type="submit">
